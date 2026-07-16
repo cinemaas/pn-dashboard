@@ -16,7 +16,9 @@ s=re.sub(r'\s*<div class="tile"><div class="n">\$2\.0M</div>.*?</div></div>','',
 s=re.sub(r'\s*<div class="flag"><b>Continuity flag:</b>.*?</div>','',s,count=1,flags=re.DOTALL)
 s=s.replace('Days to $500K deposit','Days to cash-flow deposit').replace("<b>$500K cash-flow deposit</b> due","<b>Cash-flow deposit</b> due")
 s=s.replace('<th>Eps</th><th>Budget</th>','<th>Eps</th>')
-s=re.sub(r'<td>[^<]*</td>(?=<td><span class="chip)','',s)
+mtbl=re.search(r'<h2>All sets.*?</table>', s, re.DOTALL)
+if mtbl:
+    tbl=mtbl.group(0); s=s.replace(tbl, re.sub(r'<td>[^<]*</td>(?=<td><span class="chip)','',tbl))
 for a,b in {'7 days — heaviest · $15K/8d budgeted · was $125/hr':'7 days — heaviest set','D11–15 · $10K/5d budgeted · was $400/hr':'Days 11–15 (North Shore window)','$20K/6d budgeted · school closed Ch.11 6/25 — confirm who signs':'School closed Ch.11 6/25 — confirm who signs','was $145/hr · family caters!':'family caters!'}.items(): s=s.replace(a,b)
 s=s.replace(' (target $10K/5d)','')
 for num in ['3398323123','6038181913','6176029867','6172028648','7653877277']:
