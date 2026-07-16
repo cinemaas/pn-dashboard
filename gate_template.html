@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Paranormal Nobodies — __TITLE__</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{background:#0d0d0d;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;padding:24px}.gate{width:100%;max-width:380px;text-align:center;background:#161615;border:1px solid #2c2c2a;border-radius:16px;padding:34px 28px}.ghost{font-size:44px;line-height:1;margin-bottom:10px}.slate{font-size:20px;font-weight:800;letter-spacing:.12em}.sub{font-size:12px;letter-spacing:.06em;color:#898781;margin-top:6px;margin-bottom:22px}form{display:flex;gap:8px}input{flex:1;background:#0d0d0d;border:1px solid #383835;border-radius:10px;padding:11px 13px;color:#fff;font-size:15px;outline:none}input:focus{border-color:#9085e9}button{background:#9085e9;color:#0d0d0d;font-weight:750;border:0;border-radius:10px;padding:0 16px;cursor:pointer;font-size:15px}.err{color:#ec835a;font-size:13px;margin-top:12px;min-height:18px}.hint{color:#5b5954;font-size:11px;margin-top:16px}</style></head><body>
+<div class="gate"><div class="ghost">👻</div><div class="slate">PARANORMAL NOBODIES</div><div class="sub">PRODUCER ACCESS · ENTER PASSWORD</div>
+<form id="f" autocomplete="off"><input id="pw" type="password" placeholder="password" autofocus autocomplete="off" spellcheck="false"><button type="submit">Enter</button></form>
+<div class="err" id="err"></div><div class="hint">psst — it's a cute one, tied to the show</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script>var CIPHER="__CIPHER__";function unlock(pw){try{var d=CryptoJS.AES.decrypt(CIPHER,pw).toString(CryptoJS.enc.Utf8);if(d.slice(0,11)==="PN_UNLOCKED"){sessionStorage.setItem("pn_ok",pw);document.open();document.write(d.slice(11));document.close();return true;}}catch(e){}return false;}
+document.getElementById("f").addEventListener("submit",function(e){e.preventDefault();if(!unlock(document.getElementById("pw").value.trim()))document.getElementById("err").textContent="Nope — try again 👻";});
+(function(){var p=sessionStorage.getItem("pn_ok");if(p)unlock(p);})();</script></body></html>
