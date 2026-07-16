@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Paranormal Nobodies — Locations & Schedule (Producer Overview)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --page:#0d0d0d; --surface:#1a1a19; --surface2:#222221; --ink:#ffffff;
+    --ink2:#c3c2b7; --muted:#898781; --grid:#2c2c2a; --line:#383835;
+    --ring:rgba(255,255,255,0.10);
+    --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+    --accent:#3987e5; --violet:#9085e9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.45;padding:20px 22px 60px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+  .slate{font-size:26px;font-weight:800;letter-spacing:.12em}
+  .slate small{display:block;font-size:12px;font-weight:500;letter-spacing:.18em;color:var(--muted);margin-top:2px}
+  .role{margin-left:auto;text-align:right;color:var(--ink2);font-size:12px}
+  .role b{color:var(--ink)}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .tile{background:var(--surface);border:1px solid var(--ring);border-radius:10px;padding:12px 14px}
+  .tile .n{font-size:30px;font-weight:750;line-height:1.1}
+  .tile .l{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+  .tile .s{font-size:12px;color:var(--ink2);margin-top:2px}
+  .tile.hot .n{color:var(--warn)} .tile.crit .n{color:var(--crit)} .tile.ok .n{color:var(--good)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:16px 18px;grid-column:span 12}
+  @media(min-width:980px){ .c6{grid-column:span 6} .c5{grid-column:span 5} .c7{grid-column:span 7} .c4{grid-column:span 4} .c8{grid-column:span 8} }
+  h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  h2 .tag{font-size:10px;background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:2px 8px;color:var(--muted);letter-spacing:.05em}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{color:var(--muted);text-align:left;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:7px 8px;border-bottom:1px solid var(--grid);vertical-align:top;color:var(--ink2)}
+  td b, td a.loc{color:var(--ink);font-weight:600}
+  tr:last-child td{border-bottom:none}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;white-space:nowrap}
+  .chip.good{background:rgba(12,163,12,.14);color:var(--good)}
+  .chip.warn{background:rgba(250,178,25,.13);color:var(--warn)}
+  .chip.serious{background:rgba(236,131,90,.14);color:var(--serious)}
+  .chip.crit{background:rgba(208,59,59,.16);color:var(--crit)}
+  .chip.neutral{background:var(--surface2);color:var(--ink2)}
+  /* shoot board strip */
+  .strip{display:flex;gap:2px;margin:6px 0 4px;height:52px}
+  .blk{flex:1;border-radius:4px;position:relative;cursor:default;min-width:0;background:var(--surface2)}
+  .blk.warn{background:rgba(250,178,25,.28);box-shadow:inset 0 0 0 1px rgba(250,178,25,.5)}
+  .blk.good{background:rgba(12,163,12,.30);box-shadow:inset 0 0 0 1px rgba(12,163,12,.5)}
+  .blk.crit{background:rgba(208,59,59,.34);box-shadow:inset 0 0 0 1px rgba(208,59,59,.6)}
+  .blk.neutral{box-shadow:inset 0 0 0 1px var(--ring)}
+  .blk span{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:9px;color:var(--ink2)}
+  .striplbls{display:flex;gap:2px;font-size:10px;color:var(--muted)}
+  .striplbls div{flex:1;text-align:center;overflow:hidden;white-space:nowrap}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--ink2)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  #tip{position:fixed;pointer-events:none;background:#000;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--ink2);max-width:260px;display:none;z-index:9}
+  #tip b{color:var(--ink);display:block;margin-bottom:2px}
+  /* milestones */
+  .ms{list-style:none}
+  .ms li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--grid);align-items:baseline}
+  .ms li:last-child{border-bottom:none}
+  .ms .d{width:70px;flex:none;font-weight:700;font-variant-numeric:tabular-nums}
+  .ms .dot{width:9px;height:9px;border-radius:99px;flex:none;align-self:center}
+  .ms .txt{color:var(--ink2)} .ms .txt b{color:var(--ink)}
+  .ms .eta{margin-left:auto;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  /* checklist */
+  .todo{list-style:none}
+  .todo li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--grid);align-items:flex-start}
+  .todo li:last-child{border-bottom:none}
+  .todo input{margin-top:3px;accent-color:var(--good)}
+  .todo label{color:var(--ink2);cursor:pointer}
+  .todo input:checked + label{color:var(--muted);text-decoration:line-through}
+  .todo label b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted);margin-top:10px}
+  .flag{border-left:3px solid var(--warn);background:var(--surface2);border-radius:0 8px 8px 0;padding:10px 12px;margin-top:10px;font-size:13px;color:var(--ink2)}
+  .flag b{color:var(--ink)}
+  .tiers p{margin:8px 0 4px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  /* map */
+  #map{height:560px;border-radius:10px;border:1px solid var(--ring);background:#111}
+  .mapfilters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;font-size:12px}
+  .mapfilters label{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:4px 12px;cursor:pointer;color:var(--ink2);user-select:none}
+  .mapfilters input{accent-color:var(--accent);margin:0}
+  .mapfilters i{display:inline-block;width:10px;height:10px;border-radius:99px}
+  .leaflet-popup-content-wrapper{background:#161615;color:var(--ink2);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.6)}
+  .leaflet-popup-tip{background:#161615;border:1px solid var(--line)}
+  .leaflet-popup-content{margin:12px 14px;font:13px/1.5 system-ui,-apple-system,sans-serif}
+  .leaflet-popup-content b.pn{color:var(--ink);font-size:14px;display:block;margin-bottom:3px}
+  .leaflet-popup-content .pr{color:var(--ink2)} .leaflet-popup-content .pc{color:var(--muted);font-size:12px;margin-top:4px}
+  .leaflet-popup-content a{color:var(--accent)}
+  .leaflet-container .leaflet-control-attribution{background:rgba(0,0,0,.6);color:#777}
+  .leaflet-container .leaflet-control-attribution a{color:#999}
+  .hubicon{font-size:20px;line-height:20px;text-shadow:0 0 6px #000}
+</style>
+</head>
+<body>
+<div id="tip"></div>
+<header>
+  <div class="slate">PARANORMAL NOBODIES<small>S1 · EPS 102–106 · MASSACHUSETTS · LOCATIONS & SCHEDULE OVERVIEW</small></div>
+  <div class="role"><b>Josh Maas</b> — Producer / Cinematographer<br><span id="today"></span></div>
+</header>
+
+<div class="tiles">
+  <div class="tile hot"><div class="n" id="d-outreach">–</div><div class="l">Days to location outreach</div><div class="s">Mon Jul 13</div></div>
+  <div class="tile"><div class="n" id="d-deposit">–</div><div class="l">Days to cash-flow deposit</div><div class="s">Sat Aug 15</div></div>
+  <div class="tile"><div class="n" id="d-flights">–</div><div class="l">Days to flights booking</div><div class="s">Mon Aug 17</div></div>
+  <div class="tile ok"><div class="n" id="d-camera">–</div><div class="l">Days to camera</div><div class="s">Target Sep 21 · board D1 Sep 28</div></div>
+  <div class="tile"><div class="n">35<span style="font-size:16px;color:var(--muted)"> +3</span></div><div class="l">Board days + contingency</div><div class="s">Wrap Nov 13 → pad Nov 18</div></div>
+  <div class="tile crit"><div class="n">21</div><div class="l">Locations still to lock</div><div class="s">Hell House + 20 net-new sets (see tracker)</div></div>
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>Shoot board — 35 days (posted 7/10/26 one-liner) <span class="tag">hover a block</span></h2>
+    <div class="strip" id="strip"></div>
+    <div class="striplbls" id="striplbls"></div>
+    <div class="legend">
+      <span><i style="background:rgba(12,163,12,.55)"></i>✓ Secured</span>
+      <span><i style="background:rgba(250,178,25,.5)"></i>⚠ Outreach pending (Jul 13)</span>
+      <span><i style="background:rgba(208,59,59,.6)"></i>✖ Replacement needed (Hell House)</span>
+      <span><i style="background:var(--surface2);box-shadow:inset 0 0 0 1px var(--ring)"></i>Misc / day-players TBD</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚠ Schedule load — "unmakeable days" <span class="tag">shot model over the 7/10 one-liner · hover a bar</span></h2>
+    <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;margin-bottom:12px">
+      <div><div style="font-size:30px;font-weight:750;color:var(--crit);line-height:1">18<span style="font-size:15px;color:var(--muted)"> / 35</span></div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">🔴 unmakeable</div></div>
+      <div><div style="font-size:30px;font-weight:750;color:var(--warn);line-height:1">3</div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">🟠 at risk (flagged)</div></div>
+      <div><div style="font-size:30px;font-weight:750;color:var(--good);line-height:1">14</div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">🟢 can be made</div></div>
+      <div><div style="font-size:30px;font-weight:750;line-height:1">~34</div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">avg shots/day · ~25 is comfortable</div></div>
+      <div><div style="font-size:30px;font-weight:750;line-height:1">1,178</div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">total shots · 332 scenes</div></div>
+    </div>
+    <div id="shotbars" style="display:flex;gap:2px;align-items:flex-end;height:130px;margin-bottom:4px"></div>
+    <div class="striplbls" id="shotlbls" style="align-items:flex-end"></div>
+    <div class="note"><b>Bar color = your makeability marking (ROUGH ESTIMATE.docx), not raw shots.</b> Shots = 3/scene + 1 per cast member beyond 2 (a comfortable day ≈ 25). 🟢 <b>Can be made (14):</b> Days 2, 4, 5, 6, 7, 8, 11, 14, 16, 18, 22, 23, 26, 34. 🟠 <b>At risk / flagged (3):</b> Days 20, 21, 24 — makeable but worth watching (5–6 night exteriors, or 37 shots). 🔴 <b>Unmakeable (18):</b> Days 1, 3, 9, 10, 12, 13, 15, 17, 19, 25, 27, 28, 29, 30, 31, 32, 33, 35 — the bold+underlined days in your estimate (40+ shots, company moves, or heavy night exterior).</div>
+    <div class="note"><b>The killers behind the flags:</b> <b>night exteriors</b> — D9 = 7, D24 & D28 = 6, D20 = 5, D35 = 4 (you can't beat the sun); <b>company moves</b> — D33 ×4, D27 & D32 ×3, D25 & D28 ×2, D31 & D35 ×1 (each 2nd move ≈ a lost half-day). Send-ready writeup → <b>Paranormal Nobodies - Schedule Feasibility Report.pdf</b>; full per-day markup → the annotated one-liner.</div>
+  </div>
+
+  <div class="card">
+    <h2>Location map — every set, hub &amp; candidate <span class="tag">click a pin · toggle layers</span></h2>
+    <div class="mapfilters" id="mapfilters"></div>
+    <div id="map"></div>
+    <div class="note">Dashed rings = ~45-min pairing zone around each hub (the "no extra company move" rule). Hell House pins = candidates; ⭐ in the name = photo-verified finalist. Pins marked "approx" are film-office/marketplace listings whose exact address is gated.</div>
+  </div>
+
+  <div class="card c5">
+    <h2>Milestones</h2>
+    <ul class="ms" id="ms"></ul>
+  </div>
+
+  <div class="card c7">
+    <h2>Locations board <span class="tag">pilot legacy → 2026 status</span></h2>
+    <table>
+      <tr><th>Set</th><th>Location / links</th><th>Contact</th><th>Status</th></tr>
+      <tr><td><b>Klaypool Residence</b> + Meetinghouse<br><span style="font-size:11px;color:var(--muted)">7 days — heaviest set</span></td><td>31 Crowell Rd, Sagamore Beach · <a href="https://www.peerspace.com/pages/listings/636290f8d6990c002230ef3e" target="_blank">Peerspace ↗</a></td><td><b>Julia</b> — <span style="color:var(--muted)">(on file)</span><br><span style="font-size:11px;color:var(--muted)">(sheet said "Laura" — Bryan's email says Julia)</span></td><td><span class="chip warn">⚠ OUTREACH PENDING</span></td></tr>
+      <tr><td><b>Hell House</b><br><span style="font-size:11px;color:var(--muted)">Days 11–15 (North Shore window)</span></td><td>was 120 Hill St, Whitinsville (burned 3/1/24) · <a href="https://giggster.com/listing/historic-victorian-manor-in-worcester-county" target="_blank">Giggster ↗</a> · <a href="https://www.redfin.com/MA/Whitinsville/120-Hill-St-01588/home/40157201" target="_blank">Redfin ↗</a> · <a href="https://www.loopnet.com/Listing/120-Hill-St-Whitinsville-MA/15469395/" target="_blank">LoopNet $2M ↗</a> · <a href="https://www.est8ofmind.com/facility" target="_blank">old facility pg ↗</a></td><td>Clarence — <span style="color:var(--muted)">(on file)</span><br>Broker: N. Hodson — <a href="tel:6178182101">617-818-2101</a></td><td><span class="chip crit">✖ REPLACE / CHEAT</span></td></tr>
+      <tr><td><b>Black Willow Academy</b> + PD + Psych Hosp<br><span style="font-size:11px;color:var(--muted)">School closed Ch.11 6/25 — confirm who signs</span></td><td>Academy at Penguin Hall, 36 Essex St, Wenham · <a href="https://penguinhall.org" target="_blank">site ↗</a> · <a href="https://rs.locationshub.com/Home/LocationDetail?rsLocationId=065-10062164" target="_blank">LocationsHub ↗</a></td><td>Molly Martins — <a href="tel:9785361171">978-536-1171</a> · <a href="mailto:admissions@penguinhall.org">email</a></td><td><span class="chip good">✓ SECURED</span></td></tr>
+      <tr><td><b>Klaypool Chicago</b> + Verlice basement<br><span style="font-size:11px;color:var(--muted)">family caters!</span></td><td>12 Indian Ridge Rd, West Newbury · <a href="https://www.peerspace.com/pages/listings/616f4ced03a68b000c0a39b0" target="_blank">Peerspace ↗</a></td><td>George — <span style="color:var(--muted)">(on file)</span> · Mariana — <span style="color:var(--muted)">(on file)</span></td><td><span class="chip warn">⚠ OUTREACH PENDING</span></td></tr>
+      <tr><td><b>Graveyard + Verlice EXT</b></td><td>63 Bridge St, West Newbury · <a href="https://www.wnewbury.org" target="_blank">town ↗</a></td><td>Sean — <span style="color:var(--muted)">(on file)</span> · Cemetery: J. Walsh — <a href="tel:9783631100">978-363-1100 x115</a></td><td><span class="chip warn">⚠ OUTREACH PENDING</span></td></tr>
+      <tr><td><b>Wild card: Orchard St manor</b><br><span style="font-size:11px;color:var(--muted)">100+ yr Victorian, New Bedford — never rented, Julia's friend</span></td><td>Orchard St, New Bedford (via Julia intro)</td><td>via Julia — <span style="color:var(--muted)">(on file)</span></td><td><span class="chip neutral">UNTAPPED</span></td></tr>
+      <tr><td><b>Backups on file</b><br><span style="font-size:11px;color:var(--muted)">most useful only — full 25-house rolodex in doc</span></td><td colspan="2" style="font-size:12px;line-height:1.9">
+        <a href="https://www.proctormansioninn.com" target="_blank">Proctor Mansion Inn ↗</a> (Wrentham, B. Fitzgerald 781-718-1123 — Dylan/haunted) ·
+        <a href="https://www.town.medfield.net/556/Medfield-State-Hospital" target="_blank">Medfield State Hosp ↗</a> &amp; <a href="https://www.mass.gov/locations/tewksbury-hospital" target="_blank">Tewksbury ↗</a> (psych-hospital EXT) ·
+        <a href="https://www.osv.org" target="_blank">Old Sturbridge Village ↗</a> (Salem-1692 meetinghouse) ·
+        <a href="https://louisamayalcott.org" target="_blank">Alcott House ↗</a> (Concord, Parris/meetinghouse) →
+        <b>full list → LOCATIONS_AND_NEW_MANSION.md</b></td><td><span class="chip neutral">ROLODEX</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card c6 tiers">
+    <h2>Hell House replacement — shortlist <span class="tag">rescouted 7/14 · now needs a HERO EXT too</span></h2>
+    <p>👁️ PHOTO-VERIFIED vs the real Hell House interior — dark mahogany paneling, carved stair, hardwood, NO carpet. <b style="color:var(--good)">NEW mandate (7/12–13 texts): establish a new dark EXTERIOR too — not just interiors.</b></p>
+    <table>
+      <tr><td><a class="loc" href="https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65" target="_blank"><b>🆕⭐ Morning Garden, Gloucester</b> ↗</a> ✅ BEST EXT+INT</td><td>~30–35 min (HUB 2) · <b>the 1905 John Hays Hammond Sr. Tudor</b> (190 Western Ave) — verified on 20 photos: <b>dark half-timber Gothic EXTERIOR w/ carved tracery gables + leaded casements + ocean-view grounds</b>, AND floor-to-ceiling dark oak paneling, carved grand stair, strapwork ceilings, Gothic stained-glass wall, huge carved fireplaces. Now a retreat house that already rents to outside groups → ~$2K/day realistic. <b>⚠ owner is the Unification Church — pitch the blood/horror content early & transparently; tent/line the gag room.</b> This is the first find that solves the new EXTERIOR mandate + interior in one.</td><td>via MA Film Office / Morning Garden retreat (mgretreats.weebly.com)</td></tr>
+      <tr><td><a class="loc" href="https://www.stevensestateevents.com" target="_blank"><b>⭐ Stevens Estate, N. Andover</b> ↗</a> ✅ CLOSEST INT</td><td>25 min · <b>dark wood paneling every room, carved stair w/ leaded-glass landing, arched passages, library shelves, hardwood</b> — same design language as 120 Hill St. Brick exterior. Bookable venue.</td><td><a href="tel:7817380511">781-738-0511</a> · <a href="mailto:events@stevensestateevents.com">email</a></td></tr>
+      <tr><td><a class="loc" href="https://ma.reel-scout.com/loc_detail.aspx?id=10072013&cid=65" target="_blank"><b>⭐ Andover Estate, Andover</b> ↗</a> ✅ BEST ALL-AROUND</td><td>25 min · 1924 oak Tudor, 22 rms · photos confirm oak paneling + oak stairway + <b>dark-wood kitchen</b> + leaded glass + beam ceilings · PLUS <b>paneled study, billiard room, 14 fireplaces, 20-ft iron GATES, 1000-ft drive + truck parking</b> — hits the look AND the whole script spec. Private home on film-office DB.</td><td>MA Film Office <a href="tel:6179738400">617-973-8400</a></td></tr>
+      <tr><td><a class="loc" href="https://www.turnerhill.com" target="_blank"><b>⭐ Turner Hill, Ipswich</b> ↗</a> ✅ STRONG</td><td>20 min · dark Jacobean paneled great hall, heavy carved staircase, leaded windows; brooding brick-Tudor exterior, moody at night. Bookable venue.</td><td><a href="tel:9783567070">978-356-7070</a></td></tr>
+      <tr><td><a class="loc" href="https://ma.reel-scout.com/loc_detail.aspx?id=10250383&cid=65" target="_blank"><b>Quincy-Wardner, Dorchester</b> ↗</a> ✅ closest EXT</td><td>50 min (not N. Shore) · 1885 Romanesque QA in <b>the exact reference materials — stone + brick + shingle + turret</b>; dark-oak arched living hall, billiards, stained glass. Best shingle-exterior cheat. Via film office.</td><td>MA Film Office <a href="tel:6179738400">617-973-8400</a></td></tr>
+      <tr><td colspan="3" style="color:var(--crit);font-size:12px;padding-top:4px">❌ REJECTED on photos: <b>Tupper Manor</b> (bright cream/gold wedding palette) · <b>51 Cliff St Nahant</b> (staircase & paneling painted white, modern kitchen) · <b>Westwood House</b> (just colonials in Westwood town) · <b>stone castles</b> Hammond/Searles/Winnekenni (medieval stone — EXT-night cheats only). "Glynallen" = Glynallyn Castle NJ.</td></tr>
+    </table>
+    <p>Strong — verified pricing or access, worth a call</p>
+    <table>
+      <tr><td><a class="loc" href="https://www.peerspace.com/pages/listings/61f6dd54f7f27600217781a6" target="_blank"><b>⭐ Lowell Gilded Age Mansion</b> ↗</a> <span style="color:var(--good)">JOSH LIKES</span></td><td>1874 · 10K sq ft · turret · <b>Josh scouted it — "pretty sick"</b> · host wants multi-day · <b>$1.9–2.4K/day = ON TARGET</b>. ⚠ <b>City lot, no big private grounds</b> — great INTERIOR, pair with an estate EXT for the property look.</td><td>Vitaliy Z. — <a href="tel:6179135059">617-913-5059</a></td></tr>
+      <tr><td><a class="loc" href="https://www.commandersmansion.com/studiorental" target="_blank"><b>Commander's Mansion</b> ↗</a></td><td>1865 Victorian, Watertown · <b>published $1,700/9-hr film day</b> → 5d ≈ $8.5K · night rules apply</td><td><a href="tel:6179267755">617-926-7755</a> · <a href="mailto:info@commandersmansion.com">email</a></td></tr>
+      <tr><td><a class="loc" href="https://www.peerspace.com/pages/listings/6132818fbf1931000d92d580" target="_blank"><b>Mini Mansion, Lawrence</b> ↗</a></td><td>1910 · 11 rooms "incredible woodwork" · film-explicit · <b>$95/hr ≈ $1.1K/day — cheapest</b> · 30 min</td><td>Beverly M. — Peerspace msg</td></tr>
+      <tr><td><a class="loc" href="https://www.masshort.org/contact-us" target="_blank"><b>Elm Bank Manor</b> ↗</a></td><td>1907 brick manor, VACANT — rig the blood gag freely · AMC precedent · Wellesley 55 min · bring power/heat</td><td><a href="tel:6179334921">617-933-4921</a> · <a href="mailto:functions@masshort.org">email</a></td></tr>
+      <tr><td><a class="loc" href="https://www.skhauntedmansion.com/" target="_blank"><b>S.K. Pierce Haunted Victorian</b> ↗</a></td><td>1875 Second Empire, Gardner · literally a famous haunted mansion, owners want film crews, cheap · 75 min</td><td><a href="tel:9782248944">978-224-8944</a> · <a href="mailto:skpiercemansion@gmail.com">email</a></td></tr>
+      <tr><td><a class="loc" href="https://www.google.com/search?q=Stoneacre+mansion+Eastern+Point+Gloucester+for+sale" target="_blank"><b>NEW · Gloucester Eastern Point</b> ↗</a></td><td>stone+shingle mansion district on a gated point (35 min) · <b>"Stoneacre" currently FOR SALE</b> (motivated owner) · Eastern Point Retreat House (stone, film-office listed)</td><td>listing agent / MA Film Office</td></tr>
+    </table>
+    <div class="flag" style="border-left-color:var(--good)"><b>🆕 NEW hero-EXTERIOR leads (7/14 harvest — 147 net-new options, photo-verify next):</b> for the new "establish a dark exterior" mandate — <b>The Ledges, Wenham</b> (stone Tudor manor, 14 acres, IN hub, FOR SALE) · <b>Sharksmouth Estate, Manchester-by-the-Sea</b> (granite+shingle, 40 oceanfront acres) · <b>Margaret Cummings Estate, Topsfield</b> (brick Tudor Revival) · <b>Carcassonne Castle, Marblehead</b> (oceanfront stone castle) · <b>John Faulkner House, Lowell</b> (1887 Shingle — closest sibling to the burned original, FOR SALE) · HUB 1: <b>Nathan Durfee granite manor</b> + <b>Mansion at the Highlands</b>, Fall River (stone + iron gates). Full 147 → LOCATIONS_AND_NEW_MANSION.md §6.</div>
+    <div class="note" style="color:var(--serious)">✂️ Cut for Hell House: Penguin Hall (our SECURED SCHOOL) · Tupper Manor, 51 Cliff Nahant (photo-rejected, bright) · Boston "Gothic Victorian" (Chad's Giggster) — right keywords, WRONG look: pink Painted-Lady EXT + bright interiors; cap-60 party-insert at most · Kimball Jenkins (NH, no tax credit) · Methuen 1879 (warm/bright backup only) · stone castles (EXT-night cheats only).</div>
+    <div class="note"><b>Deeper pools</b> (full detail → LOCATIONS_AND_NEW_MANSION.md + HELL_HOUSE_AND_CHURCHES_SCOUT.md): MA Film Office DB <a href="https://ma.reel-scout.com/loc_results.aspx?search=&subcat=9046" target="_blank">82 mansions + 162 period houses ↗</a> (email <a href="mailto:mafilminfo@mass.gov">mafilminfo@mass.gov</a> = owner intros) — Daniel Webster Estate (EXT only — INT not cool enough, Josh 7/15), Canton isolated Victorian, Thayer "open to filming" · for-sale/distressed for the BLOOD RIG: <a href="https://www.coldwellbankerhomes.com/ma/lowell/32-belmont-ave/pid_72204573/" target="_blank">32 Belmont Lowell ↗</a>, 29 Gorham Chelmsford (decay), $125K Springfield fixer · New Bedford County St + Fall River Highlands mansion belts (Hub 1). MACRIS by-architecture found Beverly Prides Crossing as the private-Shingle vein.</div>
+    <div class="flag"><b>⚡ STRATEGY SHIFT (7/12–13 texts):</b> Richard killed the "reuse old front footage" plan — we <b>establish a NEW Hell House</b> and replace the pilot's single front-EXT shot ("we only see the exterior front in one shot in the pilot"). Taylor: "a shit ton of scenes at the exterior of hell house — we can't cheat that at all." So the pick needs a <b>hero EXTERIOR + interior</b>, and must <b>pair with a hub — no 3rd company move</b> ("north or south as long as we can pair it"). Scout <b>Parker</b> hired 7/13 · Johanna has the location breakdown · Richard's full update due end of week.</div>
+    <div class="note"><b>SPLIT strategy (fallback):</b> museums = VFX-only, so do the practical blood-rig at an FX-friendly house (S.K. Pierce / a distressed for-sale) + beauty foyer/stair/séance at a dressed house + a gated gothic EXT-night for establishing. <b>Script needs one space to cover:</b> foyer+grand stair, a parlor for ~30 (séance), upstairs hall + 2 bedrooms (incl. a blood-rig master), an office, front gates, crowd parking. <a href="https://www.est8ofmind.com/photos" target="_blank">Look reference: real 120 Hill St ↗</a>.</div>
+  </div>
+
+  <div class="card">
+    <h2>All sets — S1 location tracker <span class="tag">options for every set → LOCATION_OPTIONS.md (full contacts)</span></h2>
+    <table>
+      <tr><th>Set (scenes)</th><th>Eps</th><th>Status · top options (many more in doc)</th></tr>
+      <tr><td><b>Klaypool Residence + Silo</b> (64)</td><td>all</td><td><span class="chip warn">⚠ PENDING</span> Julia · <a href="https://www.peerspace.com/pages/listings/636290f8d6990c002230ef3e" target="_blank">listing ↗</a></td></tr>
+      <tr><td><b>Hell House</b> (41)</td><td>103·104·106</td><td><span class="chip crit">✖ REPLACE</span> Stevens Estate / Andover Estate / Turner Hill — see Hell House card</td></tr>
+      <tr><td><b>Verlice Residence</b> (29)</td><td>all</td><td><span class="chip good">✓ SHOT</span> already filmed</td></tr>
+      <tr><td><b>Black Willow Academy</b> (24) + dance, PD, psych ward, woods, hallways</td><td>all</td><td><span class="chip good">✓ PENGUIN HALL</span> confirm Ch.11 signer</td></tr>
+      <tr><td><b>Gardner Residence</b> (16) — <b>needs POOL</b></td><td>all</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.zillow.com/danvers-ma/with-pool/" target="_blank">18 Hardy St Danvers (pool, at base) ↗</a> · 3 Meeting Place Beverly (pool+cabana) · <a href="https://www.peerspace.com/pages/listings/633cee3d8620e9000eb0b258" target="_blank">Woburn Victorian $120/hr ↗</a> · +6 more</td></tr>
+      <tr><td><b>Hall Residence</b> (11) — colonial</td><td>4 eps</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.peerspace.com/pages/listings/6886ee4d52324b53e2657150" target="_blank">Applefield, Ipswich (curved stair, teen BRs) ↗</a> · <a href="https://www.peerspace.com/pages/listings/62f312dbd600a7000e4a2a88" target="_blank">Solomon Holt House, Andover ↗</a> · Waldron St Marblehead</td></tr>
+      <tr><td><b>Sacred Heart Church + fall festival</b> (10+)</td><td>104</td><td><span class="chip warn">⚠ CHURCH SHORTLIST</span> grounds only, warm priest → UU/UCC/Episcopal: <a href="https://www.nsuu.org" target="_blank">Northshore UU Danvers ↗</a> · <a href="https://www.firstchurchwenham.org" target="_blank">First Church Wenham ↗</a> · Topsfield Cong. · Old Sloop Rockport</td></tr>
+      <tr><td><b>Hospital + ER</b> (12)</td><td>106</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.publichealthmuseum.org" target="_blank">Tewksbury State Hosp (Castle Rock) ↗</a> · Medfield State · South Shore Sim Lab (clean ER) · Carney/Nashoba (decommissioned)</td></tr>
+      <tr><td><b>Mary's Bath / Lighthouse Beach</b> (12, night water)</td><td>102–106</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.salemma.gov/winter-island" target="_blank">Winter Island Salem ↗</a> (⚠Oct) · Ned's Point Mattapoisett (cleanest permit) · Myles Standish ponds (DCR) · Halibut Point Rockport</td></tr>
+      <tr><td><b>Graveyard</b> (Verlice property, ✓shot) · <b>Salem 1692</b> (3) · <b>Klaypool Chicago</b></td><td>102–106</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.rebeccanurse.org" target="_blank">Rebecca Nurse Homestead Danvers (real 1692 site + meetinghouse) ↗</a> · Witch House Salem · Old Ship Church Hingham · Plimoth Patuxet</td></tr>
+      <tr><td><b>Diner</b> (4)</td><td>103·105</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="http://www.theagawamdiner.com/" target="_blank">Agawam Diner Rowley ↗</a> · Capitol Diner Lynn · Portside Danvers (at base) · Al Mac's Fall River · Mill Pond Wareham</td></tr>
+      <tr><td><b>Black Cat Coffee Shop</b> (4)</td><td>4 eps</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://blackcraftsalem.com/" target="_blank">🔥 Blackcraft Coffee Salem (witch café, rents space) ↗</a> · Gulu-Gulu Salem · Atomic Café Beverly · Lone Gull Gloucester</td></tr>
+      <tr><td><b>Small Outdoor Club</b> (5)</td><td>106</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://notchbrewing.com" target="_blank">Notch Brewing Salem (biergarten+stage) ↗</a> · Narrows Center Fall River (rental program) · Backbeat Beverly · Newburyport Brewing</td></tr>
+      <tr><td><b>Beauty Store</b> (1) · <b>Morgan's Office</b> (2) · <b>Bulletin/News Stage</b> (1)</td><td>104–106</td><td><span class="chip warn">⚠ OPTIONS</span> Moon Baby / Andrew Michaels salon Salem · <a href="https://www.salemma.gov/FormCenter/Special-Events-84/Film-Permit-Form-132" target="_blank">Salem City Hall ↗</a> / New Bedford City Hall · SATV/BevCam studios</td></tr>
+      <tr><td><b>Courthouse</b> (2) · <b>Town Center</b> (1) · <b>Police Station</b> (3)</td><td>103–106</td><td><span class="chip warn">⚠ OPTIONS</span> New Bedford (Lizzie Borden courtroom) · Old Essex courthouses Salem (decommissioned) · Salem Common / Sandwich Sq · Firehouse Newburyport (former PD)</td></tr>
+      <tr><td><b>Playground/Park</b> (5) · <b>Field/Roads</b> (3) · <b>Willow Reader Cottage</b> (4)</td><td>103–106</td><td><span class="chip warn">⚠ OPTIONS</span> <a href="https://www.danversma.gov/286/Reservation-Permit-Information" target="_blank">Endicott Park Danvers ↗</a> / Stage Fort Gloucester (10pm) · Appleton Farms / Crane Argilla Rd · Bunny Cottage Annisquam</td></tr>
+      <tr><td><b>Landry</b> (5) · <b>Sandra's</b> (3) · <b>Hodge</b> (2) · <b>Marrero</b> (2) · <b>Wilson/Bennet EXTs</b> (2)</td><td>104–106</td><td><span class="chip warn">⚠ OPTIONS</span> Rockcleft Marblehead (bunkroom/teen) · Salem "Urban Oasis" condo (baths) · modest home sweep — see doc</td></tr>
+      <tr><td><b>Halloween Dance</b> (7) · <b>Boston sidewalk + Airbnb</b> (6)</td><td>104·105·106</td><td><span class="chip warn">⚠ OPTIONS</span> Salem Columbus Club (stage+wings) / Gloucester Elks · Beacon Hill/Back Bay walk + <a href="https://www.boston.gov/departments/tourism-sports-and-entertainment/how-apply-film-boston" target="_blank">Boston Film Bureau ↗</a></td></tr>
+      <tr><td><b>Cars</b> (Mitch's, Sawyer's, Carrie's, Jill's, Uber)</td><td>various</td><td><span class="chip neutral">🎬 PROCESS</span> rig with adjacent set days</td></tr>
+    </table>
+    <div class="note">⚠ Script watch-outs: Gardner <b>pool party in October</b> (heater/wetsuit line not in budget) · Mary's Bath night in-water scene (safety/rescue) · séance <b>mirror-ghost gag</b> needs VFX plate day · <b>Salem = weekdays/Sept–Nov only</b> (Haunted Happenings crowds all October). Full option lists + every contact → <b>LOCATION_OPTIONS.md</b>.</div>
+  </div>
+
+  <div class="card c6">
+    <h2>Scripts — current finals <span class="tag">rcvd 6/17/26 · Niki Layson</span></h2>
+    <table>
+      <tr><th></th><th>Episode</th><th>Scenes</th><th>Read</th></tr>
+      <tr><td>102</td><td><b>How to Befriend a Phantom</b></td><td>49</td><td><input type="checkbox" class="persist" id="r102"></td></tr>
+      <tr><td>103</td><td><b>The Ghost Next Door</b></td><td>64</td><td><input type="checkbox" class="persist" id="r103"></td></tr>
+      <tr><td>104</td><td><b>Revenge of the Invisible Boyfriend!</b></td><td>72</td><td><input type="checkbox" class="persist" id="r104"></td></tr>
+      <tr><td>105</td><td><b>The Girl Who Cried Ghoul</b></td><td>59</td><td><input type="checkbox" class="persist" id="r105"></td></tr>
+      <tr><td>106</td><td><b>Please Do Not Feed the Phantasms</b> — Full Cut FINAL · runs long (~55 pp)</td><td>100</td><td><input type="checkbox" class="persist" id="r106"></td></tr>
+    </table>
+    <div class="note">FDX files in <b>PN/Scripts Ep 2-6/</b> · breakdown notes: <b>NOTES – Ep 102-106 Script Breakdown (1.1.25).pdf</b> · budget-cut notes annotated · séance Hell House scene (1/25) in EXTRA.</div>
+  </div>
+
+  </div>
+
+<script>
+// ---- countdowns
+const today = new Date(); today.setHours(0,0,0,0);
+document.getElementById('today').textContent = today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+const dd = (d)=>Math.round((new Date(d) - today)/864e5);
+const put=(id,d)=>{const n=dd(d);document.getElementById(id).textContent = n>=0?n:'✓';};
+put('d-outreach','2026-07-13'); put('d-deposit','2026-08-15'); put('d-flights','2026-08-17'); put('d-camera','2026-09-21');
+
+// ---- milestones
+const MS=[
+ ['2026-07-13','warn','<b>Location outreach begins</b> — Klaypool first, then all legacy'],
+ ['2026-08-15','neutral','<b>Cash-flow deposit</b> due'],
+ ['2026-08-17','neutral','<b>Flights booking date</b> (pinned, revisit)'],
+ ['2026-09-21','good','<b>Camera target</b> (call notes) — board Day 1 Mon Sep 28'],
+ ['2026-10-03','neutral','<b>Company move → Hub 2</b> North Shore / Danvers (~Oct 3–4)'],
+ ['2026-10-12','crit','<b>Hell House block</b> D11–15 — stand-in must be locked'],
+ ['2026-11-13','neutral','<b>Wrap Day 35</b> — pad wraps Nov 18 · all home for Thanksgiving Nov 26'],
+];
+const cmap={good:'var(--good)',warn:'var(--warn)',crit:'var(--crit)',neutral:'var(--line)'};
+document.getElementById('ms').innerHTML = MS.map(([d,c,t])=>{
+  const n=dd(d), eta=n>0?`T-${n}d`:(n===0?'TODAY':'done');
+  const dt=new Date(d+'T00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return `<li><span class="d">${dt}</span><span class="dot" style="background:${cmap[c]}"></span><span class="txt">${t}</span><span class="eta">${eta}</span></li>`;
+}).join('');
+
+// ---- shoot board strip (from 7/10/26 one-liner)
+const DAYS=[
+ [1,'Sep 28','Klaypool Res','warn'],[2,'Sep 29','Klaypool Res','warn'],[3,'Sep 30','Klaypool Res','warn'],
+ [4,'Oct 1','Klaypool 1989/Chi','warn'],[5,'Oct 2','Klaypool Res','warn'],[6,'Oct 5','Klaypool Silo','warn'],
+ [7,'Oct 6','Klaypool Res','warn'],[8,'Oct 7','Salem 1692','neutral'],[9,'Oct 8',"Mary's Bath/Lighthouse",'neutral'],
+ [10,'Oct 9','Gardner Res','warn'],[11,'Oct 12','HELL HOUSE','crit'],[12,'Oct 13','HELL HOUSE','crit'],
+ [13,'Oct 14','HELL HOUSE','crit'],[14,'Oct 15','HELL HOUSE','crit'],[15,'Oct 16','HELL HOUSE + Woods','crit'],
+ [16,'Oct 19','BW Academy','good'],[17,'Oct 20','BW Academy','good'],[18,'Oct 21','BW Academy','good'],
+ [19,'Oct 22','Halloween Dance','good'],[20,'Oct 23','Woods/Forest','neutral'],
+ [21,'Oct 26','Verlice Res','warn'],[22,'Oct 27','Verlice Res','warn'],[23,'Oct 28','Verlice Res','warn'],
+ [24,'Oct 29','Graveyard','warn'],[25,'Oct 30','Willow Reader/Coffee','neutral'],[26,'Nov 2','Hall Res','neutral'],
+ [27,'Nov 3','Town Ctr/PD/Court','neutral'],[28,'Nov 4','Park/Outdoor Club','neutral'],[29,'Nov 5','Sacred Heart','neutral'],
+ [30,'Nov 6','Hospital/Psych','neutral'],[31,'Nov 9','Boston/Chi/Sandra','neutral'],[32,'Nov 10','Diner/Hodge/Bennet','neutral'],
+ [33,'Nov 11','Marrero/Cars','neutral'],[34,'Nov 12','Landry/Mitch Car','neutral'],[35,'Nov 13','Airbnb/Playground','neutral'],
+];
+const strip=document.getElementById('strip'), lbls=document.getElementById('striplbls'), tip=document.getElementById('tip');
+DAYS.forEach(([n,dt,set,st])=>{
+  const b=document.createElement('div'); b.className='blk '+st; b.innerHTML=`<span>${n}</span>`;
+  b.onmousemove=(e)=>{tip.style.display='block';tip.innerHTML=`<b>Day ${n} — ${dt}</b>${set}`;tip.style.left=Math.min(e.clientX+12,innerWidth-280)+'px';tip.style.top=(e.clientY+14)+'px';};
+  b.onmouseleave=()=>tip.style.display='none';
+  strip.appendChild(b);
+});
+['Klaypool ×7','','','','','','','Salem','Bath','Gard','Hell House ×5','','','','','Academy ×4','','','','Wds','Verlice ×4','','','','','','','','','','','','','','Wrap']
+ .forEach(t=>{const d=document.createElement('div');d.textContent=t;lbls.appendChild(d);});
+
+// ---- checkbox persistence
+document.querySelectorAll('.persist').forEach(cb=>{
+  cb.checked = localStorage.getItem('pn_'+cb.id)==='1';
+  cb.addEventListener('change',()=>localStorage.setItem('pn_'+cb.id, cb.checked?'1':'0'));
+});
+
+// ---- schedule shot-load bars  [day, date, pages, scenes, litShots, anchor]
+const SHOTS=[
+ [1,'Mon Sep 28','8',18,54,'Klaypool – Dylan bedroom ×18 (one room)'],
+ [2,'Tue Sep 29','4⅛',10,31,'Klaypool Residence'],
+ [3,'Wed Sep 30','5⅛',7,40,'Klaypool 106 ensemble (6/7 crowd)'],
+ [4,'Thu Oct 1','4⅝',8,27,'Klaypool 1989/attic/Chicago'],
+ [5,'Fri Oct 2','9',6,24,'Klaypool kitchen/reporters'],
+ [6,'Mon Oct 5','6⅞',8,24,'Klaypool – Silo'],
+ [7,'Tue Oct 6','6⅜',6,18,'Klaypool kitchen/living'],
+ [8,'Wed Oct 7','4⅝',4,23,'Salem 1692 (all period/crowd)'],
+ [9,'Thu Oct 8','7',13,50,"Mary's Bath + Lighthouse (night water)"],
+ [10,'Fri Oct 9','8¼',16,58,'Gardner POOL PARTY (16 scenes)'],
+ [11,'Mon Oct 12','6⅛',10,31,'Hell House day ext + foyer/office'],
+ [12,'Tue Oct 13','11⅛',12,48,'Hell House party/séance/master (11⅛ pg)'],
+ [13,'Wed Oct 14','8¼',11,52,"Hell House – Sandra's room (cast up to 8)"],
+ [14,'Thu Oct 15','3⅞',3,21,'Hell House foyer/staircase'],
+ [15,'Fri Oct 16','3⅝',8,39,'Hell House upstairs + BW Woods'],
+ [16,'Mon Oct 19','5⅜',7,23,"Academy – Marrero's class"],
+ [17,'Tue Oct 20','7⅞',9,33,'Academy day/night ext'],
+ [18,'Wed Oct 21','8½',6,19,'Academy – library'],
+ [19,'Thu Oct 22','6⅞',15,51,'Halloween Dance + Academy + Marrero'],
+ [20,'Fri Oct 23','7',10,30,'Woods / Forest'],
+ [21,'Mon Oct 26','6¾',11,37,'Verlice Residence'],
+ [22,'Tue Oct 27','6⅝',8,26,'Verlice Residence'],
+ [23,'Wed Oct 28','5¾',10,30,'Verlice Residence'],
+ [24,'Thu Oct 29','7½',7,23,'Verlice / Graveyard'],
+ [25,'Fri Oct 30','7½',9,32,'Beauty store / Willow Reader / Coffee'],
+ [26,'Mon Nov 2','7¼',11,33,'Hall Residence'],
+ [27,'Tue Nov 3','6⅝',11,36,'Town Center / Courthouse / PD'],
+ [28,'Wed Nov 4','4⅞',8,27,'Abandoned Park / Outdoor Club'],
+ [29,'Thu Nov 5','5⅜',11,44,'Sacred Heart festival (9/11 crowd)'],
+ [30,'Fri Nov 6','8⅛',18,61,'Hospital + Psych Ward — worst day (×18)'],
+ [31,'Mon Nov 9','7¼',8,30,"Boston / Chicago / Sandra's"],
+ [32,'Tue Nov 10','3⅝',8,27,'Diner / Hodge / Bennet'],
+ [33,'Wed Nov 11','2⅛',6,19,'Marrero Residence'],
+ [34,'Thu Nov 12','6⅜',11,33,'Landry Residence'],
+ [35,'Fri Nov 13','5⅞',8,24,'Mitch car / process'],
+];
+(function(){
+  const wrap=document.getElementById('shotbars'), lb=document.getElementById('shotlbls'), tip=document.getElementById('tip');
+  const max=Math.max(...SHOTS.map(s=>s[4])); const makeable=25;
+  // Makeability call (Josh, 7/14): u=unmakeable, a=at risk, m=makeable. The 17 makeable days are locked non-unmakeable.
+  const U=new Set([1,3,9,10,12,13,15,17,19,25,27,28,29,30,31,32,33,35]);
+  const A=new Set([20,21,24]);
+  const COL={u:'var(--crit)',a:'var(--warn)',m:'var(--good)'}, LBL={u:'UNMAKEABLE',a:'AT RISK',m:'MAKEABLE'};
+  const tier=n=>U.has(n)?'u':(A.has(n)?'a':'m');
+  wrap.style.position='relative';
+  const ref=document.createElement('div');
+  ref.style.cssText=`position:absolute;left:0;right:0;bottom:${makeable/max*100}%;border-top:1px dashed var(--muted);pointer-events:none`;
+  ref.innerHTML='<span style="position:absolute;right:0;top:-14px;font-size:10px;color:var(--muted)">~25 shots</span>';
+  wrap.appendChild(ref);
+  SHOTS.forEach(([n,dt,pg,sc,sh,loc])=>{
+    const t=tier(n), col=COL[t];
+    const b=document.createElement('div');
+    b.style.cssText=`flex:1;min-width:0;height:${sh/max*100}%;background:${col};border-radius:3px 3px 0 0;opacity:${t==='a'?0.7:0.85};cursor:default`;
+    b.onmousemove=(e)=>{tip.style.display='block';tip.innerHTML=`<b>Day ${n} — ${dt} · ${pg} pg</b><b style="color:${col}">${LBL[t]}</b> · ${sc} scenes → ${sh} shots<br>${loc}`;tip.style.left=Math.min(e.clientX+12,innerWidth-280)+'px';tip.style.top=(e.clientY+14)+'px';};
+    b.onmouseleave=()=>tip.style.display='none';
+    wrap.appendChild(b);
+  });
+  SHOTS.forEach(s=>{const d=document.createElement('div');d.textContent=s[0];d.style.fontVariantNumeric='tabular-nums';lb.appendChild(d);});
+})();
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const LOCS=[
+  {k:'hub1',n:'HUB 1 — Cape Cod Canal base',c:'hub',lat:41.7454,lng:-70.6178,r:'Basecamp Sept 21–Oct 2 · Hampton Inn, Buzzards Bay',no:'Klaypool/Salem-1692/Mary\'s Bath/Gardner block',ct:'',u:'https://www.hilton.com/en/hotels/bosbbhx-hampton-suites-buzzards-bay-cape-cod-canal/'},
+  {k:'hub2',n:'HUB 2 — Danvers base',c:'hub',lat:42.5665,lng:-70.9363,r:'Basecamp ~Oct 3 → wrap · North Shore',no:'Hell House D11–15, Academy, Verlice, all option sets',ct:'',u:''},
+  {k:'verlice',n:'Verlice Residence + Graveyard',c:'shot',lat:42.80904,lng:-70.99222,r:'✓ SHOT — house EXT + family graveyard on property',no:'63 Bridge St, West Newbury',ct:'Sean 603-818-1913 · Cemetery: J. Walsh 978-363-1100 x115',u:'https://www.wnewbury.org'},
+  {k:'penguin',n:'Black Willow Academy — Penguin Hall',c:'secured',lat:42.59421,lng:-70.84884,r:'✓ SECURED — school + PD + psych ward + woods + dance',no:'36 Essex St, Wenham · confirm Ch.11 signer',ct:'Molly Martins 978-536-1171',u:'https://penguinhall.org'},
+  {k:'klaypool',n:'Klaypool Residence + Silo + Meetinghouse',c:'legacy',lat:41.79172,lng:-70.53006,r:'Heaviest set — 64 scenes · $15K/8d',no:'31 Crowell Rd, Sagamore Beach',ct:'Julia 339-832-3123',u:'https://www.peerspace.com/pages/listings/636290f8d6990c002230ef3e'},
+  {k:'indianridge',n:'Klaypool Chicago + Verlice basement',c:'legacy',lat:42.78506,lng:-70.94852,r:'Pilot interior double · $145/hr in 2023',no:'12 Indian Ridge Rd, West Newbury',ct:'George 617-602-9867 · Mariana 617-202-8648',u:'https://www.peerspace.com/pages/listings/616f4ced03a68b000c0a39b0'},
+  {k:'hillst',n:'120 Hill St — BURNED original Hell House',c:'dead',lat:42.11398,lng:-71.66685,r:'Burned 3/1/24 · old footage covers front EXT only',no:'Whitinsville · listed $2M',ct:'Broker N. Hodson 617-818-2101',u:'https://www.est8ofmind.com/photos'},
+  {k:'stevens',n:'Stevens Estate ⭐',c:'hellhouse',lat:42.7049,lng:-71.11532,r:'Hell House finalist — CLOSEST INTERIOR match',no:'Dark paneling every room, carved stair, leaded glass · brick EXT',ct:'781-738-0511 · events@stevensestateevents.com',u:'https://www.stevensestateevents.com'},
+  {k:'andoverestate',n:'Andover Estate ⭐',c:'hellhouse',lat:42.65717,lng:-71.14088,r:'Hell House finalist — BEST ALL-AROUND (approx pin)',no:'1924 oak Tudor · gates + billiard rm + 14 FP · address via film office',ct:'MA Film Office 617-973-8400',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10072013&cid=65'},
+  {k:'turnerhill',n:'Turner Hill ⭐',c:'hellhouse',lat:42.66388,lng:-70.8849,r:'Hell House finalist — Jacobean great hall',no:'3 Manor House Ln, Ipswich · brooding Tudor EXT',ct:'978-356-7070',u:'https://www.turnerhill.com'},
+  {k:'quincywardner',n:'Quincy-Wardner House',c:'hellhouse',lat:42.29526,lng:-71.06451,r:'Closest EXTERIOR silhouette (stone+brick+shingle+turret)',no:'Dorchester · approx pin · via film office',ct:'MA Film Office 617-973-8400',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10250383&cid=65'},
+  {k:'skpierce',n:'S.K. Pierce Haunted Victorian',c:'hellhouse',lat:42.55749,lng:-71.98078,r:'Blood-rig ace — owners want film crews',no:'1875 Second Empire, Gardner · 75 min out',ct:'978-224-8944 · skpiercemansion@gmail.com',u:'https://www.skhauntedmansion.com/'},
+  {k:'lowellga',n:'⭐ Lowell Gilded Age Mansion (Josh likes)',c:'hellhouse',lat:42.643,lng:-71.29101,r:'Josh scouted — "pretty sick" · $1.9–2.4K/day ON TARGET · wants multi-day',no:'386 Andover St, Lowell · 1874, turret · ⚠ city lot, no big grounds — pair w/ estate EXT',ct:'Vitaliy Z. 617-913-5059',u:'https://www.peerspace.com/pages/listings/61f6dd54f7f27600217781a6'},
+  {k:'commanders',n:'Commander\'s Mansion',c:'hellhouse',lat:42.36064,lng:-71.1632,r:'Published $1,700/9-hr film day',no:'440 Talcott Ave, Watertown · 1865',ct:'617-926-7755',u:'https://www.commandersmansion.com/studiorental'},
+  {k:'elmbank',n:'Elm Bank Manor',c:'hellhouse',lat:42.28045,lng:-71.30787,r:'VACANT — rig blood freely · bring power/heat',no:'900 Washington St, Wellesley/Dover',ct:'617-933-4921 · functions@masshort.org',u:'https://www.masshort.org/contact-us'},
+  {k:'eustis',n:'Eustis Estate',c:'hellhouse',lat:42.23111,lng:-71.10612,r:'Museum-grade carved interior · VFX-only gags',no:'1424 Canton Ave, Milton',ct:'617-994-6671 · rentals@historicnewengland.org',u:'https://www.historicnewengland.org/visit/property-rentals/eustis-estate/'},
+  {k:'cranecastle',n:'Castle Hill / Crane Estate',c:'hellhouse',lat:42.68536,lng:-70.77912,r:'59-room manor · Witches of Eastwick pedigree',no:'290 Argilla Rd, Ipswich · also Willow Rd/field EXTs',ct:'978-356-4351 · castlehill@thetrustees.org',u:'https://thetrustees.org/content/great-house-castle-hill-venue-rental/'},
+  {k:'forrester',n:'9 Forrester St',c:'hellhouse',lat:42.52397,lng:-70.88705,r:'FOR SALE $899K — carved stair, turret, stained glass',no:'Salem · 15 min · re-dress bright rooms',ct:'Daniel Fox, MerryFox 978-808-8064',u:'https://www.merryfoxrealty.com/listing/73095220/9-forrester-salem-ma-01970/'},
+  {k:'winnekenni',n:'Winnekenni Castle',c:'hellhouse',lat:42.79099,lng:-71.06943,r:'Gothic EXT-night cheat only (stone, bare interiors)',no:'347 Kenoza Ave, Haverhill · ~$150/hr',ct:'978-521-1686',u:'https://www.winnekenni.com'},
+  {k:'hammond',n:'Hammond Castle',c:'hellhouse',lat:42.5847,lng:-70.69374,r:'Gothic EXT cheat · rents for film from ~$450/hr',no:'80 Hesperus Ave, Gloucester',ct:'978-283-2080',u:'https://hammondcastle.org/professional-photos-and-video/'},
+  {k:'beauport',n:'Beauport (Sleeper-McCann House)',c:'hellhouse',lat:42.5786,lng:-70.6639,r:'Historic New England — ~40 moody, atmospheric collector rooms; dark & theatrical INT',no:'75 Eastern Point Blvd, Gloucester · ~30 min from Danvers · museum (VFX-only for FX) · HNE filming program',ct:'Historic New England 617-994-6600',u:'https://www.historicnewengland.org/property/beauport-the-sleeper-mccann-house/'},
+  {k:'wfstillingtonhal',n:'⭐ Stillington Hall',c:'hellhouse',lat:42.578,lng:-70.663,r:'STRONG · dark · look 3/5 prop 5/5 · 18th-c.-style English Tu… 1923',no:'32 Stillington Drive, Gloucester, MA 01930 (Ea… · ~30 mi / ~40-45 min to Danvers (Hub 2) v… · Medium — private residence, not an established film-location rental. B…',ct:'Mary Pruett, J. Barrett & Company (North Shore MA; now part of Gibson Sotheby\'s Internatio…',u:'https://leadingestates.com/estates/stillington-hall-gloucester-massachusetts-2/'},
+  {k:'wfwyndhurstmanor',n:'⭐ Wyndhurst Manor (Miraval Berkshires)',c:'hellhouse',lat:42.3416,lng:-73.2643,r:'STRONG · mixed · look 3/5 prop 5/5 · Tudor Revival hilltop ma… 1894 (Peabody & Stearns for John Sloane; Olmsted grounds)',no:'Wyndhurst Manor & Club, 55 Lee Rd, Lenox, MA 0… · ~2 hr 30 min to Danvers (Hub 2, ~135 mi)… · Medium — operating luxury resort/club (Wyndhurst Manor & Club, Destina…',ct:'Wyndhurst Manor & Club, 55 Lee Rd, Lenox, MA 01240; tel 877-781-7125; sales/events via Mir…',u:'https://www.partyslate.com/venues/wyndhurst-manor-club'},
+  {k:'wfurncrest',n:'⭐ Urncrest',c:'hellhouse',lat:42.1271,lng:-71.5341,r:'STRONG · dark · look 4/5 prop 3/5 · Queen Anne 1887 (tower added c.1890)',no:'85 Adin St, Hopedale, MA 01747 · ~1h00 to Sagamore Beach (South Shore hub… · MED - Off-market private residence (last sold Jan 2015 for $722,500; a…',ct:'Town of Hopedale Assessor 508-634-2203 (for current owner of record); no listing agent (of…',u:'https://www.redfin.com/MA/Hopedale/85-Adin-St-01747/home/16524955'},
+  {k:'wfjohnethayerman',n:'⭐ John E. Thayer Mansion',c:'hellhouse',lat:42.4514535,lng:-71.6970448,r:'STRONG · mixed · look 3/5 prop 4/5 · English Queen Anne count… 1883',no:'495 George Hill Road, Lancaster, MA 01523 · ~50 min / ~48 mi to Hub 2 Danvers (Rte 2… · Low-to-medium. Not a rental venue — private single-family residence so…',ct:'John Petraglia, Petraglia Real Estate Services (2022 listing agent, MLS 73057962) — best w…',u:'https://buildingsofnewengland.com/2025/10/24/john-e-thayer-mansion-1883/'},
+  {k:'wfhowemansiontho',n:'⭐ Howe Mansion (Thomas Howe Estate)',c:'hellhouse',lat:42.4346,lng:-70.9342,r:'STRONG · bright · look 3.5/5 prop 3/5 · Queen Anne (Wait & Cutte… 1880',no:'9 Little Nahant Road, Nahant, MA 01908 · ~30 min / ~16 mi to Hub 2 (Danvers) via … · High — actively listed $5.5M, vacant/staged after restoration (no resi…',ct:'Karina Mejia, The Legacy Group | EVO Real Estate Group (listing agent) — via thehowemansio…',u:'https://www.thehowemansion.com/'},
+  {k:'wftomballmountai',n:'Tom Ball Mountain Tudor Estate',c:'hellhouse',lat:42.2447,lng:-73.4165,r:'POSSIBLE · dark · look 2/5 prop 5/5 · Tudor Revival 2010',no:'30 East Rd, Alford, MA 01266 · ~2h45m / ~140 mi to Danvers (nearer hub)… · med — actively listed with a luxury agent accustomed to showings; a fi…',ct:'Steven Weisz, William Pitt Sotheby\'s International Realty — 917-670-6339, sweisz@wpsir.com…',u:'https://www.priceypads.com/majestic-13-5-million-tudor-estate-on-71-acres-atop-tom-ball-mountain-in-massachusetts/'},
+  {k:'wfwyndhurstmansi',n:'Wyndhurst Mansion (Cranwell / Miraval Be…',c:'hellhouse',lat:42.3436,lng:-73.2742,r:'POSSIBLE · mixed · look 2/5 prop 5/5 · Tudor Revival \'cottage\' … 1894',no:'55 Lee Road, Lenox, MA 01240 · ~2h40m / ~145 mi to Danvers (North Shore… · low-med — active Hyatt/Miraval luxury resort with guests on-site; no c…',ct:'Wyndhurst Manor & Club / Miraval Berkshires, 55 Lee Rd, Lenox, MA 01240; (844) 440-1589. F…',u:'https://www.miravalresorts.com/berkshires/stay-with-us/accommodations/wyndhurst-mansion'},
+  {k:'wfbayviewestate',n:'Bay View Estate',c:'hellhouse',lat:42.66981,lng:-70.66511,r:'POSSIBLE · mixed · look 2/5 prop 5/5 · Victorian shingle/stone … 19th c. (Gen. Benjamin F. Butler family compound)',no:'Bay View Estate, Bay View / Annisquam, Glouces… · ~35-45 min / ~28 mi to Hub 2 (Danvers) v… · med — actively rentable and reachable (manager Bonnie Foz / mgmt co / …',ct:'Bonnie Foz, Manager — bonfoz@gmail.com, (617) 678-3505; also Unique Edge Management (direc…',u:'https://www.bayviewestate.net/the-estate'},
+  {k:'wfconnorscenters',n:'Connors Center (St. Stephen\'s Priory)',c:'hellhouse',lat:42.24135,lng:-71.32541,r:'POSSIBLE · mixed · look 2/5 prop 5/5 · Turn-of-century estate m… 1902',no:'The Connors Center (St. Stephen\'s Priory), 20 … · ~40 mi / ~55 min to HUB 2 Danvers (neare… · HIGH as a bookable venue / MED for a film shoot. Path: it is an active…',ct:'The Connors Center, Boston College — 617-552-9210; booking via bc.edu/.../connors-center (…',u:'https://bcconnorscenter.wordpress.com/'},
+  {k:'wfcrosbymansiont',n:'Crosby Mansion ("Tawasentha")',c:'hellhouse',lat:41.773,lng:-70.062,r:'POSSIBLE · dark · look 2/5 prop 4/5 · Grand three-story Victor… 1876-1888 (wraps an 1830s Cape); built by Albert Crosby',no:'163 Crosby Lane, Brewster, MA 02631 · ~30 mi / ~40-45 min to Hub 1 (Sagamore B… · med — town-owned + actively rents for weddings/tours/haunted shows mak…',ct:'Friends of Crosby Mansion / Properties Manager Richard Archer — 508-896-1744, info@crosbym…',u:'https://www.crosbymansion.com/'},
+  {k:'wfbelviderecastl',n:'Belvidere "Castle"',c:'hellhouse',lat:42.6353,lng:-71.2895,r:'POSSIBLE · dark · look 4/5 prop 2/5 · Richardsonian Romanesque… 1883',no:'236 Fairmount Street, Lowell, MA 01852 · ~25 mi / 35-40 min to HUB 2 (Danvers) vi… · low-med — private residence, not for sale; off-market approach only. P…',ct:'Chateau Fairmount Facebook page (facebook.com/chateaufairmount); prior listing office Fost…',u:'https://www.oldhousedreams.com/2011/01/07/1883-romanesque-lowell-ma/'},
+  {k:'wfporphyryhallja',n:'Porphyry Hall (Jacob E. Spring Mansion)',c:'hellhouse',lat:42.5862,lng:-70.9436,r:'POSSIBLE · unknown · look 3/5 prop 3/5 · Victorian Gothic, polych… 1880 (architect George M. Harding of Boston)',no:'St. John\'s Prep (Porphyry Hall / Administratio… · ~5-7 min (it is IN the Danvers/North Sho… · med-low — institutional/private; must get written permission from St. …',ct:'St. John\'s Preparatory School, 72 Spring Street, Danvers, MA 01923 — main office 978-774-1…',u:'https://buildingsofnewengland.com/2024/12/04/porphyry-hall-1880/'},
+  {k:'wfwheatleigh',n:'Wheatleigh',c:'hellhouse',lat:42.3433,lng:-73.3039,r:'POSSIBLE · bright · look 1/5 prop 5/5 · Florentine Renaissance p… 1893',no:'11 Hawthorne Road, Stockbridge, MA 01262 · ~2h45m–3h to Danvers (nearer hub, ~140 m… · med — shuttered former luxury inn (closed spring 2024), delisted from …',ct:'Owners: Linfield & Susan Simon. Offering broker: LandVest / Christie\'s International Real …',u:'https://en.wikipedia.org/wiki/Wheatleigh'},
+  {k:'wf374nahantroade',n:'374 Nahant Road (Egg Rock estate)',c:'hellhouse',lat:42.4188,lng:-70.9005,r:'POSSIBLE · mixed · look 2/5 prop 4/5 · Gilded Age Victorian (It… 1865',no:'374 Nahant Road, Nahant, MA 01908 (East Point) · ~30-35 min / ~16 mi to Hub 2 (Danvers) v… · med — currently listed for sale ($6.25M), so owner may entertain a pai…',ct:'Annie Wachtel, Coldwell Banker Realty — (917) 545-2199; listing MLS# 73535142',u:'https://www.bostonglobe.com/2026/06/23/real-estate/nahant-egg-rock-estate-for-sale/'},
+  {k:'wfwhitcombmansio',n:'Whitcomb Mansion',c:'hellhouse',lat:42.2711,lng:-71.8025,r:'POSSIBLE · dark · look 4/5 prop 1/5 · High Victorian Queen Ann… 1879',no:'51 Harvard St, Worcester, MA 01609 · ~55-65 min to Danvers (North Shore hub),… · High — vacant historic mansion, recently listed for sale. Booking path…',ct:'Preservation Worcester: 508-754-8760, info@preservationworcester.org (61 Harvard St). List…',u:'https://en.wikipedia.org/wiki/Whitcomb_Mansion'},
+  {k:'wfwistariahursts',n:'Wistariahurst (Skinner Mansion)',c:'hellhouse',lat:42.2081,lng:-72.6094,r:'POSSIBLE · mixed · look 2/5 prop 3/5 · Eclectic Victorian/Tudor… 1874 (moved/expanded to Holyoke 1899)',no:'238 Cabot Street, Holyoke, MA 01040 · ~1h50m to Danvers (Hub 2, North Shore) v… · med — municipally owned museum that explicitly books private events, t…',ct:'Wistariahurst Museum, (413) 322-5660; wistariahurst.org (Book a Private Event); owned/oper…',u:'https://en.wikipedia.org/wiki/Wistariahurst'},
+  {k:'wfstoneacre',n:'Stoneacre',c:'hellhouse',lat:42.5859,lng:-70.6644,r:'POSSIBLE · bright · look 2.5/5 prop 2.5/5 · Hand-cut granite stone m… 1920',no:'71 Eastern Point Blvd, Gloucester, MA 01930 · ~40 min / ~24 mi to Danvers (Hub 2) via … · low-med — private luxury home, recently SOLD (~$6.1M), on gated Easter…',ct:'Amanda Armstrong Group, Compass — (978) 879-6322; 35 Fuller St #100, Magnolia, MA. Backup:…',u:'https://www.nshoremag.com/faces-places/currently-listed-stoneacre-mansion-on-gloucesters-eastern-point/'},
+  {k:'wfstoneholmmanor',n:'Stoneholm Manor',c:'hellhouse',lat:42.1153,lng:-71.1658,r:'POSSIBLE · mixed · look 3/5 prop 2/5 · Second Empire STONE mans… 1865 (Horace A. Lothrop)',no:'188 Ames Street, Sharon, MA 02067 · ~55 min north to Danvers (HUB 2) via I-9… · med — private residence, but recently listed for sale (~$950k via Cold…',ct:'Owner: private residence (188 Ames St, Sharon MA 02067). Approach paths: former listing br…',u:'https://buildingsofnewengland.com/2026/03/23/stoneholm-manor-1865/'},
+  {k:'wfthehowemansion',n:'The Howe Mansion (Thomas Howe Estate)',c:'hellhouse',lat:42.434627,lng:-70.934228,r:'POSSIBLE · mixed · look 3/5 prop 2/5 · Queen Anne \'Gentleman\'s … 1880 (Wait & Cutter, for merchant Thomas Howe)',no:'9 Little Nahant Road, Nahant, MA 01908 · ~25-30 min / ~15 mi to Hub 2 (Danvers, 4… · Medium — actively for sale ($5.5M), so a clear approach path exists vi…',ct:'Karina Mejia — The Legacy Group | EVO Real Estate Group (EVO Boston/Newbury St office 617-…',u:'https://landvest.com/listing/73444398/9-little-nahant-road-nahant-ma-01908/'},
+  {k:'wffrederickharri',n:'Frederick Harris House (a.k.a. Valentine…',c:'hellhouse',lat:42.0955,lng:-72.5793,r:'POSSIBLE · mixed · look 2/5 prop 2.5/5 · Colonial Revival (1879) … 1879',no:'270 Maple Street, Springfield, MA 01105 · ~1h45 / ~95 mi to Danvers (Hub 2), the n… · High (interior only). Actively for sale at $1.3M (MLS 73484553) and al…',ct:'Erica Swallow, Swallow Real Estate, Inc. (listing agent, MLS 73484553); LandVest/Christie\'…',u:'https://www.wamc.org/news/2026-03-18/this-old-and-extremely-large-house-historic-mansion-up-for-sale-said-to-be-largest-single-family-home-in-springfield-mass'},
+  {k:'wfnathandurfeees',n:'Nathan Durfee Estate (503 Highland Avenu…',c:'hellhouse',lat:41.7123,lng:-71.1451,r:'POSSIBLE · dark · look 2/5 prop 2/5 · English-manor / Tudor gr… mid-1920s (Durfee family)',no:'503 Highland Avenue, Fall River, MA 02720 · ~45 min / ~35 mi to Sagamore Beach (Hub … · med — private residence but recently/currently listed for sale, so own…',ct:'Listing agent: Paul Conti, Highland Group at Compass, (781) 254-2709. Also marketed by Tea…',u:'https://en.wikipedia.org/wiki/Highlands_Historic_District_(Fall_River,_Massachusetts)'},
+  {k:'wfmurdockwhitney',n:'Murdock-Whitney House (Winchendon Histor…',c:'hellhouse',lat:42.687,lng:-72.0447,r:'POSSIBLE · dark · look 1.5/5 prop 1.5/5 · Victorian / Colonial Rev… c.1850, greatly enlarged c.1900 (architect H.W. Francis)',no:'151 Front St, Winchendon, MA 01475 · Nearer hub is Danvers (North Shore): ~58… · HIGH. It\'s a nonprofit museum that already actively hosts ghost hunts …',ct:'Winchendon History & Cultural Center — info@winchendonhistory.com; main 978-297-2142; even…',u:'https://www.winchendonhistory.com/murdock-whitney'},
+  {k:'methuen1879',n:'Methuen 1879 Second Empire',c:'hellhouse',lat:42.72977,lng:-71.18738,r:'Period-perfect but warm/bright · backup INTs',no:'30 High St, Methuen · $250/hr',ct:'Matt F. 617-968-6912',u:'https://www.peerspace.com/pages/listings/5c66e228db29c2000ec3300f'},
+  {k:'proctor',n:'Proctor Mansion Inn',c:'hellhouse',lat:42.06553,lng:-71.3276,r:'2023 scout — \'entryway exactly as envisioned\' (TC)',no:'36 Common St, Wrentham',ct:'Brian Fitzgerald 781-718-1123',u:'https://www.proctormansioninn.com'},
+  {k:'minimansion',n:'Mini Mansion (Lawrence)',c:'hellhouse',lat:42.70704,lng:-71.16311,r:'Cheapest real contender — $95/hr, film-explicit',no:'1910 · 11 rooms woodwork · approx pin',ct:'Beverly M. via Peerspace',u:'https://www.peerspace.com/pages/listings/6132818fbf1931000d92d580'},
+  {k:'orchardst',n:'Orchard St manor (wildcard)',c:'hellhouse',lat:41.62149,lng:-70.92921,r:'100+ yr Victorian, never rented — Julia\'s friend',no:'Orchard St, New Bedford (HUB 1)',ct:'via Julia 339-832-3123',u:''},
+  {k:'morninggarden',n:'🆕⭐ Morning Garden (Hammond Sr. Tudor)',c:'hellhouse',lat:42.59885,lng:-70.68385,r:'BEST NEW FIND — dark Tudor gothic EXT + dark-oak interior · solves the new exterior mandate',no:'190 Western Ave, Gloucester · ~30-35 min HUB 2 · retreat house, ~$2K/day · ⚠ church owner: pitch content early',ct:'via MA Film Office / mgretreats.weebly.com',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65'},
+  {k:'dayhouse',n:'Fred Holland Day House (Josh-flagged)',c:'hellhouse',lat:42.19305,lng:-71.20334,r:'Half-timbered Tudor — Norwood Historical Society HQ · 51 photos on reel-scout',no:'93 Day St, Norwood · Josh texted this to the group 7/11 · between hubs (~50 min each)',ct:'Norwood Historical Society 781-762-9197',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10063080&cid=65'},
+  {k:'daniellwebster',n:'Daniel Webster Estate — EXT only',c:'hellhouse',lat:42.08019,lng:-70.67949,r:'⚠ Josh 7/15: exterior is fine but INTERIOR not cool enough',no:'Marshfield (HUB 1 side) · 1880s QA · use for exterior/grounds only',ct:'via reel-scout',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10250539&cid=65'},
+  {k:'hardyst',n:'18 Hardy St — Gardner pool pick',c:'option',lat:42.55875,lng:-70.92688,r:'GARDNER RESIDENCE · in-ground pool, 5BR, at base',no:'$834,900 listing · Danvers',ct:'Keller Williams Evolution',u:'https://www.zillow.com/danvers-ma/with-pool/'},
+  {k:'woburnpool',n:'Woburn Victorian w/ pool',c:'option',lat:42.47926,lng:-71.15228,r:'GARDNER fallback · $120/hr · host allows set changes',no:'Woburn · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/633cee3d8620e9000eb0b258'},
+  {k:'applefield',n:'Applefield (Ipswich)',c:'option',lat:42.67927,lng:-70.84116,r:'HALL RESIDENCE · curved stair + teen bedrooms',no:'Ipswich · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/6886ee4d52324b53e2657150'},
+  {k:'solomonholt',n:'Solomon Holt House',c:'option',lat:42.65717,lng:-71.14088,r:'HALL RESIDENCE option · house + barn, cap 40',no:'Andover · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/62f312dbd600a7000e4a2a88'},
+  {k:'nsuu',n:'Northshore UU Danvers',c:'option',lat:42.59588,lng:-70.93721,r:'SACRED HEART · friendliest + runs mid-Oct Harvest Festival',no:'323 Locust St, Danvers',ct:'978-774-7582 · office@nsuu.org',u:'https://www.nsuu.org'},
+  {k:'wenhamchurch',n:'First Church in Wenham',c:'option',lat:42.604,lng:-70.889,r:'SACRED HEART · best classic steeple-on-common look',no:'Wenham Common · UCC Open & Affirming',ct:'978-468-4900',u:'https://www.firstchurchwenham.org'},
+  {k:'topsfieldchurch',n:'Congregational Church of Topsfield',c:'option',lat:42.64229,lng:-70.94952,r:'SACRED HEART · deep harvest-fair pedigree',no:'9 E Common St, Topsfield',ct:'978-887-2101',u:''},
+  {k:'oldsloop',n:'Old Sloop, Rockport',c:'option',lat:42.65784,lng:-70.6188,r:'SACRED HEART · hero white steeple over the harbor',no:'12 School St, Rockport · Old Sloop Fair',ct:'oldsloop.org',u:'https://oldsloop.org'},
+  {k:'connors',n:'Connors Farm',c:'option',lat:42.6081,lng:-70.93506,r:'FALL FESTIVAL grounds · real pumpkin patch in Oct',no:'30 Valley Rd, Danvers',ct:'connorsfarm.com',u:'https://www.connorsfarm.com'},
+  {k:'smolak',n:'Smolak Farms',c:'option',lat:42.69026,lng:-71.07468,r:'FALL FESTIVAL alt · pumpkin patch + event fields',no:'315 S Bradford St, N. Andover',ct:'smolakfarms.com',u:'https://www.smolakfarms.com'},
+  {k:'tewksbury',n:'Tewksbury State Hospital',c:'option',lat:42.61624,lng:-71.2106,r:'HOSPITAL + PSYCH · played \'Juniper Hills\' in Castle Rock',no:'365 East St, Tewksbury · museum + closed wings',ct:'Museum 978-851-7321 x2606 · MFO',u:'https://www.publichealthmuseum.org'},
+  {k:'medfield',n:'Medfield State Hospital',c:'option',lat:42.21198,lng:-71.33443,r:'PSYCH WARD · Shutter Island asylum campus',no:'45 Hospital Rd, Medfield · town permit',ct:'Town of Medfield',u:'https://www.town.medfield.net/556/Medfield-State-Hospital'},
+  {k:'winterisland',n:'Winter Island / Fort Pickering Light',c:'option',lat:42.52673,lng:-70.86919,r:'MARY\'S BATH · 1871 light + rocky tidal shore',no:'Salem · ⚠ avoid Oct weekends',ct:'Ellen Talkowsky 978-619-5676',u:'https://www.salemma.gov/winter-island'},
+  {k:'nedspoint',n:'Ned\'s Point Light',c:'option',lat:41.65087,lng:-70.79565,r:'MARY\'S BATH · cleanest permit path (HUB 1)',no:'Mattapoisett · 1838 light, lawn + rocks',ct:'Rec 508-758-4548',u:''},
+  {k:'rebeccanurse',n:'Rebecca Nurse Homestead',c:'option',lat:42.55821,lng:-70.95037,r:'SALEM 1692 · REAL 1692 site + reproduction meetinghouse',no:'149 Pine St, Danvers — IN hub',ct:'978-774-8799 · Info@RebeccaNurse.org',u:'https://www.rebeccanurse.org'},
+  {k:'witchhouse',n:'The Witch House (Corwin House)',c:'option',lat:42.52095,lng:-70.89996,r:'SALEM 1692 · judge\'s home, pretrial examinations',no:'310 Essex St, Salem',ct:'City of Salem',u:'https://www.thewitchhouse.org'},
+  {k:'osv',n:'Old Sturbridge Village',c:'option',lat:42.10883,lng:-72.09868,r:'SALEM 1692 meetinghouse EXT — \'Perfect\' (TC 2023)',no:'Sturbridge · 1h15 from hubs',ct:'osv.org',u:'https://www.osv.org'},
+  {k:'agawam',n:'Agawam Diner',c:'option',lat:42.70478,lng:-70.90956,r:'DINER · definitive 1954 chrome Fodero',no:'Rowley · 20 min from base',ct:'978-948-7780',u:'http://www.theagawamdiner.com/'},
+  {k:'capitol',n:'Capitol Diner',c:'option',lat:42.46323,lng:-70.94439,r:'DINER alt · 1928 Brill, gritty/moody',no:'431 Union St, Lynn',ct:'781-595-9314',u:''},
+  {k:'portside',n:'Portside Diner',c:'option',lat:42.55577,lng:-70.92401,r:'DINER alt · retro, at base',no:'2 River St, Danvers',ct:'978-774-4400',u:''},
+  {k:'blackcraft',n:'Blackcraft Coffee 🔥',c:'option',lat:42.52126,lng:-70.8966,r:'BLACK CAT COFFEE · actual witch-brand café that rents',no:'Salem · written to spec for Veda',ct:'blackcraftsalem.com',u:'https://blackcraftsalem.com/'},
+  {k:'gulu',n:'Gulu-Gulu Café',c:'option',lat:42.52132,lng:-70.89628,r:'BLACK CAT alt · bohemian, art, live music',no:'247 Essex St, Salem',ct:'978-740-8882',u:'https://gulugulucafe.com'},
+  {k:'atomic',n:'Atomic Café',c:'option',lat:42.55035,lng:-70.87771,r:'BLACK CAT alt · dark edgy indie roaster',no:'265 Cabot St, Beverly — at base',ct:'978-921-2483',u:''},
+  {k:'notch',n:'Notch Brewing Biergarten',c:'option',lat:42.51967,lng:-70.8908,r:'OUTDOOR CLUB · riverside garden + stage + A/V',no:'283R Derby St, Salem',ct:'978-412-7674',u:'https://notchbrewing.com'},
+  {k:'narrows',n:'Narrows Center for the Arts',c:'option',lat:41.70307,lng:-71.16261,r:'OUTDOOR CLUB (HUB 1) · pro A/V rental program',no:'16 Anawan St, Fall River',ct:'508-324-1926 · events@narrowscenter.org',u:'https://narrowscenter.org'},
+  {k:'salemcityhall',n:'Salem City Hall',c:'option',lat:42.52185,lng:-70.89541,r:'MORGAN\'S OFFICE · 1837 Greek Revival, film-permit process',no:'93 Washington St, Salem',ct:'978-745-9595',u:'https://www.salemma.gov/FormCenter/Special-Events-84/Film-Permit-Form-132'},
+  {k:'nbcityhall',n:'New Bedford City Hall',c:'option',lat:41.63545,lng:-70.92751,r:'MORGAN\'S OFFICE (HUB 1) · 1856 grand mayor\'s suite + film office',no:'133 William St, New Bedford',ct:'Amy DesRosiers 508-979-1745 · film@newbedford-ma.gov',u:''},
+  {k:'courthouse',n:'Essex County Superior Courthouse',c:'option',lat:42.80814,lng:-70.87399,r:'COURTHOUSE · 1805 Bulfinch on Bartlet Mall',no:'145 High St, Newburyport',ct:'Trial Court PIO: Jennifer.Donahue@jud.state.ma.us',u:''},
+  {k:'columbusclub',n:'Salem Columbus Club',c:'option',lat:42.51837,lng:-70.89356,r:'HALLOWEEN DANCE · 250-seat hall, LARGE stage + wings',no:'94 Lafayette St, Salem · ⚠ lock early',ct:'978-744-9533',u:''},
+  {k:'endicottpark',n:'Endicott Park',c:'option',lat:42.57419,lng:-70.96192,r:'PLAYGROUND/PARK · 165-acre farm-park, at base',no:'57 Forest St, Danvers',ct:'Erika 978-774-6518 · egioia@danversma.gov',u:'https://www.danversma.gov/286/Reservation-Permit-Information'},
+  {k:'nestudios',n:'New England Studios',c:'option',lat:42.54056,lng:-71.59318,r:'NEWS STAGE / build fallback · 4 stages',no:'32 Barnum Rd, Devens',ct:'newenglandstudios.com',u:'https://www.newenglandstudios.com'},
+];
+
+const CATS = {
+  hub:      {label:'Hubs / basecamps', color:'#9085e9', on:true},
+  shot:     {label:'✓ Shot',           color:'#0ca30c', on:true},
+  secured:  {label:'✓ Secured',        color:'#0ca30c', on:true},
+  legacy:   {label:'Pilot legacy (have contact)', color:'#3987e5', on:true},
+  hellhouse:{label:'Hell House candidates', color:'#d03b3b', on:true},
+  option:   {label:'Option sets',      color:'#fab219', on:true},
+  dead:     {label:'Burned original',  color:'#666663', on:true},
+};
+
+const map = L.map('map', {scrollWheelZoom:true, maxZoom:18});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains:'abcd', maxZoom:19
+}).addTo(map);
+
+// ~45-min pairing zones (approx 40 km) around each hub
+LOCS.filter(l=>l.c==='hub').forEach(h=>{
+  L.circle([h.lat,h.lng],{radius:40000,color:'#9085e9',weight:1.2,dashArray:'6 7',fill:true,fillColor:'#9085e9',fillOpacity:0.04,interactive:false}).addTo(map);
+});
+
+function popupHtml(l){
+  const chipTxt={shot:'✓ SHOT',secured:'✓ SECURED',legacy:'⚠ OUTREACH',hellhouse:'CANDIDATE',option:'OPTION',hub:'BASECAMP',dead:'BURNED 3/1/24'}[l.c]||'';
+  let h=`<b class="pn">${l.n}</b><span class="pr">${l.r}</span>`;
+  if(l.no) h+=`<div class="pc">${l.no}</div>`;
+  if(l.ct) h+=`<div class="pc">☎ ${l.ct}</div>`;
+  h+=`<div class="pc" style="margin-top:6px"><span style="color:${CATS[l.c].color};font-weight:700">${chipTxt}</span>${l.u?` · <a href="${l.u}" target="_blank">open ↗</a>`:''}</div>`;
+  return h;
+}
+
+const markers=[];
+LOCS.forEach(l=>{
+  let m;
+  if(l.c==='hub'){
+    m=L.marker([l.lat,l.lng],{icon:L.divIcon({className:'',html:'<div class="hubicon">🏕️</div>',iconSize:[20,20],iconAnchor:[10,10]})});
+  }else{
+    m=L.circleMarker([l.lat,l.lng],{radius:l.c==='hellhouse'?8:7,color:CATS[l.c].color,weight:2,fillColor:CATS[l.c].color,fillOpacity:l.c==='option'?0.45:0.7});
+  }
+  m.bindPopup(popupHtml(l),{maxWidth:290});
+  m.bindTooltip(l.n,{direction:'top',offset:[0,-8]});
+  m._cat=l.c; m.addTo(map); markers.push(m);
+});
+map.fitBounds(L.latLngBounds(LOCS.map(l=>[l.lat,l.lng])).pad(0.06));
+
+// filter chips
+const mf=document.getElementById('mapfilters');
+Object.entries(CATS).forEach(([k,c])=>{
+  const lab=document.createElement('label');
+  lab.innerHTML=`<input type="checkbox" ${c.on?'checked':''} data-cat="${k}"><i style="background:${c.color}"></i>${c.label}`;
+  mf.appendChild(lab);
+});
+mf.addEventListener('change',e=>{
+  const cat=e.target.dataset.cat; if(!cat) return;
+  markers.filter(m=>m._cat===cat).forEach(m=>{ e.target.checked ? m.addTo(map) : map.removeLayer(m); });
+});
+</script>
+</body>
+</html>
