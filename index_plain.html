@@ -123,8 +123,32 @@
   details.fold[open] > summary:before{content:"▾ "}
   details.fold > summary .tag{font-size:10px;background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:2px 8px;color:var(--muted);letter-spacing:.05em}
   details.fold > .foldbody{margin-top:12px}
+  /* website-like top menu bar */
+  .card[id], h2[id]{scroll-margin-top:70px}
+  .nav{align-items:center}
+  .nav .navlinks{display:flex;flex-wrap:wrap;gap:7px}
+  .nav .watch{margin-left:auto;display:flex;gap:8px}
+  .nav a.btn{color:#0d0d0d;font-weight:750;border:0}
+  .nav a.btn.pilot{background:var(--violet)}
+  .nav a.btn.trailer{background:#ff4d4d}
+  .nav a.btn:hover{filter:brightness(1.08);text-decoration:none}
+  /* watch buttons in the intro */
+  .watchrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .watchbtn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:9px 15px;font-weight:700;font-size:13px;text-decoration:none}
+  .watchbtn.trailer{background:#ff4d4d;color:#fff} .watchbtn.pilot{background:var(--violet);color:#0d0d0d}
+  .watchbtn:hover{filter:brightness(1.08);text-decoration:none}
+  .watchbtn small{font-weight:500;opacity:.85}
+  /* guide <-> map links */
+  .btn-map{display:inline-block;margin-top:8px;font-size:11px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 10px;color:var(--accent);cursor:pointer;font-weight:600;user-select:none}
+  .btn-map:hover{background:var(--page);border-color:var(--accent)}
+  .inguide{color:var(--violet);cursor:pointer;font-weight:700}
+  .setcard{scroll-margin-top:70px}
+  .setcard.flash{animation:flashset 1.8s ease}
+  @keyframes flashset{0%,100%{box-shadow:0 0 0 1px var(--ring)}25%{box-shadow:0 0 0 2px var(--violet);background:#25233a}}
+  #map{scroll-margin-top:64px}
   /* MOBILE */
   @media(max-width:640px){
+    .nav .watch{margin-left:0}
     body{padding:12px 12px 48px}
     header{gap:6px}
     .slate{font-size:19px;letter-spacing:.08em}
@@ -155,16 +179,27 @@
   <div class="lead">📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
   <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers), Sept 21–Nov 13.
   <div style="margin-top:8px"><b>New here? Start with the <a href="#locations">Location Guide</a></b> (every set + its vibe, from the director), then the <a href="#map">map</a> and <a href="#schedule">schedule</a>. Everything else is detail you can open when you need it.</div>
+  <div class="watchrow">
+    <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
+    <a class="watchbtn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Watch the Pilot <small>· Vimeo · pw PN</small></a>
+  </div>
 </div>
 <nav class="nav">
-  <a href="#locations">📍 Locations</a>
-  <a href="#map">🗺️ Map</a>
-  <a href="#schedule">📅 Schedule</a>
-  <a href="#hellhouse">🏚️ Hell House</a>
-  <a href="#tracker">✅ Status tracker</a>
-  <a href="#castcrew">👥 Cast &amp; Crew</a>
-  <a href="#gear">🎥 Gear</a>
-  <a href="#scripts">🎬 Scripts</a>
+  <div class="navlinks">
+    <a href="#locations">📍 Locations</a>
+    <a href="#map">🗺️ Map</a>
+    <a href="#board">📋 Location board</a>
+    <a href="#schedule">📅 Schedule</a>
+    <a href="#hellhouse">🏚️ Hell House</a>
+    <a href="#tracker">✅ Tracker</a>
+    <a href="#castcrew">👥 Cast &amp; Crew</a>
+    <a href="#gear">🎥 Gear</a>
+    <a href="#scripts">🎬 Scripts</a>
+  </div>
+  <div class="watch">
+    <a class="btn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a>
+    <a class="btn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Pilot</a>
+  </div>
 </nav>
 
 <div class="tiles">
@@ -226,7 +261,7 @@
   </div>
 
   <div class="card c7">
-    <h2>Locations board <span class="tag">pilot legacy → 2026 status</span></h2>
+    <h2 id="board">📋 Locations board <span class="tag">pilot legacy → 2026 status</span></h2>
     <table>
       <tr><th>Set</th><th>Location / links</th><th>Contact</th><th>Status</th></tr>
       <tr><td><b>Klaypool Residence</b> + Meetinghouse<br><span style="font-size:11px;color:var(--muted)">7 days — heaviest set</span></td><td>31 Crowell Rd, Sagamore Beach · <a href="https://www.peerspace.com/pages/listings/636290f8d6990c002230ef3e" target="_blank">Peerspace ↗</a></td><td><b>Julia</b> — <span style="color:var(--muted)">(on file)</span><br><span style="font-size:11px;color:var(--muted)">(sheet said "Laura" — Bryan's email says Julia)</span></td><td><span class="chip warn">⚠ OUTREACH PENDING</span></td></tr>
@@ -370,7 +405,7 @@
       <tr><td>105</td><td><b>The Girl Who Cried Ghoul</b></td><td>59</td><td><a href="scripts/105-The-Girl-Who-Cried-Ghoul.pdf" target="_blank">open ↗</a></td></tr>
       <tr><td>106</td><td><b>Please Do Not Feed the Phantasms</b> — Full Cut FINAL</td><td>100</td><td><a href="scripts/106-Please-Do-Not-Feed-the-Phantasms.pdf" target="_blank">open ↗</a></td></tr>
     </table>
-    <div class="note">📅 <a href="scripts/Schedule-Feasibility-Report.pdf" target="_blank"><b>Schedule — feasibility report (PDF) ↗</b></a> — the full 35-day schedule with makeability flags. Scripts numbered 101–106 so they line up with the schedule's episode references. &middot; 🎬 <a href="https://vimeo.com/video/956314696" target="_blank"><b>Watch the pilot ↗</b></a> (Vimeo · password <b>PN</b>).</div>
+    <div class="note">📅 <a href="scripts/Schedule-Feasibility-Report.pdf" target="_blank"><b>Schedule — feasibility report (PDF) ↗</b></a> — the full 35-day schedule with makeability flags. Scripts numbered 101–106 so they line up with the schedule's episode references. &middot; 🎬 <a href="https://vimeo.com/956314696" target="_blank"><b>Watch the pilot ↗</b></a> (Vimeo · password <b>PN</b>) &middot; ▶️ <a href="https://youtu.be/miAmRyOLM5c" target="_blank"><b>Watch the trailer ↗</b></a> (YouTube).</div>
   </div>
 
   </div>
@@ -685,11 +720,34 @@ const SETS=[
  {n:"Connective / driving beats",ep:"Eps 3–6",c:"vehicles",sl:"town driving & campus overflow",sc:"neutral",v:"Black Willow roads / Willow Road driving beats · school parking lot / restroom / hallway overflow · generic woods / open field.",d:"Town identity: <b>Black Willow, EST. 1693</b> — founded by Dorothy Good after fleeing Salem; self-branded 'quite haunted and quite boring,' permanent autumn."}
 ];
 const SETGROUPS=[["primary","Primary / recurring"],["secondary","Secondary"],["ep6","Ep 6 — road-trip & finale"],["salem","Salem 1692"],["vehicles","Vehicles & connective"]];
+/* ---- Location Guide <-> Map linking ---- */
+const SETMAP={
+ "Verlice Residence":"verlice","Klaypool Residence":"klaypool","Hell House":"beauport",
+ "Black Willow Academy":"penguin","Gardner Residence":"hardyst","Black Cat Coffee Shop":"blackcraft",
+ "Black Willow Woods":"penguin","The Graveyard":"verlice","Diner":"agawam",
+ "Lighthouse Beach":"winterisland","Sacred Heart Church":"oldsloop","Halloween Dance":"penguin",
+ "Black Willow Courthouse":"courthouse","Psych Hospital / Ward":"tewksbury","Salem 1692 (period thread)":"osv"
+};
+const mByKey={}; LOCS.forEach((l,i)=>{ if(markers[i]) mByKey[l.k]=markers[i]; });
+const SETSLUG=n=>'set-'+n.replace(/[^a-z0-9]/gi,'');
+window.showOnMap=function(key){
+  const l=LOCS.find(x=>x.k===key), m=mByKey[key]; if(!l||!m) return;
+  const cb=[...mf.querySelectorAll('input')].find(i=>i.dataset.cat===l.c);
+  if(cb && !cb.checked){ cb.checked=true; markers.filter(x=>x._cat===l.c).forEach(x=>x.addTo(map)); }
+  if(!map.hasLayer(m)) m.addTo(map);
+  document.getElementById('map').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{ map.setView([l.lat,l.lng],12,{animate:true}); m.openPopup(); },450);
+};
+window.showInGuide=function(name){
+  const el=document.getElementById(SETSLUG(name)); if(!el) return;
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  const d=el.querySelector('details'); if(d) d.open=true;
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+};
 (function(){
   const grid=document.getElementById('setgrid'), fb=document.getElementById('setfilters');
   if(!grid) return;
   SETGROUPS.forEach(([k,label])=>fb.insertAdjacentHTML('beforeend',`<label><input type="checkbox" checked data-g="${k}"> ${label} <span style="color:var(--muted)">(${SETS.filter(s=>s.c===k).length})</span></label>`));
-  function esc(x){return x;}
   function render(){
     grid.innerHTML='';
     const on=new Set([...fb.querySelectorAll('input:checked')].map(i=>i.dataset.g));
@@ -697,14 +755,25 @@ const SETGROUPS=[["primary","Primary / recurring"],["secondary","Secondary"],["e
       if(!on.has(k))return;
       const items=SETS.filter(s=>s.c===k); if(!items.length)return;
       grid.insertAdjacentHTML('beforeend',`<div class="grouphd">${label}</div>`);
-      items.forEach(s=>grid.insertAdjacentHTML('beforeend',
-        `<div class="setcard"><h3><span>${s.n}</span><span class="eps">${s.ep}</span></h3>`+
+      items.forEach(s=>{
+        const mk=SETMAP[s.n];
+        const mapBtn=mk?`<div><span class="btn-map" onclick="showOnMap('${mk}')">🗺️ show on map</span></div>`:'';
+        grid.insertAdjacentHTML('beforeend',
+        `<div class="setcard" id="${SETSLUG(s.n)}"><h3><span>${s.n}</span><span class="eps">${s.ep}</span></h3>`+
         `<div><span class="chip ${s.sc}">${s.sl}</span></div>`+
         `<div class="vibe">${s.v}</div>`+
-        `<details><summary>detail</summary><div class="dl">${s.d}</div></details></div>`));
+        `<details><summary>detail</summary><div class="dl">${s.d}</div></details>`+mapBtn+`</div>`);
+      });
     });
   }
   fb.addEventListener('change',render); render();
+  /* reverse: add an "in the Location Guide" link into the popups of pins that map to a set */
+  const keyToSet={}; Object.entries(SETMAP).forEach(([name,key])=>{ if(!keyToSet[key]) keyToSet[key]=name; });
+  Object.entries(keyToSet).forEach(([key,name])=>{
+    const m=mByKey[key]; if(!m||!m.getPopup()) return;
+    const cur=m.getPopup().getContent();
+    m.setPopupContent(cur+`<div class="pc" style="margin-top:5px">📋 <span class="inguide" onclick="showInGuide('${name.replace(/'/g,"\\'")}')">in the Location Guide ↗</span></div>`);
+  });
 })();
 </script>
 </body>
