@@ -93,6 +93,55 @@
   .leaflet-container .leaflet-control-attribution{background:rgba(0,0,0,.6);color:#777}
   .leaflet-container .leaflet-control-attribution a{color:#999}
   .hubicon{font-size:20px;line-height:20px;text-shadow:0 0 6px #000}
+  /* intro + section nav (orientation) */
+  .intro{background:var(--surface);border:1px solid var(--ring);border-left:3px solid var(--violet);border-radius:10px;padding:14px 18px;margin:4px 0 12px;font-size:13.5px;color:var(--ink2)}
+  .intro b{color:var(--ink)}
+  .intro .lead{font-size:15px;color:var(--ink);font-weight:600;margin-bottom:4px}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;position:sticky;top:0;background:var(--page);padding:8px 0;z-index:8}
+  .nav a{background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:6px 13px;color:var(--ink2);font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .nav a:hover{background:var(--surface);color:var(--ink);text-decoration:none}
+  /* location guide */
+  .setgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+  .grouphd{grid-column:1/-1;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);font-weight:700;margin:10px 0 0;padding-top:6px;border-top:1px solid var(--grid)}
+  .grouphd:first-child{border-top:none;padding-top:0}
+  .setcard{background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:12px 14px}
+  .setcard h3{font-size:14px;color:var(--ink);font-weight:700;margin:0 0 3px;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+  .setcard .eps{font-size:10px;color:var(--muted);letter-spacing:.04em;white-space:nowrap;margin-top:2px}
+  .setcard .vibe{font-size:12.5px;color:var(--ink2);margin:5px 0}
+  .setcard details{margin-top:4px}
+  .setcard summary{font-size:11px;color:var(--accent);cursor:pointer;list-style:none;font-weight:600}
+  .setcard summary::-webkit-details-marker{display:none}
+  .setcard summary:before{content:"▸ ";color:var(--muted)}
+  .setcard details[open] summary:before{content:"▾ "}
+  .setcard .dl{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.5}
+  .setcard .dl b{color:var(--ink2)}
+  .setcard .dl .k{color:var(--ink);font-weight:600;letter-spacing:.04em;font-size:10.5px;text-transform:uppercase}
+  /* generic collapsible cards for progressive disclosure */
+  details.fold > summary{cursor:pointer;list-style:none;color:var(--ink2);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  details.fold > summary::-webkit-details-marker{display:none}
+  details.fold > summary:before{content:"▸ ";color:var(--muted)}
+  details.fold[open] > summary:before{content:"▾ "}
+  details.fold > summary .tag{font-size:10px;background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:2px 8px;color:var(--muted);letter-spacing:.05em}
+  details.fold > .foldbody{margin-top:12px}
+  /* MOBILE */
+  @media(max-width:640px){
+    body{padding:12px 12px 48px}
+    header{gap:6px}
+    .slate{font-size:19px;letter-spacing:.08em}
+    .slate small{font-size:10px}
+    .role{margin-left:0;text-align:left;width:100%}
+    .tiles{grid-template-columns:repeat(auto-fit,minmax(46%,1fr));gap:8px;margin:12px 0}
+    .tile{padding:10px 11px}
+    .tile .n{font-size:23px}
+    .grid{gap:12px}
+    .card{padding:14px 13px;overflow-x:auto}
+    #map{height:380px}
+    .nav{gap:6px;padding:8px 0;overflow-x:auto;flex-wrap:nowrap}
+    .nav a{padding:6px 12px}
+    .setgrid{grid-template-columns:1fr}
+    .strip{height:44px}
+    .mapfilters{gap:6px}
+  }
 </style>
 </head>
 <body>
@@ -101,6 +150,22 @@
   <div class="slate">PARANORMAL NOBODIES<small>S1 · EPS 102–106 · MASSACHUSETTS · LOCATIONS · SCHEDULE · SCRIPTS</small></div>
   <div class="role"><b>Josh Maas</b> — Producer / Cinematographer<br><span id="today"></span></div>
 </header>
+
+<div class="intro">
+  <div class="lead">📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
+  <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers), Sept 21–Nov 13.
+  <div style="margin-top:8px"><b>New here? Start with the <a href="#locations">Location Guide</a></b> (every set + its vibe, from the director), then the <a href="#map">map</a> and <a href="#schedule">schedule</a>. Everything else is detail you can open when you need it.</div>
+</div>
+<nav class="nav">
+  <a href="#locations">📍 Locations</a>
+  <a href="#map">🗺️ Map</a>
+  <a href="#schedule">📅 Schedule</a>
+  <a href="#hellhouse">🏚️ Hell House</a>
+  <a href="#tracker">✅ Status tracker</a>
+  <a href="#castcrew">👥 Cast &amp; Crew</a>
+  <a href="#gear">🎥 Gear</a>
+  <a href="#scripts">🎬 Scripts</a>
+</nav>
 
 <div class="tiles">
   <div class="tile hot"><div class="n" id="d-outreach">–</div><div class="l">Days to location outreach</div><div class="s">Mon Jul 13</div></div>
@@ -113,7 +178,15 @@
 
 <div class="grid">
 
-  <div class="card">
+  <div class="card" id="locations">
+    <h2>📍 Location Guide <span class="tag">from the director's list · every set + its vibe</span></h2>
+    <p class="note" style="margin:0 0 12px">Every location in Eps 2–6, grouped by how much we see it. Each card: what it is, which episodes, and its status. <b>Tap "▸ detail"</b> for sub-areas, hero props, seasonal dress &amp; bedroom color/light. <span style="color:var(--ink2)">Global look: <i>gothic Americana · permanent late-October · fog · ox-blood/rust/amber/moss/slate · candlelight &amp; wet stone · Crimson Peak × Wednesday × Coraline.</i></span></p>
+    <div class="mapfilters" id="setfilters"></div>
+    <div class="setgrid" id="setgrid"></div>
+    <p class="note">🎨 <b>Two on-screen seasons:</b> Eps 2–5 = permanent Halloween/harvest (pumpkins, hay, string lights, Spirit Week); <b>Ep 6</b> jumps to first snow + Christmas/Thanksgiving (Halloween comes down). The Willow Reader Cottage is the on-screen crossover. · <b>Bedrooms are color-keyed</b> so cutting between them reads instantly (Carrie=pink, Dylan=moss green, Mitch=teal/amber, Dakota=boho terracotta, etc.). · Full director's list saved locally: <i>Locations_List_DIRECTOR.docx</i>.</p>
+  </div>
+
+  <div class="card" id="schedule">
     <h2>Shoot board — 35 days (posted 7/10/26 one-liner) <span class="tag">hover a block</span></h2>
     <div class="strip" id="strip"></div>
     <div class="striplbls" id="striplbls"></div>
@@ -171,7 +244,7 @@
     </table>
   </div>
 
-  <div class="card c6 tiers">
+  <div class="card c6 tiers" id="hellhouse">
     <h2>Hell House replacement — shortlist <span class="tag">rescouted 7/14 · now needs a HERO EXT too</span></h2>
     <div class="flag" style="border-left-color:var(--good)"><b>🔥 LEAD (7/16): Beauport — the Sleeper-McCann House, Gloucester.</b> Lindsay sent Historic New England a formal filming inquiry. Ask = <b>~6 days, shooting right after Beauport closes Oct 17</b> (pre-winterize, zero public disruption), 30–40 cast+crew. FX handled museum-safe: <b>blood = post-VFX chocolate syrup (nothing on walls)</b>, boarded-up EXT = VFX + a temporary padlock, breakaway prop mirrors, prop weapon + stunt coordinator for the finale. Offered a <b>location fee or a donation to Historic New England</b>, staff on set throughout, film only in approved rooms. <b>Status: awaiting Kristen/Beauport's reply.</b> Henry Sleeper's collector rooms + colored glass + cabinet-of-curiosities interior = exactly the tone. (Hell House scenes live in Eps 103/104/106.)</div>
     <p>👁️ PHOTO-VERIFIED vs the real Hell House interior — dark mahogany paneling, carved stair, hardwood, NO carpet. <b style="color:var(--good)">NEW mandate (7/12–13 texts): establish a new dark EXTERIOR too — not just interiors.</b></p>
@@ -200,7 +273,7 @@
     <div class="note"><b>📸 Instagram scouting — keep pushing here:</b> the mansion / abandoned-house accounts are the best off-database source. DM the New-England ones: <a href="https://instagram.com/buildingsofnewengland" target="_blank">@buildingsofnewengland</a> (78K, MA-heavy) · <a href="https://instagram.com/st.severus" target="_blank">@st.severus</a> (abandoned Victorians, 108K) · <a href="https://instagram.com/ghostofnewengland" target="_blank">@ghostofnewengland</a> · <a href="https://instagram.com/jasonbakerphotography" target="_blank">@jasonbakerphotography</a> (Danvers/North Shore) · <a href="https://instagram.com/abandoned_massachusetts" target="_blank">@abandoned_massachusetts</a>. Browse by tag: <a href="https://instagram.com/explore/tags/newenglandmansion" target="_blank">#newenglandmansion</a> · <a href="https://instagram.com/explore/tags/victorianmansion" target="_blank">#victorianmansion</a> · <a href="https://instagram.com/explore/tags/abandonedmansion" target="_blank">#abandonedmansion</a>. DM drafts ready → <b>OUTREACH_ESTATE_AND_IG.md</b>. ⚠ "@abandonedmansiion" does NOT verify as a real account — skip it (nothing was ever sent to it).</div>
   </div>
 
-  <div class="card">
+  <div class="card" id="tracker">
     <h2>All sets — S1 location tracker <span class="tag">options for every set → LOCATION_OPTIONS.md (full contacts)</span></h2>
     <table>
       <tr><th>Set (scenes)</th><th>Eps</th><th>Status · top options (many more in doc)</th></tr>
@@ -227,7 +300,7 @@
     <div class="note">⚠ Script watch-outs: Gardner <b>pool party in October</b> (heater/wetsuit line not in budget) · Mary's Bath night in-water scene (safety/rescue) · séance <b>mirror-ghost gag</b> needs VFX plate day · <b>Salem = weekdays/Sept–Nov only</b> (Haunted Happenings crowds all October). Full option lists + every contact → <b>LOCATION_OPTIONS.md</b>.</div>
   </div>
 
-  <div class="card">
+  <div class="card" id="castcrew">
     <h2>Cast &amp; Crew <span class="tag">from casting docs + call notes · avail-checked, offers pending</span></h2>
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px">
       <div>
@@ -260,7 +333,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" id="gear">
     <h2>Grip truck + lighting <span class="tag">3-ton G&amp;E · sourced in MA for the 25% tax credit</span></h2>
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px">
       <div>
@@ -286,7 +359,7 @@
     <div class="note"><b>Plan:</b> get written quotes from <b>FastLights + High Output</b> first (none publish rates), then call <b>Kaye</b> for the owner-op route (his labor <i>and</i> gear both count toward the credit). Spec for heavy <b>night EXT</b> (HMIs) + practical interiors (SkyPanel/Astera/LED). Loop in <b>Patrick (Key Grip)</b> on the package. Out-of-state (KJfilms CT, Rat Race CT/RI) = weaker for the credit. Pulls from account <b>2600 G&amp;E $92.5K</b>.</div>
   </div>
 
-  <div class="card c6">
+  <div class="card c6" id="scripts">
     <h2>Scripts — click to open <span class="tag">numbered 101–106 · matches the schedule</span></h2>
     <table>
       <tr><th>Ep</th><th>Title</th><th>Scenes</th><th>Script PDF</th></tr>
@@ -571,6 +644,68 @@ mf.addEventListener('change',e=>{
   const cat=e.target.dataset.cat; if(!cat) return;
   markers.filter(m=>m._cat===cat).forEach(m=>{ e.target.checked ? m.addTo(map) : map.removeLayer(m); });
 });
+
+/* ===== LOCATION GUIDE (director's Locations List, Eps 2–6) ===== */
+const SETS=[
+ {n:"Verlice Residence",ep:"Eps 2–6",c:"primary",sl:"EXT + graveyard shot (pilot) · interiors new",sc:"good",v:"Mitch's moody, lived-in, jazz-and-guitar home built on and overlooking the family graveyard.",d:"<span class='k'>Sub-areas</span> Mitch's bedroom (occult books, guitar) + bath · glass <b>atrium</b> (rocking chair, kettle always near boiling) · <b>garage</b> = band rehearsal · living room (old TV/VCR, records) · front door/street · adjacent family graveyard.<br><span class='k'>Keep</span> Mitch's bedroom, kitchen, atrium; graveyard lantern from pilot.<br><span class='k'>Bedroom</span> teal/amber + dark wood; dark-blue lava lamps, salt lamp, candles.<br><span class='k'>Props</span> guitar · occult/Salem books · framed illustration of late mother Carleen · Hell House files · ghost-hunting kit."},
+ {n:"Klaypool Residence",ep:"Eps 2,3,5,6",c:"primary",sl:"dressed/kept · contact Julia (on file)",sc:"good",v:"Dylan & Jill's preserved witch's-cottage; a hidden silo reached through an armoire is the ghost-hunting HQ.",d:"<span class='k'>Sub-areas</span> silo floors + attic ('A GRAND HUSH' blackboard, crest chest) · Dylan's & Jill's rooms · kitchen/living/foyer · front door/bench · Chicago 2006 flashback.<br><span class='k'>Keep/match</span> the armoire→silo, silo decor + top-floor mural, Dylan's bedroom (lamps/mirror/necklace), kitchen.<br><span class='k'>Bedroom</span> moss/forest green + charcoal, vintage brass, candle + soft green glow.<br><span class='k'>Props</span> THE NECKLACE (hero) · Good-crest chest · Candice's tarot deck · killer's mask (Jill's room)."},
+ {n:"Hell House",ep:"Eps 3,4,6",c:"primary",sl:"🔥 PRIORITY — original burned, finding new",sc:"crit",v:"Grand, spooky-yet-elegant mansion directly across from the Klaypool silo; Sandra & Jill run ghost tours and séances.",d:"<span class='k'>Sub-areas</span> foyer/staircase/living/hallways · Sandra's séance room (candles + mirror) · master bedroom (walls that 'bleed') · office (Hell House files) · snack table/front gates · 1989 flashback.<br>Must <b>match the pilot look</b>; the sightline to the Klaypool silo is canon. See the <a href='#hellhouse'>Hell House shortlist</a>.<br><span class='k'>Props</span> SPIRIT BOX · THE MIRROR (shatters) · Mel-meter · séance candles · BLOOD RIG (ceiling pipe + syrup, remote).<br><b>Note:</b> Ep 6 'Sandra's House' is her SEPARATE present-day Boston home — not this."},
+ {n:"Mary's Bath",ep:"Eps 2,3,4,5",c:"primary",sl:"open · water location",sc:"warn",v:"A dark pond on the town's edge where Dylan nearly drowns reaching for the book; a shoreline picnic / pumpkin-carving spot by day.",d:"Present-day water + a <b>1692 version</b> (Abigail, Betty & Tituba). Central to the Salem lore.<br>Should read as located <b>behind Hell House</b> — match the geography/sightline to that build.<br><span class='k'>Props</span> picnic blanket + pumpkins · Mitch's abandoned Crocs (staged drowning) · THE COMPASS (needle spins to water)."},
+ {n:"Black Willow Academy",ep:"Eps 2,4,5,6",c:"primary",sl:"SECURED — Penguin Hall, Wenham",sc:"good",v:"The gothic town high school — cobblestone steps, hedges. The Library doubles as Ms. Marrero's classroom (floor-to-ceiling books).",d:"<span class='k'>Sub-areas</span> library (desk/printer) · Marrero's classroom ('THE CRUCIBLE' board) · hallways · cafeteria · parking lot · bulletin stage.<br><span class='k'>Keep/match</span> desks + green desk lamps, chalkboard, teacher desk (pilot).<br><span class='k'>Props</span> Carrie's pink VW Beetle · Salem library stacks · Dean John Richard portrait · cap & gown."},
+ {n:"Gardner Residence",ep:"Eps 2,3,5,6",c:"primary",sl:"open · reach DEB (pool)",sc:"warn",v:"Dakota & Harlow's house — the classic small-town house-party spot; lean vibey/boho to match Dakota's room + Harlow's van.",d:"<span class='k'>Sub-areas</span> living room (party central) · kitchen · Dakota's room · porch/yard · pool (summer flashback).<br><span class='k'>Bedroom</span> 70s boho — terracotta/mustard/olive, macramé; hippie & lava lamps, wood-shape string lights.<br><span class='k'>Props</span> house-party dressing (strobe, karaoke, vape) · HARLOW'S 1970s HIPPY VAN."},
+ {n:"Hall Residence",ep:"Eps 2,3,5,6",c:"primary",sl:"open · reach DEB (look)",sc:"warn",v:"The put-together colonial (mom is the mayor) — the most 'proper New England' house, clearly distinct from the vibey Gardner place.",d:"<span class='k'>Sub-areas</span> Sawyer's room + bath · Parker's room · kitchen/living (+ Morgan's office can live here — see Ep 6).<br><span class='k'>Bedrooms</span> Sawyer = muted olive/rust artsy · Parker = clean navy/red jock · Morgan = navy/cream/red colonial.<br><span class='k'>Props</span> Sawyer's hair-dye makeover kit + spider earrings · TEN 'VOTE MORGAN HALL FOR MAYOR… AGAIN!' signs."},
+ {n:"Black Cat Coffee Shop",ep:"Eps 2,4,5,6",c:"primary",sl:"open — find / build",sc:"warn",v:"Veda's tiny, near-empty, edgy café — an extension of Veda herself: dark, punk-witchy, cozy on the surface, defiant underneath.",d:"Hand-scrawled signage with attitude · black-cat & tarot touches · thrifted mismatched furniture · candle + low warm light · riot-grrrl zines. Near-empty because Veda doesn't let just anyone in.<br><span class='k'>Props</span> counter + chai · CLOSED sign she flips · monster mask · Chayton's photo of a monster."},
+ {n:"Black Willow Woods",ep:"Eps 3,5,6",c:"primary",sl:"shot (pilot) · reuse Academy grounds",sc:"good",v:"Eerie, fog-walled forest on the town edge; kids get lost, later the site of a night shooting + police search (bullet holes in trees).",d:"Pilot cheated the school's property as the woods — match & likely reuse.<br><span class='k'>Props</span> ivy grave slab + Good Crest · bear trap · THE SNAKE (becomes a broom) · hunting rifle + masked man · buried box of VHS tapes."},
+ {n:"The Graveyard",ep:"Eps 2,6",c:"primary",sl:"shot (pilot) · keep the lantern",sc:"good",v:"The working graveyard where Mitch digs — autumn ivy, harvest-lit epitaphs, incense. Tied to the Verlice property.",d:"Grave-digging is a recurring romance motif (Mitch makes Dylan dig; they kiss in an open grave) — needs a practical, dressable <b>open-grave</b> setup.<br><span class='k'>Props</span> stuffed black cat 'ELPIS' · THE SHOVEL (recurring) · THE LANTERN (pilot) · incense + match."},
+
+ {n:"Diner",ep:"Eps 3,5",c:"secondary",sl:"open — find / build",sc:"warn",v:"A timeworn New England townie diner: Twin Peaks' Double R × Hopper's 'Nighthawks' — a warm, near-empty refuge on a wet dark street.",d:"Aged formica + stools · cracked ox-blood/teal vinyl booths · pie case · old jukebox · buzzing vintage neon · handwritten specials. Warm tungsten + flickering neon, rain on glass. Daytime.<br><span class='k'>Props</span> hostess-area public phone (Dylan calls Mitch) · Miguel's coffee + case files."},
+ {n:"Police Station",ep:"Eps 3,5",c:"secondary",sl:"open",sc:"warn",v:"Old-school New England station; Chief Hodge's office is a room inside it (case files splayed on the desk).",d:"The Chief's office scene is shot HERE (part of the station).<br><span class='k'>Props</span> mugshot camera · Parker's mugshot · HERO FILE 'CASE AGAINST MICHAEL HUGH FOR THE MURDER OF RAYMOND COLE' (stamped BOSTON, MA)."},
+ {n:"Lighthouse Beach",ep:"Eps 4,5,6",c:"secondary",sl:"open · want a real North-Shore lighthouse",sc:"warn",v:"Moonlit beach beneath a lighthouse; Mitch performs in silhouette; also a ritual/chanting site.",d:"Major plot anchor: Candice's abandoned car is found here; her body later washes ashore. A listed town landmark.<br><span class='k'>Props</span> bonfire · Veda's drum kit · THE ENGRAVED LIGHTER · Candice Good rising from the water."},
+ {n:"The Willow Reader Cottage",ep:"Eps 4(fb),5",c:"secondary",sl:"open · want a storybook cottage",sc:"warn",v:"A crooked, ivy-covered fortune-teller cottage at the end of a gravel path — 'MADAME ZUGASTI', troll dolls everywhere. The whimsy side (Coraline/Burton).",d:"Also the on-screen <b>Halloween→Christmas crossover</b> (decorations changing over).<br><span class='k'>Props</span> 'MADAME ZUGASTI' sign · Carrie's tarot deck · cryptic floor-mat equation · many locks + peephole · TROLL DOLLS EVERYWHERE."},
+ {n:"Sacred Heart Church",ep:"Ep 4",c:"secondary",sl:"candidate: 'Old Sloop', Rockport",sc:"neutral",v:"A gorgeous stained-glass church hosting the Fall Festival (tents, pumpkin patch, water-gun tent).",d:"Scouting candidate: <b>First Congregational Church of Rockport ('The Old Sloop')</b>, 12 School St — historic white church, tall clock steeple, coastal town; ties to a real autumn fest (Rockport Harvest Fest).<br><span class='k'>Props</span> festival banner · ticket tents · pumpkin patch · THE AX Dakota finds · a kiss-marked pumpkin."},
+ {n:"Halloween Dance",ep:"Eps 4,5",c:"secondary",sl:"TBD once school locks",sc:"neutral",v:"The school's Halloween dance — whimsical goth, OVER THE TOP; stage + backstage.",d:"Inside vs outside decided once we lock the school.<br><span class='k'>Props</span> fog machine · CONFETTI CANNON of black paper hearts ('Kill yourself, Carrie Landry') · grand staircase · Dylan's witch gown/cape/hat."},
+ {n:"Landry Residence",ep:"Ep 4",c:"secondary",sl:"open",sc:"warn",v:"Carrie's home — ALL PINK (glossy blush + hot pink), curated & performative, with a lonelier maternal warmth underneath.",d:"Should NOT feel like Dakota's (boho) or Sawyer's (artsy) — the polished, image-conscious one.<br><span class='k'>Light</span> pink twinkle lights, Hollywood-vanity bulbs, glossy pink wash.<br><span class='k'>Props</span> vanity + rollers · TAROT (Devil & Lovers) · PLUSH PIG 'PORKIE' · heart-shaped glasses."},
+ {n:"Playground",ep:"Ep 4",c:"secondary",sl:"open · night shoot",sc:"warn",v:"A real kids' playground that reads creepy at night — empty swings, still equipment, fog, sodium/streetlight pools.",d:"<span class='k'>Props</span> BLANKET 'GHOST' costumes with cut eye-holes (Mitch & Dylan) · rolls of toilet paper · fallen leaves."},
+ {n:"Black Willow Courthouse",ep:"Ep 4",c:"secondary",sl:"low priority — possible cut",sc:"neutral",v:"Bench (ext) + courtroom (int). Hold before sourcing.",d:"<span class='k'>Props</span> 'est. 1693' sign · judge's gavel · the shared book Mitch & Dylan read."},
+ {n:"Hodge Residence",ep:"Eps 5,6",c:"secondary",sl:"SIMPLE — bathroom interior only",sc:"good",v:"Only a bathroom interior is needed (the killer's-mask reveal); the brick exterior is just an establishing insert — any brick house front works.",d:"Does NOT need to double for the Chief's office (that's the police station).<br><span class='k'>Props</span> bathroom pill bottle + makeup · THE BOX WITH THE KILLER'S MASK (hero reveal)."},
+ {n:"Psych Hospital / Ward",ep:"Eps 2,5,6",c:"secondary",sl:"open · consolidate w/ Hospital + ER",sc:"warn",v:"A Chicago-linked psych facility; the padded cell holds Nathan (Dylan's father). A lucid-man-in-a-mad-place tension — not generic asylum horror.",d:"Lab / lobby / padded cell. Combine with Hospital + ER to limit company moves.<br><span class='k'>Props</span> CHICAGO SMUGGLING RIG (food-supply truck, cans hiding codeine, whiteboard w/ Nathan's photo) · padded cell."},
+ {n:"Abandoned Park",ep:"Ep 5",c:"secondary",sl:"open",sc:"warn",v:"An abandoned parking lot posing as an orchard — cracked asphalt, weeds, a rusted carousel; flat overcast light, faintly menacing.",d:"<span class='k'>Props</span> abandoned carousel · Sawyer's guitar + skateboard."},
+ {n:"Ms. Marrero's House",ep:"Eps 4,5",c:"secondary",sl:"open",sc:"warn",v:"An old-world, bookish young-teacher's home — warm lamplight, stacked books, vintage charm; Halloween decor being boxed up.",d:"Holds the framed photo of Mitch & his mother Carleen (the scar) — a quiet tie to the Verlice mystery."},
+ {n:"Beauty Store",ep:"Ep 4 (flashback)",c:"secondary",sl:"open",sc:"warn",v:"Bright, glossy retail normalcy — fluorescents, pinks, mirrors; a deliberate un-haunted palate-cleanser flashback.",d:"The commercial counterpoint to Black Willow."},
+ {n:"Sandra's House (Boston)",ep:"Ep 6",c:"secondary",sl:"open · Boston, winter",sc:"warn",v:"Adult Sandra's modest, faded Boston home in winter — tea-service gentility, haunted by memory not ghosts. SEPARATE from Hell House.",d:"Dusty rose / cream / sage, aged wood; curated family photos.<br><span class='k'>Props</span> FRAMED TEEN POLAROID of Sandra & Raymond · tea + fruit cake."},
+
+ {n:"Boston Airbnb",ep:"Ep 6",c:"ep6",sl:"open · make it a HOUSE",sc:"warn",v:"Road-trip lodging in Boston — a rented Airbnb house (not a city apartment). Bedroom + exterior.",d:"<span class='k'>Props</span> Chinese take-out · lamp · double beds."},
+ {n:"Hospital (Boston)",ep:"Ep 6",c:"ep6",sl:"open · consolidate",sc:"warn",v:"Fluorescent limbo — Candice's coma room (machine glow), a waiting-room hallway + a warmer cafeteria (flashback).",d:"Could consolidate with the ER + Psych Ward to limit moves.<br><span class='k'>Props</span> gurney/IV/heart monitor · book 'Dedicated to my daughter'."},
+ {n:"Morgan's Office",ep:"Ep 6",c:"ep6",sl:"DOUBLE — Hall den (dressing only)",sc:"neutral",v:"The Mayor's civic office — dark wood, US + MA flags, seal, campaign signage; navy/cream/red.",d:"<span class='k'>Best double</span> the Hall Residence home study (it's the mayor's own house, Sawyer's drop-in plays naturally) — or the police/academy office. Set-dressing only (flag, seal, signage, cue cards)."},
+ {n:"Small Outdoor Club",ep:"Ep 6",c:"ep6",sl:"open",sc:"warn",v:"An open-air night gig in a full downpour + thunder — DIY rock energy, string lights, a failing tarp, wet neon. Sawyer & Veda perform.",d:"Think a small outdoor stage / beer-garden / festival-lot venue. Stage + backstage."},
+ {n:"Emergency Room",ep:"Ep 6",c:"ep6",sl:"open · consolidate",sc:"warn",v:"A harsh-fluorescent ER entrance (sliding doors, ambulance bay, red sign) + waiting area; a guard with a taser stops Mitch & Carrie.",d:"Consolidate with the Hospital + Psych Ward if possible. Also Ep 6 montage: town center/suburbs, Wilson/Gardner ext (snow), Bennet front door, open field."},
+
+ {n:"Salem 1692 (period thread)",ep:"Eps 2,3,5,6",c:"salem",sl:"open · ONE heritage village",sc:"warn",v:"One living-history / colonial village to service ALL the Salem sub-areas in one package — historical accuracy is paramount (no modern intrusion in frame).",d:"<span class='k'>Sub-areas</span> Parris nursery (Ep2) · Mary's Bath 1692 (Ep3) · jail cell (Ep5) · Ipswich prison + Proctor's Ledge (Ep6). Raw timber, rushlight, cold stone, breath in the air.<br><span class='k'>Props</span> nursery egg-in-water → coffin vision · jail snake + iron bars · Proctor's Ledge chains + NOOSES on a tree."},
+ {n:"Picture Vehicles",ep:"Eps 2–6",c:"vehicles",sl:"as scene locations",sc:"neutral",v:"Cars used as sets: Mitch's pickup (recurring travel, Eps 2/4/6), Uber (3), Jill's car (3), Carrie's car (4), Sawyer's car (5).",d:"<span class='k'>Props</span> TRUCK BED OF TP ROLLS under a black tarp · sticker-coated syllabus folder · quad espresso."},
+ {n:"Connective / driving beats",ep:"Eps 3–6",c:"vehicles",sl:"town driving & campus overflow",sc:"neutral",v:"Black Willow roads / Willow Road driving beats · school parking lot / restroom / hallway overflow · generic woods / open field.",d:"Town identity: <b>Black Willow, EST. 1693</b> — founded by Dorothy Good after fleeing Salem; self-branded 'quite haunted and quite boring,' permanent autumn."}
+];
+const SETGROUPS=[["primary","Primary / recurring"],["secondary","Secondary"],["ep6","Ep 6 — road-trip & finale"],["salem","Salem 1692"],["vehicles","Vehicles & connective"]];
+(function(){
+  const grid=document.getElementById('setgrid'), fb=document.getElementById('setfilters');
+  if(!grid) return;
+  SETGROUPS.forEach(([k,label])=>fb.insertAdjacentHTML('beforeend',`<label><input type="checkbox" checked data-g="${k}"> ${label} <span style="color:var(--muted)">(${SETS.filter(s=>s.c===k).length})</span></label>`));
+  function esc(x){return x;}
+  function render(){
+    grid.innerHTML='';
+    const on=new Set([...fb.querySelectorAll('input:checked')].map(i=>i.dataset.g));
+    SETGROUPS.forEach(([k,label])=>{
+      if(!on.has(k))return;
+      const items=SETS.filter(s=>s.c===k); if(!items.length)return;
+      grid.insertAdjacentHTML('beforeend',`<div class="grouphd">${label}</div>`);
+      items.forEach(s=>grid.insertAdjacentHTML('beforeend',
+        `<div class="setcard"><h3><span>${s.n}</span><span class="eps">${s.ep}</span></h3>`+
+        `<div><span class="chip ${s.sc}">${s.sl}</span></div>`+
+        `<div class="vibe">${s.v}</div>`+
+        `<details><summary>detail</summary><div class="dl">${s.d}</div></details></div>`));
+    });
+  }
+  fb.addEventListener('change',render); render();
+})();
 </script>
 </body>
 </html>
