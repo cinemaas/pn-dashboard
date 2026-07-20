@@ -131,6 +131,11 @@
   .nav a.btn.pilot{background:var(--violet)}
   .nav a.btn.trailer{background:#ff4d4d}
   .nav a.btn:hover{filter:brightness(1.08);text-decoration:none}
+  /* hamburger toggle (mobile only) */
+  .navtoggle{display:none;align-items:center;justify-content:space-between;gap:8px;width:100%;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:9px 14px;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  .navtoggle .bars{font-size:16px;line-height:1;margin-right:4px}
+  .navtoggle .caret{color:var(--muted);transition:transform .15s ease}
+  .nav.open .navtoggle .caret{transform:rotate(180deg)}
   /* watch buttons in the intro */
   .watchrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .watchbtn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:9px 15px;font-weight:700;font-size:13px;text-decoration:none}
@@ -161,8 +166,14 @@
     .grid{gap:12px}
     .card{padding:14px 13px;overflow-x:auto}
     #map{height:380px}
-    .nav{gap:6px;padding:8px 0;overflow-x:auto;flex-wrap:nowrap}
-    .nav a{padding:6px 12px}
+    .nav{gap:8px;padding:8px 0;overflow:visible;flex-wrap:wrap;align-items:stretch}
+    .navtoggle{display:flex}
+    .nav .navlinks{display:none;width:100%;flex-direction:column;gap:6px}
+    .nav .watch{display:none;width:100%;margin-left:0;flex-wrap:wrap;gap:6px}
+    .nav.open .navlinks{display:flex}
+    .nav.open .watch{display:flex}
+    .nav .navlinks a{width:100%;padding:11px 13px;font-size:14px}
+    .nav .watch a{flex:1;text-align:center;padding:10px 12px}
     .setgrid{grid-template-columns:1fr}
     .strip{height:44px}
     .mapfilters{gap:6px}
@@ -183,14 +194,17 @@
   <div class="watchrow">
     <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
     <a class="watchbtn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Watch the Pilot <small>· Vimeo · pw PN</small></a>
-    <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· Hell House stills + concept art</small></a>
+    <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· real scout photos + pilot stills</small></a>
+    <a class="watchbtn lookbook" href="conceptart.html" style="background:var(--violet);color:#0d0d0d">🎨 Concept Art Catalogue <small>· 37 location renders</small></a>
   </div>
 </div>
-<nav class="nav">
-  <div class="navlinks">
+<nav class="nav" id="topnav">
+  <button class="navtoggle" type="button" aria-expanded="false" aria-controls="navlinks" onclick="var n=document.getElementById('topnav');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.querySelector('.lbl').textContent=o?'Close menu':'Menu';"><span><span class="bars">☰</span><span class="lbl">Menu</span></span><span class="caret">▾</span></button>
+  <div class="navlinks" id="navlinks">
     <a href="#locations">📍 Locations</a>
     <a href="#map">🗺️ Map</a>
     <a href="lookbook.html">📸 Look Book</a>
+    <a href="conceptart.html">🎨 Concept Art</a>
     <a href="#board">📋 Location board</a>
     <a href="#schedule">📅 Schedule</a>
     <a href="#hellhouse">🏚️ Hell House</a>
@@ -200,11 +214,12 @@
     <a href="#scripts">🎬 Scripts</a>
   </div>
   <div class="watch">
-    <a class="btn lookbook" href="lookbook.html">📸 Look Book</a>
+    <a class="btn lookbook" href="conceptart.html">🎨 Concept Art</a>
     <a class="btn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a>
     <a class="btn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Pilot</a>
   </div>
 </nav>
+<script>document.getElementById('navlinks').addEventListener('click',function(e){if(e.target.closest('a')){var n=document.getElementById('topnav');n.classList.remove('open');var t=n.querySelector('.navtoggle');if(t){t.setAttribute('aria-expanded','false');var l=t.querySelector('.lbl');if(l)l.textContent='Menu';}}});</script>
 
 <div class="tiles">
   <div class="tile hot"><div class="n" id="d-outreach">–</div><div class="l">Days to location outreach</div><div class="s">Mon Jul 13</div></div>
