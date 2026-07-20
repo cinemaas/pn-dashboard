@@ -131,6 +131,11 @@
   .nav a.btn.pilot{background:var(--violet)}
   .nav a.btn.trailer{background:#ff4d4d}
   .nav a.btn:hover{filter:brightness(1.08);text-decoration:none}
+  /* hamburger toggle (mobile only) */
+  .navtoggle{display:none;align-items:center;justify-content:space-between;gap:8px;width:100%;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:9px 14px;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  .navtoggle .bars{font-size:16px;line-height:1;margin-right:4px}
+  .navtoggle .caret{color:var(--muted);transition:transform .15s ease}
+  .nav.open .navtoggle .caret{transform:rotate(180deg)}
   /* watch buttons in the intro */
   .watchrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .watchbtn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:9px 15px;font-weight:700;font-size:13px;text-decoration:none}
@@ -161,8 +166,14 @@
     .grid{gap:12px}
     .card{padding:14px 13px;overflow-x:auto}
     #map{height:380px}
-    .nav{gap:6px;padding:8px 0;overflow-x:auto;flex-wrap:nowrap}
-    .nav a{padding:6px 12px}
+    .nav{gap:8px;padding:8px 0;overflow:visible;flex-wrap:wrap;align-items:stretch}
+    .navtoggle{display:flex}
+    .nav .navlinks{display:none;width:100%;flex-direction:column;gap:6px}
+    .nav .watch{display:none;width:100%;margin-left:0;flex-wrap:wrap;gap:6px}
+    .nav.open .navlinks{display:flex}
+    .nav.open .watch{display:flex}
+    .nav .navlinks a{width:100%;padding:11px 13px;font-size:14px}
+    .nav .watch a{flex:1;text-align:center;padding:10px 12px}
     .setgrid{grid-template-columns:1fr}
     .strip{height:44px}
     .mapfilters{gap:6px}
@@ -183,14 +194,18 @@
   <div class="watchrow">
     <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
     <a class="watchbtn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Watch the Pilot <small>· Vimeo · pw PN</small></a>
-    <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· Hell House stills + concept art</small></a>
+    <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· real scout photos + pilot stills</small></a>
+    <a class="watchbtn lookbook" href="conceptart.html" style="background:var(--violet);color:#0d0d0d">🎨 Concept Art Catalogue <small>· 37 location renders</small></a>
   </div>
 </div>
-<nav class="nav">
-  <div class="navlinks">
+<nav class="nav" id="topnav">
+  <button class="navtoggle" type="button" aria-expanded="false" aria-controls="navlinks" onclick="var n=document.getElementById('topnav');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.querySelector('.lbl').textContent=o?'Close menu':'Menu';"><span><span class="bars">☰</span><span class="lbl">Menu</span></span><span class="caret">▾</span></button>
+  <div class="navlinks" id="navlinks">
+    <a href="#scout">🔦 Scout Board</a>
     <a href="#locations">📍 Locations</a>
     <a href="#map">🗺️ Map</a>
     <a href="lookbook.html">📸 Look Book</a>
+    <a href="conceptart.html">🎨 Concept Art</a>
     <a href="#board">📋 Location board</a>
     <a href="#schedule">📅 Schedule</a>
     <a href="#hellhouse">🏚️ Hell House</a>
@@ -200,11 +215,12 @@
     <a href="#scripts">🎬 Scripts</a>
   </div>
   <div class="watch">
-    <a class="btn lookbook" href="lookbook.html">📸 Look Book</a>
+    <a class="btn lookbook" href="conceptart.html">🎨 Concept Art</a>
     <a class="btn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a>
     <a class="btn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Pilot</a>
   </div>
 </nav>
+<script>document.getElementById('navlinks').addEventListener('click',function(e){if(e.target.closest('a')){var n=document.getElementById('topnav');n.classList.remove('open');var t=n.querySelector('.navtoggle');if(t){t.setAttribute('aria-expanded','false');var l=t.querySelector('.lbl');if(l)l.textContent='Menu';}}});</script>
 
 <div class="tiles">
   <div class="tile hot"><div class="n" id="d-outreach">–</div><div class="l">Days to location outreach</div><div class="s">Mon Jul 13</div></div>
@@ -217,6 +233,236 @@
 </div>
 
 <div class="grid">
+
+  <div class="card" id="scout">
+    <style>
+     #scout .scoutsum{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+     #scout .ss{background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:8px 12px;min-width:74px}
+     #scout .ss b{display:block;font-size:22px;font-weight:750;line-height:1.1} #scout .ss span{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+     #scout .scoutgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+     #scout .sc{background:var(--surface2);border:1px solid var(--ring);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:9px}
+     #scout .sc.dim{opacity:.4}
+     #scout .sc-h{display:flex;align-items:flex-start;gap:8px} #scout .sc-h b{font-size:15px;flex:1;line-height:1.25}
+     #scout .meta{display:flex;flex-wrap:wrap;gap:6px} #scout .m{font-size:10.5px;letter-spacing:.03em;color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+     #scout .needs{display:flex;flex-wrap:wrap;gap:5px} #scout .nk{font-size:11px;background:rgba(144,133,233,.13);border:1px solid rgba(144,133,233,.32);color:var(--ink);border-radius:20px;padding:2px 9px} #scout .nk.cut{opacity:.5;text-decoration:line-through}
+     #scout .needlbl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:1px}
+     #scout .cands{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--line);padding-top:9px}
+     #scout .cand b{font-size:12.5px} #scout .cand .cl{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:11.5px;color:var(--ink2);margin-top:1px;align-items:center}
+     #scout .cand .cl a{color:var(--accent)} #scout .lead{color:var(--good)!important;font-weight:700}
+     #scout .none{font-size:12px;color:var(--warn);font-style:italic}
+     #scout .flagp{font-size:11.5px;color:var(--warn);font-weight:600}
+    </style>
+    <h2>🔦 Scout Board <span class="tag">the director's breakdown → what each location must have + tracked candidates</span></h2>
+    <p class="note" style="margin:0 0 12px">Every set in Eps 2–6 as a scouting brief: the <b>spaces one location has to contain</b> (these are requirements, not assignments — we're not saying <i>where</i> the bedroom is, just that the place needs one), its <b>hub · est. shoot days · day/night</b>, and tracked <b>candidates with address, contact &amp; 🗺️ map</b>. Filter by hub or status. Pilot sets already shot/locked are grouped at the bottom.</p>
+    <div class="scoutsum" id="scoutsum"></div>
+    <div class="mapfilters" id="scoutfilters"></div>
+    <div class="scoutgrid" id="scoutgrid"></div>
+    <p class="note">Statuses: <span class="chip good">✓ LOCKED</span> signed · <span class="chip" style="background:rgba(57,135,229,.18);color:#8fbaf0">🔥 LEAD</span> inquiry out · <span class="chip warn">⚠ OPTIONS</span> shortlist to call · <span class="chip crit">🔦 OPEN</span> needs scouting · <span class="chip neutral">✂ CUT</span> may be dropped. Full contacts/notes per set → <i>LOCATION_OPTIONS.md</i>.</p>
+  </div>
+  <script>
+  const SCOUT=[
+   {s:"Hell House",hub:"N",d:"6 days",dn:6,t:"D+N",ep:"103·104·106",st:"lead",
+    needs:["Hero dark EXTERIOR","Foyer","Grand staircase","Living room","Office","Hallway","Upstairs hallway","Master bedroom (walls 'bleed')","Sandra's room","Black Willow Woods just outside"],
+    flag:"Heaviest new set (6 days) — one place should cover foyer+stair, a parlor for ~30 (séance), an upstairs + 2 bedrooms, an office, front gates & crowd parking.",
+    cands:[
+     {n:"⭐ Beauport (Sleeper-McCann)",a:"75 Eastern Point Blvd, Gloucester",c:"Historic New England — Kristen (inquiry out)",st:"lead",mk:"beauport",u:"https://www.historicnewengland.org/property/beauport-the-sleeper-mccann-house/",px:{permit:"HNE approval + fee/donation; museum-safe FX only (blood=post)",access:"closes Oct 17 — shoot right after",park:"Eastern Point — limited"}},
+     {n:"Morning Garden, Gloucester",a:"190 Western Ave, Gloucester",c:"MA Film Office / mgretreats",st:"options",mk:"morninggarden",u:"https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65",px:{permit:"Unification Church owner — pitch FX early"}},
+     {n:"Stevens Estate, N. Andover",a:"723 Osgood St, N. Andover",c:"781-738-0511 · events@stevensestateevents.com",st:"options",mk:"stevens",u:"https://www.stevensestateevents.com"},
+     {n:"Andover Estate",a:"Andover",c:"MA Film Office 617-973-8400",st:"options",mk:"andoverestate",u:"https://ma.reel-scout.com/loc_detail.aspx?id=10072013&cid=65"},
+     {n:"Turner Hill, Ipswich",a:"3 Manor House Ln, Ipswich",c:"978-356-7070",st:"options",mk:"turnerhill",u:"https://www.turnerhill.com"},
+     {n:"Crane Estate (Castle Hill)",a:"290 Argilla Rd, Ipswich",c:"The Trustees / Castle Hill 978-356-4351",st:"options",mk:"crane",u:"https://thetrustees.org/place/castle-hill-on-the-crane-estate/"}
+    ]},
+   {s:"Salem, 1692 (period thread)",hub:"S",d:"1 day",dn:1,t:"D+N",ep:"2·3·5·6",st:"options",
+    needs:["Proctor's Ledge","Ipswich prison","Jail cell","Parris residence — nursery"],
+    flag:"One living-history / colonial village to service ALL four — historical accuracy paramount (no modern intrusion in frame).",
+    cands:[
+     {n:"Old Sturbridge Village",a:"1 Old Sturbridge Village Rd, Sturbridge",c:"osv.org — film office",st:"options",mk:"osv",u:"https://www.osv.org"},
+     {n:"Rebecca Nurse Homestead",a:"149 Pine St, Danvers",c:"rebeccanurse.org",st:"open",u:"https://rebeccanurse.org"},
+     {n:"Alcott House / Concord",a:"Concord",c:"louisamayalcott.org",st:"open",u:"https://louisamayalcott.org"}
+    ]},
+   {s:"Mary's Bath / Lighthouse Beach",hub:"S",d:"2 days",dn:2,t:"D+N",ep:"2·3·4·5",st:"options",
+    needs:["Mary's Bath — dark pond (night in-water)","Lighthouse beach","A 1692 version of the water","Reads as located behind Hell House"],
+    cands:[
+     {n:"Winter Island / Fort Pickering Light",a:"50 Winter Island Rd, Salem",c:"Ellen Talkowsky 978-619-5676",st:"options",mk:"winterisland",u:"https://www.salemma.gov/winter-island",px:{permit:"Salem park permit; ⚠ avoid Oct weekends"}},
+     {n:"Ned's Point Light",a:"Ned's Point Rd, Mattapoisett",c:"town of Mattapoisett",st:"open"},
+     {n:"Myles Standish ponds",a:"Cranberry Rd, S. Carver",c:"MA DCR",st:"open"}
+    ]},
+   {s:"Gardner Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·3·5·6",st:"options",
+    needs:["Exterior","Front yard","Front porch","IN-GROUND POOL","Another area near pool (ext)","Kitchen","Living room","Dakota's room","Upstairs hallway"],
+    flag:"MUST have a real in-ground pool (night pool-party flashback) + a boho/vibey feel.",
+    cands:[
+     {n:"18 Hardy St, Danvers (pool, at base)",a:"18 Hardy St, Danvers",c:"via listing",st:"options",mk:"hardyst",u:"https://www.zillow.com/danvers-ma/with-pool/"},
+     {n:"3 Meeting Place, Beverly (pool+cabana)",a:"Beverly",c:"via listing",st:"open"},
+     {n:"Woburn Victorian ($120/hr)",a:"Woburn",c:"Peerspace",st:"open",u:"https://www.peerspace.com/pages/listings/633cee3d8620e9000eb0b258"}
+    ]},
+   {s:"Hall Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·3·5·6",st:"options",
+    needs:["Exterior (night)","Living room","Kitchen","Sawyer's bedroom","Sawyer's bathroom","Parker's room","Morgan's room"],
+    flag:"The put-together colonial (mom is the mayor) — Morgan's room can double as her mayor's office.",
+    cands:[
+     {n:"Applefield, Ipswich (curved stair, teen BRs)",a:"Ipswich",c:"Peerspace",st:"options",u:"https://www.peerspace.com/pages/listings/6886ee4d52324b53e2657150"},
+     {n:"Solomon Holt House, Andover",a:"Andover",c:"Peerspace",st:"open",u:"https://www.peerspace.com/pages/listings/62f312dbd600a7000e4a2a88"},
+     {n:"Waldron St, Marblehead",a:"Marblehead",c:"—",st:"open"}
+    ]},
+   {s:"Coffee Shop (Black Cat)",hub:"F",d:"5–7 hrs",dn:0.7,t:"D+N",ep:"2·4·5·6",st:"options",
+    needs:["Exterior (establishing)","Interior","Counter in front"],
+    cands:[
+     {n:"⭐ Blackcraft Coffee, Salem (witch-brand café that rents)",a:"Salem",c:"blackcraftcult.com",st:"options",mk:"blackcraft",u:"https://blackcraftcult.com"},
+     {n:"Gulu-Gulu Café, Salem",a:"247 Essex St, Salem",c:"—",st:"open"},
+     {n:"Atomic Café, Beverly",a:"Beverly",c:"—",st:"open"}
+    ]},
+   {s:"Small Outdoor Club (night gig)",hub:"N",d:"½ day",dn:0.5,t:"Night",ep:"106",st:"options",
+    needs:["Exterior","Stage","Backstage"],
+    cands:[
+     {n:"⭐ Take-Out Terrace Truss & Stage, Ipswich",a:"4 Union St, Ipswich (Riverwalk, by the river + mural)",c:"Ipswich Rec & Culture — reserve free via town site",st:"options",mk:"takeoutterrace",u:"https://www.ipswichma.gov/facilities/facility/details/TakeOut-Terrace-Truss-Stage-53",px:{permit:"town-owned — FREE to reserve",power:"real truss stage w/ A/V + power",sound:"downtown street — some evening traffic",park:"downtown lots"}},
+     {n:"Notch Brewing Biergarten, Salem",a:"283R Derby St, Salem",c:"978-412-7674",st:"open",mk:"notch",u:"https://notchbrewing.com"},
+     {n:"Narrows Center, Fall River (HUB 1)",a:"16 Anawan St, Fall River",c:"508-324-1926",st:"open",mk:"narrows",u:"https://narrowscenter.org"}
+    ]},
+   {s:"Sacred Heart Church + Fall Festival",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"104",st:"options",
+    needs:["Exterior","Interior","Festival path outside","Pumpkin patch","Photography tent","Water-gun tent","Ticket-tent area","✂ Porta-potty"],
+    flag:"Grounds only, warm priest OK w/ the content. Pumpkin-patch grounds: Connors / Smolak Farms.",
+    cands:[
+     {n:"⭐ 'Old Sloop' First Congregational, Rockport",a:"12 School St, Rockport",c:"oldsloop.org",st:"options",mk:"oldsloop",u:"https://oldsloop.org"},
+     {n:"Northshore UU, Danvers",a:"Danvers",c:"nsuu.org",st:"open",u:"https://www.nsuu.org"},
+     {n:"First Church Wenham",a:"Wenham",c:"firstchurchwenham.org",st:"open",u:"https://www.firstchurchwenham.org"}
+    ]},
+   {s:"Hospital + ER + Psych Ward",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·5·6",st:"options",
+    needs:["Hospital cafeteria","Hospital hallway","Hospital room","Psych hospital interior","Psych cell","Psych lab","Psych lobby","ER exterior","ER interior"],
+    flag:"Consolidate all three (Hospital + ER + Psych) to limit company moves.",
+    cands:[
+     {n:"Tewksbury State Hospital (was 'Juniper Hills')",a:"365 East St, Tewksbury",c:"state approval — mass.gov",st:"options",mk:"tewksbury",u:"https://www.mass.gov/locations/tewksbury-hospital",px:{permit:"state facility approval"}},
+     {n:"Medfield State Hospital (Shutter Island)",a:"Medfield",c:"town of Medfield",st:"options",u:"https://www.town.medfield.net/556/Medfield-State-Hospital",px:{permit:"town approval"}},
+     {n:"South Shore Sim Lab (clean modern ER)",a:"South Shore",c:"—",st:"open"}
+    ]},
+   {s:"Diner",hub:"F",d:"½ day",dn:0.5,t:"Day",ep:"3·5",st:"options",
+    needs:["Interior diner","Hostess area","(likely an ext establishing)"],
+    cands:[
+     {n:"⭐ Agawam Diner, Rowley (1954 Fodero — definitive)",a:"166 Newburyport Tpke, Rowley",c:"theagawamdiner.com — shoot around hours",st:"options",mk:"agawam",u:"http://www.theagawamdiner.com/",px:{access:"operating diner — off-hours / early AM"}},
+     {n:"Salem Diner (1941 Streamliner)",a:"70 Loring Ave, Salem",c:"—",st:"open"},
+     {n:"Portside Diner, Danvers (at base)",a:"Danvers",c:"—",st:"open"}
+    ]},
+   {s:"Willow Reader Cottage",hub:"F",d:"4–5 hrs",dn:0.5,t:"Day",ep:"4·5",st:"open",
+    needs:["Exterior","Ext driveway","Interior"],
+    flag:"Crooked storybook fortune-teller cottage ('Madame Zugasti') — the on-screen Halloween→Christmas crossover.",
+    cands:[
+     {n:"Bunny Cottage, Annisquam",a:"Annisquam, Gloucester",c:"—",st:"open"},
+     {n:"Salty Witches / pre-dressed Salem cottages",a:"Salem",c:"—",st:"open"},
+     {n:"Rockport / Onset shingled cottages",a:"Rockport",c:"—",st:"open"}
+    ]},
+   {s:"Town Center / Police / Morgan's Office / Courthouse",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"3·4·5·6",st:"options",
+    needs:["Town center (1 scene, day)","Police — interior","Police — exterior","Hodge's office (in the station)","Morgan's office (day)","Courthouse — exterior bench (day)","✂ Courthouse interior"],
+    flag:"Bundle these civic sets into one company day.",
+    cands:[
+     {n:"New Bedford City Hall (1856 suite + film office)",a:"133 William St, New Bedford",c:"Amy DesRosiers 508-979-1745",st:"options",mk:"nbcityhall"},
+     {n:"Salem City Hall (1837)",a:"93 Washington St, Salem",c:"978-745-9595",st:"open",mk:"salemcityhall",u:"https://www.salemma.gov"},
+     {n:"Essex Superior Courthouse (1805 Bulfinch)",a:"145 High St, Newburyport",c:"Trial Court PIO",st:"open",mk:"courthouse"},
+     {n:"Town green (Ipswich / Salem Common)",a:"—",c:"town",st:"open"}
+    ]},
+   {s:"Landry Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"4",st:"open",
+    needs:["Carrie's bedroom (ALL PINK)","Exterior"],
+    flag:"Carrie's bedroom can be cheated at another house if the schedule needs it.",
+    cands:[{n:"Modest single-family near a hub (pink dress the room)",a:"—",c:"—",st:"open"}]},
+   {s:"Sandra's House (Boston)",hub:"B",d:"½ day",dn:0.5,t:"Day + 1 ext night",ep:"6",st:"open",
+    needs:["Interior","Ext / front porch / doorway","Ext sidewalk outside"],
+    cands:[{n:"Modest faded Boston single-family (winter)",a:"Boston",c:"—",st:"open"}]},
+   {s:"Marrero Residence",hub:"F",d:"2 scenes",dn:0.3,t:"1 Day / 1 Night",ep:"4·5",st:"open",
+    needs:["Ext front of house (day)","Interior (night)"],
+    cands:[{n:"Bookish young-teacher's home (warm lamplight)",a:"—",c:"—",st:"open"}]},
+   {s:"Hodge Residence",hub:"F",d:"2 scenes",dn:0.2,t:"1 Day / 1 Night",ep:"5·6",st:"open",
+    needs:["Bathroom (both scenes — can cheat D4N)"],
+    flag:"Both scenes are in the bathroom → cheat day-for-night; brick exterior is just an establishing insert.",
+    cands:[{n:"Any house bathroom + a brick front insert",a:"—",c:"—",st:"open"}]},
+   {s:"Playground (night)",hub:"F",d:"½ day",dn:0.5,t:"Night",ep:"4",st:"open",
+    needs:["Ext playground","Swings"],
+    cands:[
+     {n:"Endicott Park, Danvers (at base)",a:"57 Forest St, Danvers",c:"Erika 978-774-6518",st:"options",mk:"endicottpark",u:"https://www.danversma.gov/286/Reservation-Permit-Information"},
+     {n:"Stage Fort Park, Gloucester (10pm ordinance)",a:"Gloucester",c:"city of Gloucester",st:"open"},
+     {n:"Salem Willows / Kiddieland",a:"Salem",c:"city of Salem",st:"open"}
+    ]},
+   {s:"Abandoned Park",hub:"F",d:"⅓ day",dn:0.3,t:"Day",ep:"5",st:"open",
+    needs:["Abandoned lot / orchard (1 scene) — rusted carousel dress"],
+    cands:[{n:"Cracked parking lot / weedy orchard near a hub",a:"—",c:"—",st:"open"}]},
+   {s:"Airbnb (Boston)",hub:"B",d:"½ day",dn:0.5,t:"Dusk & night",ep:"6",st:"open",
+    needs:["Exterior","Bedroom"],
+    flag:"Make it a rented Airbnb HOUSE, not a city apartment.",
+    cands:[{n:"Film-cleared Boston-area rental HOUSE",a:"Boston",c:"—",st:"open"}]},
+   {s:"Beauty Store",hub:"F",d:"3–4 hrs",dn:0.3,t:"Day",ep:"4 (flashback)",st:"cut",
+    needs:["Interior only"],
+    flag:"1 scene, trying to cut — low priority.",
+    cands:[
+     {n:"Moon Baby / Andrew Michaels, Salem",a:"Salem",c:"—",st:"open"},
+     {n:"Sally Beauty (the aisle; corporate sign-off)",a:"—",c:"corporate",st:"open"}
+    ]},
+   {s:"Bennet Residence",hub:"F",d:"1 scene",dn:0.2,t:"Day",ep:"6",st:"open",
+    needs:["Ext front door"],
+    cands:[{n:"Any modest house front near a hub",a:"—",c:"—",st:"open"}]}
+  ];
+  const SCOUT_PILOT=[
+   {s:"Klaypool Residence + Silo + Meetinghouse",st:"locked",d:"8 days — heaviest",needs:["Silo (armoire→HQ)","Dylan's & Jill's rooms","Kitchen/living/foyer","Meetinghouse","Chicago flashback"],cands:[{n:"31 Crowell Rd, Sagamore Beach",a:"31 Crowell Rd, Sagamore Beach",c:"Julia 339-832-3123",st:"locked",mk:"klaypool",px:{permit:"private — family caters",sound:"quiet residential"}}]},
+   {s:"Verlice Residence + Graveyard",st:"shot",d:"—",needs:["Atrium","Bedroom/kitchen","Adjacent graveyard"],cands:[{n:"Filmed in the pilot",a:"63 Bridge St, West Newbury (graveyard)",c:"Sean 603-818-1913",st:"shot",mk:"verlice"}]},
+   {s:"Black Willow Academy (+ woods, dance, PD, ward)",st:"options",d:"6 days",needs:["Library / classroom","Hallways","Cafeteria","Grounds = the Woods","Dance hall"],cands:[{n:"Penguin Hall, Wenham (awaiting reply)",a:"36 Essex St, Wenham",c:"Molly Martins 978-536-1171",st:"options",mk:"penguin",u:"https://penguinhall.org"},{n:"BACKUP: Crane Estate Great House, Ipswich",a:"290 Argilla Rd, Ipswich",c:"The Trustees 978-356-4351",st:"open",mk:"crane"}]}
+  ];
+  (function(){
+   const HUBL={S:'🚐 South Shore',N:'🚐 North Shore',B:'🚐 Boston',F:'🚐 Either hub'};
+   const STL={locked:['good','✓ LOCKED'],lead:['','🔥 LEAD'],options:['warn','⚠ OPTIONS'],open:['crit','🔦 OPEN — needs scouting'],cut:['neutral','✂ trying to cut'],shot:['good','✓ SHOT']};
+   const leadStyle='background:rgba(57,135,229,.18);color:#8fbaf0';
+   const grid=document.getElementById('scoutgrid'), sum=document.getElementById('scoutsum'), filt=document.getElementById('scoutfilters');
+   if(!grid) return;
+   let fHub='all', fSt='all';
+   const chip=(st)=>{const v=STL[st]||['neutral',st];return `<span class="chip ${v[0]}" ${st==='lead'?'style="'+leadStyle+'"':''}>${v[1]}</span>`;};
+   function px(x){if(!x)return '';const m=[];if(x.power)m.push('⚡ '+x.power);if(x.sound)m.push('🔇 '+x.sound);if(x.park)m.push('🅿️ '+x.park);if(x.permit)m.push('📋 '+x.permit);if(x.access)m.push('🚪 '+x.access);return m.length?`<div class="cl" style="color:var(--muted)">${m.join(' · ')}</div>`:'';}
+   function cand(c){
+     const map=c.mk?`<span class="btn-map" onclick="showOnMap('${c.mk}')">🗺️ map</span>`:'';
+     const list=c.u?`<a href="${c.u}" target="_blank">listing ↗</a>`:'';
+     const lead=c.st==='lead'||c.st==='locked';
+     return `<div class="cand"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)}
+       <div class="cl">${c.a&&c.a!=='—'?'📍 '+c.a:''} ${c.c&&c.c!=='—'?'· 📞 '+c.c:''} ${map} ${list}</div>${px(c.px)}</div>`;
+   }
+   function card(o,pilot){
+     const needs=o.needs.map(n=>`<span class="nk ${n.indexOf('✂')===0?'cut':''}">${n.replace('✂ ','')}</span>`).join('');
+     const meta=[o.hub?`<span class="m">${HUBL[o.hub]}</span>`:'',o.d?`<span class="m">📅 ${o.d}</span>`:'',o.t?`<span class="m">${/Night/.test(o.t)&&!/D\+N|Day/.test(o.t)?'🌙':/D\+N/.test(o.t)?'🌗':'☀️'} ${o.t}</span>`:'',o.ep?`<span class="m">Eps ${o.ep}</span>`:''].join('');
+     return `<div class="sc" data-hub="${o.hub||'F'}" data-st="${o.st}">
+       <div class="sc-h"><b>${o.s}</b>${chip(o.st)}</div>
+       <div class="meta">${meta}</div>
+       ${o.flag?`<div class="flagp">▸ ${o.flag}</div>`:''}
+       <div><div class="needlbl">Location must have</div><div class="needs">${needs}</div></div>
+       <div class="cands">${o.cands&&o.cands.length?o.cands.map(cand).join(''):'<span class="none">🔦 open — needs scouting</span>'}</div>
+     </div>`;
+   }
+   function draw(){
+     grid.innerHTML='';
+     const show=SCOUT.filter(o=>(fHub==='all'||o.hub===fHub)&&(fSt==='all'||o.st===fSt));
+     grid.insertAdjacentHTML('beforeend', show.map(o=>card(o)).join(''));
+     if(fHub==='all'&&fSt==='all'){
+       grid.insertAdjacentHTML('beforeend', `<div style="grid-column:1/-1;margin:6px 0 -4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Pilot — already shot / locked</div>`);
+       grid.insertAdjacentHTML('beforeend', SCOUT_PILOT.map(o=>card(o,1)).join(''));
+     }
+   }
+   // summary
+   const all=SCOUT.concat(SCOUT_PILOT);
+   const cnt=s=>all.filter(o=>o.st===s).length;
+   const days=SCOUT.reduce((a,o)=>a+(o.dn||0),0);
+   sum.innerHTML=[
+     ['🎬 '+SCOUT.length,'new-build sets'],
+     ['📅 ~'+Math.round(days),'est. shoot days'],
+     [cnt('locked'),'✓ locked'],
+     [cnt('lead'),'🔥 leads'],
+     [cnt('options'),'⚠ options'],
+     [cnt('open'),'🔦 to scout'],
+     [cnt('cut'),'✂ cutting']
+   ].map(x=>`<div class="ss"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
+   // filters
+   const hubs=[['all','All hubs'],['N','North Shore'],['S','South Shore'],['B','Boston'],['F','Either']];
+   const sts=[['all','All status'],['lead','Leads'],['options','Options'],['open','To scout'],['cut','Cutting']];
+   function fbar(){
+     filt.innerHTML='<span style="font-size:11px;color:var(--muted);align-self:center;margin-right:2px">Hub:</span>'+
+       hubs.map(h=>`<button class="mf ${fHub===h[0]?'on':''}" data-h="${h[0]}">${h[1]}</button>`).join('')+
+       '<span style="font-size:11px;color:var(--muted);align-self:center;margin:0 2px 0 10px">Status:</span>'+
+       sts.map(s=>`<button class="mf ${fSt===s[0]?'on':''}" data-s="${s[0]}">${s[1]}</button>`).join('');
+   }
+   filt.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.h!==undefined)fHub=b.dataset.h;if(b.dataset.s!==undefined)fSt=b.dataset.s;fbar();draw();});
+   fbar(); draw();
+  })();
+  </script>
 
   <div class="card" id="locations">
     <h2>📍 Location Guide <span class="tag">from the director's list · every set + its vibe</span></h2>
