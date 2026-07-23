@@ -251,11 +251,34 @@
      #scout .cand .cl a{color:var(--accent)} #scout .lead{color:var(--good)!important;font-weight:700}
      #scout .none{font-size:12px;color:var(--warn);font-style:italic}
      #scout .flagp{font-size:11.5px;color:var(--warn);font-weight:600}
+     #scout .stoolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+     #scout .ssearch{flex:1;min-width:220px;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:10px 14px;color:var(--ink);font-size:14px}
+     #scout .ssearch:focus{outline:none;border-color:var(--violet)}
+     #scout .togglebtn{cursor:pointer;font-weight:700;border:1px solid var(--violet);background:rgba(144,133,233,.15);color:var(--ink);border-radius:9px;padding:9px 13px;white-space:nowrap}
+     #scout .cand .top{display:flex;align-items:flex-start;gap:8px} #scout .cand .top b{flex:1}
+     #scout .pickbtn{cursor:pointer;font-size:11px;font-weight:800;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:8px;padding:3px 9px;white-space:nowrap;user-select:none}
+     #scout .pickbtn:hover{border-color:var(--violet);color:var(--ink)}
+     #scout .pickbtn.on{background:var(--violet);color:#0d0d0d;border-color:var(--violet)}
+     #scout .mypicks{background:var(--surface2);border:1px solid var(--violet);border-radius:12px;padding:13px 15px;margin:0 0 14px;display:none}
+     #scout .mypicks.show{display:block}
+     #scout .pkhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+     #scout .pkset{margin:9px 0 2px;font-size:12px;font-weight:750;color:var(--violet)}
+     #scout .pkrow{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--line)}
+     #scout .pkrow .rk{font-weight:800;color:var(--violet);min-width:56px} #scout .pkrow .nm{flex:1}
+     #scout .pkrow button,#scout .pkclear{cursor:pointer;border:1px solid var(--ring);background:var(--surface);color:var(--ink2);border-radius:6px;padding:2px 8px;font-size:12px;line-height:1.3}
+     #scout .pkrow button:hover{border-color:var(--violet);color:var(--ink)}
+     #scout .rkbadge{font-size:10px;font-weight:800;color:var(--violet);background:rgba(144,133,233,.16);border:1px solid rgba(144,133,233,.4);border-radius:6px;padding:1px 6px;margin-left:4px}
+     #scout .nomatch{grid-column:1/-1;color:var(--muted);font-style:italic;padding:14px 2px}
     </style>
     <h2>🔦 Scout Board <span class="tag">the director's breakdown → what each location must have + tracked candidates</span></h2>
     <p class="note" style="margin:0 0 12px">Every set in Eps 2–6 as a scouting brief: the <b>spaces one location has to contain</b> (these are requirements, not assignments — we're not saying <i>where</i> the bedroom is, just that the place needs one), its <b>hub · est. shoot days · day/night</b>, and tracked <b>candidates with address, contact &amp; 🗺️ map</b>. Filter by hub or status. Pilot sets already shot/locked are grouped at the bottom.</p>
     <div class="scoutsum" id="scoutsum"></div>
     <div style="margin:0 0 12px"><a class="btn" style="background:var(--good);color:#0d0d0d;font-weight:700;padding:8px 14px;border-radius:9px;display:inline-block" href="mailto:cinemaasinc@gmail.com?subject=PN%20location%20suggestion&body=Set%20it%27s%20for%3A%0ALocation%20name%3A%0AAddress%3A%0AContact%20(name%20%2B%20phone%2Femail)%3A%0ALink%2Flisting%3A%0AParking%20%2F%20power%20%2F%20sound%20%2F%20permit%20notes%3A%0AWhy%20it%20fits%3A%0A(attach%20photos)%0A">➕ Suggest a location / add info</a> <span style="font-size:11.5px;color:var(--muted)">— anyone (scouts, crew, locals) can send a candidate; it lands in the PN inbox to add here.</span></div>
+    <div class="stoolbar">
+      <input class="ssearch" id="scoutsearch" type="search" placeholder="🔎 Search any location — town, feature, style… (e.g. mansard, Beverly, ballroom, corn maze)">
+      <button class="togglebtn" id="pickstoggle">⭐ My picks (0)</button>
+    </div>
+    <div class="mypicks" id="mypicks"></div>
     <div class="mapfilters" id="scoutfilters"></div>
     <div class="scoutgrid" id="scoutgrid"></div>
     <p class="note">Statuses: <span class="chip good">✓ LOCKED</span> signed · <span class="chip" style="background:rgba(57,135,229,.18);color:#8fbaf0">🔥 LEAD</span> inquiry out · <span class="chip warn">⚠ OPTIONS</span> shortlist to call · <span class="chip crit">🔦 OPEN</span> needs scouting · <span class="chip neutral">✂ CUT</span> may be dropped. Full contacts/notes per set → <i>LOCATION_OPTIONS.md</i>.</p>
@@ -290,7 +313,6 @@
      {n:"Oakes Ames Memorial Hall, N. Easton",a:"N. Easton",c:"event venue",st:"open",u:"https://en.wikipedia.org/wiki/Oakes_Ames_Memorial_Hall",px:{access:"~40–45 min",permit:"H.H. Richardson 1881 — stone Great Hall w/ leaded stained glass; a grand hall, not a full mansion"}},
      {n:"James Arnold Mansion / Wamsutta Club, New Bedford",a:"427 County St, New Bedford",c:"info@jamesarnoldmansion.org",st:"open",u:"https://jamesarnoldmansion.org/mansion/",px:{access:"~35–40 min (Hub 1)",permit:"1821 Federal granite + 1873 Mansard; antiques, fireplaces, chandeliers — verify dark-oak/stained glass"}},
      {n:"Blithewold Mansion, Bristol RI",a:"101 Ferry Rd, Bristol RI",c:"blithewold.org — weddings",st:"open",u:"https://www.blithewold.org/",px:{access:"~50–55 min — EDGE of range; ⚠ Rhode Island (out of state, no MA credit)",park:"45-room English-manor estate, dark-wood heirloom interiors, 33 waterfront acres"}},
-     {n:"Heritage Museums & Gardens, Sandwich",a:"67 Grove St, Sandwich",c:"heritagemuseumsandgardens.org — event rentals",st:"open",u:"https://heritagemuseumsandgardens.org/about-us/event-rentals/",px:{access:"~15 min — VERY close to Klaypool",permit:"proximity / GROUNDS option — buildings skew modern-repro, not gothic interior"}},
      {n:"Chapter House, Yarmouth Port",a:"277 Rte-6A, Yarmouth Port",c:"508-362-4348",st:"open",u:"https://www.chapterhousecapecod.com/event-venue",px:{access:"~30–35 min (Mid-Cape)",permit:"restored Victorian mansion event venue — interior detail unverified, scout it"}},
      {n:"⭐ Willowdale Estate, Topsfield (BALLROOM)",a:"Bradley Palmer State Park, Topsfield",c:"willowdaleestate.com",st:"options",u:"https://www.willowdaleestate.com/about",px:{access:"~10–15 min · IN HUB 2",permit:"1901 Tudor STONE mansion modeled on Aberdeen castles — grand BALLROOM w/ exposed beams + a large carved-stone fireplace, library, conservatory; inside a 45-acre state park (woods EXT). Event venue — best all-around ballroom fit."}},
      {n:"⭐ Ocean Edge / Nickerson Mansion, Brewster (BALLROOM)",a:"2907 Main St, Brewster",c:"oceanedge.com — events",st:"options",u:"https://www.oceanedge.com/our-history",px:{access:"~35–45 min from Sagamore (Hub 1)",permit:"1907–12 stone mansion, 'Renaissance Revival + GOTHIC themes,' Gilded-Age Nickerson estate — large luxury BALLROOM; resort used to events; Cape Cod Bay backdrop."}},
@@ -307,9 +329,7 @@
      {n:"⭐ 9 Little Nahant Rd, Nahant",a:"9 Little Nahant Rd, Nahant",c:"Redfin / MLS 73444398",st:"options",u:"https://www.redfin.com/MA/Nahant/9-Little-Nahant-Rd-01908/home/8317223",px:{access:"Nahant · HUB 2 (~20–25 min Salem/Danvers) — closest spooky-for-sale",permit:"1870/80 Queen Anne, 8bd/~10,800 sqft — dramatic lookout TOWER (360° ocean views), double-height library, stained glass, ornate woodwork. ⚠ restored + re-listed ~$5.5M (now pristine, not decrepit) — confirm status. Via @spookyhousesforsale."}},
      {n:"William Warden House, 7 Circuit Ave E, Worcester",a:"7 Circuit Ave E, Worcester",c:"Coldwell Banker listing",st:"open",u:"https://www.coldwellbankerhomes.com/ma/worcester/7-circuit-ave-e/pid_48528616/",px:{access:"Worcester · central (~1 hr both hubs)",permit:"1890s Queen Anne w/ corner TURRET, ~6,000 sqft, un-renovated = genuine decrepit haunted vibe ('a basement you don't want to go down into'). Cheapest. ⚠ dated post (~2022 sale $325k; poss. 2025 re-list) — verify status. Via @spookyhousesforsale."}},
      {n:"16 Summit St, Newton",a:"16 Summit St, Newton",c:"Zillow listing",st:"open",u:"https://www.zillow.com/homedetails/16-Summit-St-Newton-MA-02458/56303283_zpid/",px:{access:"Newton · ~40–50 min (Greater Boston, W)",permit:"1850 Queen Anne Italianate, 7+bd/6,745 sqft, $1.95M — stained glass, dark-wood paneling throughout, grand entryway + a 2nd-floor BALLROOM (grandest interiors of the MA spooky set). Currently a 3-unit. Via @spookyhousesforsale."}},
-     {n:"⭐ Noblewoods Estate, 31 Boyles St, Beverly (ACTIVE)",a:"31 Boyles St, Beverly",c:"Redfin / MLS 73536291",st:"options",u:"https://www.redfin.com/MA/Beverly/31-Boyles-St-01915/home/8215370",px:{access:"Beverly · IN HUB 2 (bullseye)",permit:"1865 mansion, ~9,151 sqft, 6bd/7ba, gated on 2.19 acres — a TURRET suite + 9 fireplaces. $4.375M ACTIVE. ⚠ fully restored (polished, not decayed) + pricey."}},
      {n:"⭐ 251 Puritan Rd, Swampscott (ACTIVE)",a:"251 Puritan Rd (Phillips Point), Swampscott",c:"Gibson Sotheby's",st:"options",u:"https://www.sothebysrealty.com/gibsonsir/eng/sales/detail/846-l-962-gb9v53/251-puritan-road-phillips-point-swampscott-ma-01907",px:{access:"Swampscott · HUB 2 (~10–15 min Nahant/Salem)",permit:"1895 Queen Anne/Shingle oceanfront, 8,178 sqft — stained-glass entry doors, hand-carved balusters, rich wood paneling, ornate fireplaces, wraparound porch. $4.95M ACTIVE. ⚠ refined/coastal, not brooding; pricey."}},
-     {n:"30 Magnolia Rd, Milton (ACTIVE)",a:"30 Magnolia Rd, Milton",c:"Redfin / MLS 73508119",st:"open",u:"https://www.redfin.com/MA/Milton/30-Magnolia-Rd-02186/home/8908254",px:{access:"Milton · edge HUB 1 (~25 min Hingham)",permit:"1900 Victorian, 5,458 sqft/12 rooms — ornate woodwork, high ceilings, fireplaces, porch. $1.95M ACTIVE — most affordable active grand Victorian near a hub, but turn-key/updated (least haunted)."}},
      {n:"Theodore W. Borden Estate, 240 Highland Ave, Fall River (SOLD)",a:"240 Highland Ave, Fall River",c:"new owner — approach via Coldwell Banker record",st:"open",u:"https://www.coldwellbankerhomes.com/ma/fall-river/240-highland-ave/pid_46375203/",px:{access:"Fall River · HUB 1 (~20 min New Bedford)",permit:"1872 Second Empire — full MANSARD, marble fireplaces, grandiose ceilings + staircase, period woods, carriage house (Highlands Hist. Dist). BEST Crimson-Peak silhouette found. ⚠ recently SOLD (~$1.25M) — approach the new owner as a location."}},
      {n:"9 Forrester St, Salem (SOLD)",a:"9 Forrester St, Salem",c:"new owner — via Redfin record",st:"open",u:"https://www.redfin.com/MA/Salem/9-Forrester-St-01970/home/8399796",px:{access:"Salem · IN HUB 2",permit:"1880 Queen Anne w/ a classic 'Witches' Cap' TURRET, hand-carved staircase, stained glass, curved-glass windows, original mantels — very on-theme for Salem. Smaller (~3,000 sqft). ⚠ SOLD 2023 — owner-approach lead."}},
      {n:"Henry E. Fales Mansion, Milford (VACANT/boarded)",a:"Walnut St, Milford",c:"owner/town outreach — NOT listed",st:"open",u:"https://www.google.com/search?q=Henry+E.+Fales+Mansion+Milford+MA+Second+Empire",px:{access:"Milford · central (~50 min S. Shore hub)",permit:"1866 Second Empire — mansard + belvedere, ocular window, window hoods, nearly all original detail; BOARDED-UP / VACANT since ~2009 = the genuinely-DECAYED 'dress freely for a blood rig' look. Not for sale — direct owner/town outreach."}},
@@ -476,24 +496,31 @@
    const grid=document.getElementById('scoutgrid'), sum=document.getElementById('scoutsum'), filt=document.getElementById('scoutfilters');
    if(!grid) return;
    let fHub='all', fSt='all';
+   let PICKS={}; try{PICKS=JSON.parse(localStorage.getItem('pnPicks')||'{}')||{};}catch(e){PICKS={};}
+   const A=s=>(''+s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+   const rankOf=(set,n)=>{const a=PICKS[set]||[];const i=a.indexOf(n);return i<0?0:i+1;};
+   function savePicks(){try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));}catch(e){}}
    const chip=(st)=>{const v=STL[st]||['neutral',st];return `<span class="chip ${v[0]}" ${st==='lead'?'style="'+leadStyle+'"':''}>${v[1]}</span>`;};
    function px(x){if(!x)return '';const m=[];if(x.power)m.push('⚡ '+x.power);if(x.sound)m.push('🔇 '+x.sound);if(x.park)m.push('🅿️ '+x.park);if(x.permit)m.push('📋 '+x.permit);if(x.access)m.push('🚪 '+x.access);return m.length?`<div class="cl" style="color:var(--muted)">${m.join(' · ')}</div>`:'';}
-   function cand(c){
+   function cand(c,setName){
      const map=c.mk?`<span class="btn-map" onclick="showOnMap('${c.mk}')">🗺️ map</span>`:'';
      const list=c.u?`<a href="${c.u}" target="_blank">listing ↗</a>`:'';
      const lead=c.st==='lead'||c.st==='locked';
-     return `<div class="cand"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)}
+     const rk=rankOf(setName,c.n);
+     const pk=`<span class="pickbtn ${rk?'on':''}" data-set="${A(setName)}" data-nm="${A(c.n)}">${rk?'★ Pick '+rk:'☆ pick'}</span>`;
+     const s=((c.n||'')+' '+(c.a||'')+' '+(c.c||'')+' '+(c.px?Object.values(c.px).join(' '):'')).toLowerCase();
+     return `<div class="cand" data-search="${A(s)}"><div class="top"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)} ${pk}</div>
        <div class="cl">${c.a&&c.a!=='—'?'📍 '+c.a:''} ${c.c&&c.c!=='—'?'· 📞 '+c.c:''} ${map} ${list}</div>${px(c.px)}</div>`;
    }
    function card(o,pilot){
      const needs=o.needs.map(n=>`<span class="nk ${n.indexOf('✂')===0?'cut':''}">${n.replace('✂ ','')}</span>`).join('');
      const meta=[o.hub?`<span class="m">${HUBL[o.hub]}</span>`:'',o.d?`<span class="m">📅 ${o.d}</span>`:'',o.t?`<span class="m">${/Night/.test(o.t)&&!/D\+N|Day/.test(o.t)?'🌙':/D\+N/.test(o.t)?'🌗':'☀️'} ${o.t}</span>`:'',o.ep?`<span class="m">Eps ${o.ep}</span>`:''].join('');
-     return `<div class="sc" data-hub="${o.hub||'F'}" data-st="${o.st}">
+     return `<div class="sc" data-hub="${o.hub||'F'}" data-st="${o.st}" data-search="${A(((o.s||'')+' '+(o.flag||'')+' '+(o.needs||[]).join(' ')).toLowerCase())}">
        <div class="sc-h"><b>${o.s}</b>${chip(o.st)}</div>
        <div class="meta">${meta}</div>
        ${o.flag?`<div class="flagp">▸ ${o.flag}</div>`:''}
        <div><div class="needlbl">Location must have</div><div class="needs">${needs}</div></div>
-       <div class="cands">${o.cands&&o.cands.length?o.cands.map(cand).join(''):'<span class="none">🔦 open — needs scouting</span>'}</div>
+       <div class="cands">${o.cands&&o.cands.length?o.cands.map(c=>cand(c,o.s)).join(''):'<span class="none">🔦 open — needs scouting</span>'}</div>
      </div>`;
    }
    function draw(){
@@ -501,9 +528,10 @@
      const show=SCOUT.filter(o=>(fHub==='all'||o.hub===fHub)&&(fSt==='all'||o.st===fSt));
      grid.insertAdjacentHTML('beforeend', show.map(o=>card(o)).join(''));
      if(fHub==='all'&&fSt==='all'){
-       grid.insertAdjacentHTML('beforeend', `<div style="grid-column:1/-1;margin:6px 0 -4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Pilot — already shot / locked</div>`);
+       grid.insertAdjacentHTML('beforeend', `<div class="pilotlbl" style="grid-column:1/-1;margin:6px 0 -4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Pilot — already shot / locked</div>`);
        grid.insertAdjacentHTML('beforeend', SCOUT_PILOT.map(o=>card(o,1)).join(''));
      }
+     applySearch();
    }
    // summary
    const all=SCOUT.concat(SCOUT_PILOT);
@@ -528,7 +556,44 @@
        sts.map(s=>`<button class="mf ${fSt===s[0]?'on':''}" data-s="${s[0]}">${s[1]}</button>`).join('');
    }
    filt.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.h!==undefined)fHub=b.dataset.h;if(b.dataset.s!==undefined)fSt=b.dataset.s;fbar();draw();});
-   fbar(); draw();
+   const searchEl=document.getElementById('scoutsearch'), mp=document.getElementById('mypicks'), pkToggle=document.getElementById('pickstoggle');
+   function applySearch(){
+     const q=(searchEl.value||'').trim().toLowerCase();
+     let matches=0;
+     grid.querySelectorAll('.sc').forEach(sc=>{
+       const setMatch=q&&(sc.getAttribute('data-search')||'').includes(q);
+       let vis=0;
+       sc.querySelectorAll('.cand').forEach(cd=>{const ok=!q||setMatch||(cd.getAttribute('data-search')||'').includes(q);cd.style.display=ok?'':'none';if(ok)vis++;});
+       const scShow=!q||setMatch||vis>0; sc.style.display=scShow?'':'none'; if(scShow)matches++;
+     });
+     const lbl=grid.querySelector('.pilotlbl'); if(lbl)lbl.style.display=q?'none':'';
+     const old=grid.querySelector('.nomatch'); if(old)old.remove();
+     if(q&&matches===0) grid.insertAdjacentHTML('beforeend','<div class="nomatch">No locations match “'+q.replace(/[<>]/g,'')+'”. Try a town, a style (mansard, Queen Anne), or a feature (ballroom, corn maze, turret).</div>');
+   }
+   function renderPicks(){
+     const sets=Object.keys(PICKS).filter(s=>PICKS[s]&&PICKS[s].length);
+     const total=sets.reduce((a,s)=>a+PICKS[s].length,0);
+     pkToggle.textContent='⭐ My picks ('+total+')';
+     if(!sets.length){ mp.innerHTML='<div style="color:var(--muted);font-size:12.5px">No picks yet — tap <b>☆ pick</b> on any candidate to rank it <b>Pick 1, 2, 3…</b> within its location. Saved on this device; reorder with ↑↓.</div>'; return; }
+     let h='<div class="pkhd"><b style="color:var(--violet)">⭐ My top picks <span style="font-weight:400;color:var(--muted);font-size:11px">· saved on this device</span></b><button class="pkclear">clear all</button></div>';
+     sets.forEach(s=>{ h+='<div class="pkset">'+s+'</div>';
+       PICKS[s].forEach((nm,i)=>{ h+='<div class="pkrow"><span class="rk">Pick '+(i+1)+'</span><span class="nm">'+nm+'</span><button data-mv="up" data-s="'+A(s)+'" data-i="'+i+'" title="move up">↑</button><button data-mv="down" data-s="'+A(s)+'" data-i="'+i+'" title="move down">↓</button><button data-rm="1" data-s="'+A(s)+'" data-i="'+i+'" title="remove">✕</button></div>'; });
+     });
+     mp.innerHTML=h;
+   }
+   function togglePick(set,nm){ const a=PICKS[set]||(PICKS[set]=[]); const i=a.indexOf(nm); if(i<0)a.push(nm); else a.splice(i,1); if(!a.length)delete PICKS[set]; savePicks(); renderPicks(); draw(); }
+   grid.addEventListener('click',e=>{ const b=e.target.closest('.pickbtn'); if(!b)return; togglePick(b.dataset.set,b.dataset.nm); });
+   mp.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b)return;
+     if(b.classList.contains('pkclear')){ if(confirm('Clear all your picks?')){PICKS={};savePicks();renderPicks();draw();} return; }
+     const s=b.dataset.s, i=+b.dataset.i, a=PICKS[s]; if(!a)return;
+     if(b.dataset.rm){ a.splice(i,1); if(!a.length)delete PICKS[s]; }
+     else if(b.dataset.mv==='up'&&i>0){ const t=a[i-1];a[i-1]=a[i];a[i]=t; }
+     else if(b.dataset.mv==='down'&&i<a.length-1){ const t=a[i+1];a[i+1]=a[i];a[i]=t; }
+     savePicks(); renderPicks(); draw();
+   });
+   searchEl.addEventListener('input', applySearch);
+   pkToggle.addEventListener('click', ()=>mp.classList.toggle('show'));
+   renderPicks(); fbar(); draw();
   })();
   </script>
 
