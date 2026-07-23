@@ -550,7 +550,8 @@
    /* ---- shared-state sync: realtime crew-wide when a Firebase config is present, else per-device (cross-tab) ---- */
    const FB_CONFIG = {apiKey:"AIzaSyAAhS8PafH0Pn1qmDaOfY2lmor4V0Ulpag",authDomain:"pnscout-24b48.firebaseapp.com",databaseURL:"https://pnscout-24b48-default-rtdb.firebaseio.com",projectId:"pnscout-24b48",storageBucket:"pnscout-24b48.firebasestorage.app",messagingSenderId:"584581178158",appId:"1:584581178158:web:37237ccce64ff6413650bf"}; /* pnscout Realtime DB — live crew-wide sync of picks + removes */
    let SYNC = { realtime:false, push(){}, wire(cb){ window.addEventListener('storage',ev=>{ if(ev.key==='pnPicks'||ev.key==='pnRemoved'){ let p={},r={}; try{p=JSON.parse(localStorage.getItem('pnPicks')||'{}');r=JSON.parse(localStorage.getItem('pnRemoved')||'{}');}catch(e){} cb({picks:p,removed:r}); } }); } };
-   function applyRemote(v){ PICKS=(v&&v.picks)||{}; REMOVED=(v&&v.removed)||{}; try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));localStorage.setItem('pnRemoved',JSON.stringify(REMOVED));}catch(e){} renderPicks(); draw(); }
+   const dec=x=>{ if(x==null)return {}; if(typeof x==='string'){try{return JSON.parse(x)||{};}catch(e){return {};}} return x; };
+   function applyRemote(v){ PICKS=dec(v&&v.picks); REMOVED=dec(v&&v.removed); try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));localStorage.setItem('pnRemoved',JSON.stringify(REMOVED));}catch(e){} renderPicks(); draw(); }
    function saveState(){ try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));localStorage.setItem('pnRemoved',JSON.stringify(REMOVED));}catch(e){} SYNC.push({picks:PICKS,removed:REMOVED}); }
    const savePicks=saveState;
    function enableFirebase(cfg){
@@ -558,7 +559,8 @@
      ld('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js')
        .then(()=>ld('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js'))
        .then(()=>{ firebase.initializeApp(cfg); const ref=firebase.database().ref('pnBoard'); let applying=false;
-         SYNC={ realtime:true, push(st){ if(applying)return; ref.set(st); }, wire(cb){ ref.on('value',s=>{ applying=true; cb(s.val()||{}); applying=false; }); } };
+         /* store as JSON STRINGS under safe keys — set/candidate names contain / . which are illegal as RTDB keys */
+         SYNC={ realtime:true, push(st){ if(applying)return; ref.set({picks:JSON.stringify(st.picks||{}),removed:JSON.stringify(st.removed||{}),ts:firebase.database.ServerValue.TIMESTAMP}); }, wire(cb){ ref.on('value',s=>{ applying=true; cb(s.val()||{}); applying=false; }); } };
          SYNC.wire(applyRemote); renderPicks();
        }).catch(e=>console.warn('PN sync: Firebase load failed, staying on-device',e));
    }
