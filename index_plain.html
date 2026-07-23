@@ -97,7 +97,7 @@
   .intro{background:var(--surface);border:1px solid var(--ring);border-left:3px solid var(--violet);border-radius:10px;padding:14px 18px;margin:4px 0 12px;font-size:13.5px;color:var(--ink2)}
   .intro b{color:var(--ink)}
   .intro .lead{font-size:15px;color:var(--ink);font-weight:600;margin-bottom:4px}
-  .nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;position:sticky;top:0;background:var(--page);padding:8px 0;z-index:8}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;position:sticky;top:0;background:var(--page);padding:8px 0;z-index:1002}
   .nav a{background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:6px 13px;color:var(--ink2);font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
   .nav a:hover{background:var(--surface);color:var(--ink);text-decoration:none}
   /* location guide */
@@ -151,7 +151,7 @@
   .navsearch{flex:0 1 260px;min-width:150px;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:8px 13px;color:var(--ink);font-size:13.5px;font-family:inherit}
   .navsearch::placeholder{color:var(--muted)} .navsearch:focus{outline:none;border-color:var(--violet);background:var(--page)}
   /* floating up/down pager — one-tap way past tall cards like the map */
-  #pager{position:fixed;right:15px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:30}
+  #pager{position:fixed;right:15px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:1001}
   #pager button{width:52px;height:52px;border-radius:50%;border:1px solid rgba(0,0,0,.35);background:var(--violet);color:#0d0d0d;font-size:25px;font-weight:800;cursor:pointer;box-shadow:0 5px 18px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;line-height:1;font-family:inherit}
   #pager button:hover{filter:brightness(1.08)} #pager button:active{transform:translateY(1px)}
   /* guide <-> map links */
@@ -656,10 +656,10 @@
      #lookbible .lbh{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--violet);font-weight:750;margin:18px 0 7px} #lookbible .lbh:first-of-type{margin-top:4px}
      #lookbible .keybox{background:var(--page);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:10px;padding:12px 15px;font-size:13.5px;color:var(--ink);line-height:1.6}
      #lookbible .palgrid{display:grid;grid-template-columns:1.15fr 1.5fr 1.9fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:12.5px}
-     #lookbible .palgrid>div{background:var(--surface);padding:9px 12px;display:flex;align-items:flex-start;gap:8px}
+     #lookbible .palgrid>div{background:var(--surface);padding:9px 12px}
      #lookbible .palgrid .ph{background:var(--surface2);font-weight:750;color:var(--ink2);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
-     #lookbible .palgrid b{color:#fff} #lookbible .palgrid .who{flex-direction:column;gap:2px} #lookbible .palgrid .who b{display:block} #lookbible .palgrid .who span{color:var(--muted);font-size:11px}
-     #lookbible .sw{width:13px;height:13px;border-radius:50%;flex:0 0 13px;margin-top:2px;border:1px solid rgba(255,255,255,.25)}
+     #lookbible .palgrid b{color:#fff} #lookbible .palgrid .who{display:flex;align-items:center;gap:8px} #lookbible .palgrid .who span{color:var(--muted);font-size:11.5px}
+     #lookbible .sw{width:13px;height:13px;border-radius:50%;flex:0 0 13px;border:1px solid rgba(255,255,255,.25)}
      @media(max-width:640px){ #lookbible .palgrid{grid-template-columns:1fr} #lookbible .palgrid .ph{display:none} #lookbible .palgrid>div{padding:8px 11px} #lookbible .palgrid .who{background:var(--surface2)} }
     </style>
     <h2>🎨 World &amp; Look Bible <span class="tag">one visual key — pull every comp to this</span></h2>
