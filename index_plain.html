@@ -298,6 +298,11 @@
      #scout .pickbtn{cursor:pointer;font-size:11px;font-weight:800;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:8px;padding:3px 9px;white-space:nowrap;user-select:none}
      #scout .pickbtn:hover{border-color:var(--violet);color:var(--ink)}
      #scout .pickbtn.on{background:var(--violet);color:#0d0d0d;border-color:var(--violet)}
+     #scout .rmbtn{cursor:pointer;font-size:11px;font-weight:800;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:8px;padding:3px 9px;white-space:nowrap;user-select:none}
+     #scout .rmbtn:hover{border-color:#d0463b;color:#e06a5f}
+     #scout .rmbtn.on{background:#d0463b;color:#fff;border-color:#d0463b}
+     #scout .cand.removed{opacity:.5} #scout .cand.removed .top b{text-decoration:line-through}
+     #scout .synced{font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;margin-left:6px;white-space:nowrap} #scout .synced.live{background:rgba(107,191,89,.16);color:#7fce6c;border:1px solid rgba(107,191,89,.4)} #scout .synced.local{background:var(--surface);color:var(--muted);border:1px solid var(--ring)}
      #scout .mypicks{background:var(--surface2);border:1px solid var(--violet);border-radius:12px;padding:13px 15px;margin:0 0 14px;display:none}
      #scout .mypicks.show{display:block}
      #scout .pkhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -382,8 +387,7 @@
     flag:"One living-history / colonial village to service ALL four — historical accuracy paramount (no modern intrusion in frame).",
     cands:[
      {n:"Old Sturbridge Village",a:"1 Old Sturbridge Village Rd, Sturbridge",c:"osv.org — film office",st:"options",mk:"osv",u:"https://www.osv.org"},
-     {n:"Rebecca Nurse Homestead",a:"149 Pine St, Danvers",c:"rebeccanurse.org",st:"open",u:"https://rebeccanurse.org"},
-     {n:"Alcott House / Concord",a:"Concord",c:"louisamayalcott.org",st:"open",u:"https://louisamayalcott.org"}
+     {n:"Rebecca Nurse Homestead",a:"149 Pine St, Danvers",c:"rebeccanurse.org",st:"open",u:"https://rebeccanurse.org"}
     ]},
    {s:"Mary's Bath / Lighthouse Beach",hub:"S",d:"2 days",dn:2,t:"D+N",ep:"2·3·4·5",st:"options",
     needs:["Mary's Bath — dark pond (night in-water)","Lighthouse beach","A 1692 version of the water","Reads as located behind Hell House"],
@@ -394,14 +398,8 @@
     ]},
    {s:"Gardner Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·3·5·6",st:"options",
     needs:["Exterior","Front yard","Front porch","IN-GROUND POOL","Another area near pool (ext)","Kitchen","Living room","Dakota's room","Upstairs hallway"],
-    flag:"MUST have a real in-ground pool (night pool-party flashback) + a boho/vibey feel.",
-    cands:[
-     {n:"18 Hardy St, Danvers (pool, at base)",a:"18 Hardy St, Danvers",c:"via listing",st:"options",mk:"hardyst",u:"https://www.zillow.com/danvers-ma/with-pool/"},
-     {n:"3 Meeting Place, Beverly (pool+cabana)",a:"Beverly",c:"via listing",st:"open"},
-     {n:"Woburn Victorian ($120/hr)",a:"Woburn",c:"Peerspace",st:"open",u:"https://www.peerspace.com/pages/listings/633cee3d8620e9000eb0b258"},
-     {n:"⭐ Bailey Cottage, Rockport (BoNE look-lead)",a:"Rockport",c:"BuildingsofNewEngland — private",st:"open",u:"https://buildingsofnewengland.com/2024/05/06/bailey-cottage-1896/",px:{access:"Rockport · HUB 2",permit:"1896 Queen Anne/Shingle builder's-showcase — medium-scale, warm, porch + yard, summer-colony feel = the party vibe. ⚠ no pool documented — verify. Private (LOOK LEAD)."}},
-     {n:"Winfield S. Richards Cottage, Hull (BoNE)",a:"Hull",c:"BuildingsofNewEngland — private",st:"open",u:"https://buildingsofnewengland.com/2024/06/28/winfield-s-richards-cottage-c-1890/",px:{access:"Hull · HUB 1 (near Hingham/Cohasset)",permit:"c.1890 Queen Anne/Craftsman coastal cottage — porchy, boho-summer feel; the H1 party option. Private (LOOK LEAD); verify pool."}}
-    ]},
+    flag:"MUST have a real in-ground pool (night pool-party flashback) + a boho/vibey feel. Prior pool-house options were all cut by the director — re-scouting.",
+    cands:[]},
    {s:"Hall Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·3·5·6",st:"options",
     needs:["Exterior (night)","Living room","Kitchen","Sawyer's bedroom","Sawyer's bathroom","Parker's room","Morgan's room"],
     flag:"The put-together colonial (mom is the mayor) — Morgan's room can double as her mayor's office.",
@@ -542,10 +540,28 @@
    const grid=document.getElementById('scoutgrid'), sum=document.getElementById('scoutsum'), filt=document.getElementById('scoutfilters');
    if(!grid) return;
    let fHub='all', fSt='all';
-   let PICKS={}; try{PICKS=JSON.parse(localStorage.getItem('pnPicks')||'{}')||{};}catch(e){PICKS={};}
+   let PICKS={}, REMOVED={};
+   try{PICKS=JSON.parse(localStorage.getItem('pnPicks')||'{}')||{};}catch(e){PICKS={};}
+   try{REMOVED=JSON.parse(localStorage.getItem('pnRemoved')||'{}')||{};}catch(e){REMOVED={};}
    const A=s=>(''+s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
    const rankOf=(set,n)=>{const a=PICKS[set]||[];const i=a.indexOf(n);return i<0?0:i+1;};
-   function savePicks(){try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));}catch(e){}}
+   const rmKey=(set,n)=>set+'||'+n;
+   const isRemoved=(set,n)=>!!REMOVED[rmKey(set,n)];
+   /* ---- shared-state sync: realtime crew-wide when a Firebase config is present, else per-device (cross-tab) ---- */
+   const FB_CONFIG = null; /* ← paste your Firebase config object here to turn on live crew-wide sync (see the crew note) */
+   let SYNC = { realtime:false, push(){}, wire(cb){ window.addEventListener('storage',ev=>{ if(ev.key==='pnPicks'||ev.key==='pnRemoved'){ let p={},r={}; try{p=JSON.parse(localStorage.getItem('pnPicks')||'{}');r=JSON.parse(localStorage.getItem('pnRemoved')||'{}');}catch(e){} cb({picks:p,removed:r}); } }); } };
+   function applyRemote(v){ PICKS=(v&&v.picks)||{}; REMOVED=(v&&v.removed)||{}; try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));localStorage.setItem('pnRemoved',JSON.stringify(REMOVED));}catch(e){} renderPicks(); draw(); }
+   function saveState(){ try{localStorage.setItem('pnPicks',JSON.stringify(PICKS));localStorage.setItem('pnRemoved',JSON.stringify(REMOVED));}catch(e){} SYNC.push({picks:PICKS,removed:REMOVED}); }
+   const savePicks=saveState;
+   function enableFirebase(cfg){
+     const ld=src=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+     ld('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js')
+       .then(()=>ld('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js'))
+       .then(()=>{ firebase.initializeApp(cfg); const ref=firebase.database().ref('pnBoard'); let applying=false;
+         SYNC={ realtime:true, push(st){ if(applying)return; ref.set(st); }, wire(cb){ ref.on('value',s=>{ applying=true; cb(s.val()||{}); applying=false; }); } };
+         SYNC.wire(applyRemote); renderPicks();
+       }).catch(e=>console.warn('PN sync: Firebase load failed, staying on-device',e));
+   }
    const chip=(st)=>{const v=STL[st]||['neutral',st];return `<span class="chip ${v[0]}" ${st==='lead'?'style="'+leadStyle+'"':''}>${v[1]}</span>`;};
    function px(x){if(!x)return '';const m=[];if(x.power)m.push('⚡ '+x.power);if(x.sound)m.push('🔇 '+x.sound);if(x.park)m.push('🅿️ '+x.park);if(x.permit)m.push('📋 '+x.permit);if(x.access)m.push('🚪 '+x.access);return m.length?`<div class="cl" style="color:var(--muted)">${m.join(' · ')}</div>`:'';}
    function cand(c,setName){
@@ -553,9 +569,11 @@
      const list=c.u?`<a href="${c.u}" target="_blank">listing ↗</a>`:'';
      const lead=c.st==='lead'||c.st==='locked';
      const rk=rankOf(setName,c.n);
+     const rmv=isRemoved(setName,c.n);
      const pk=`<span class="pickbtn ${rk?'on':''}" data-set="${A(setName)}" data-nm="${A(c.n)}">${rk?'★ Pick '+rk:'☆ pick'}</span>`;
+     const rm=`<span class="rmbtn ${rmv?'on':''}" data-rmset="${A(setName)}" data-rmnm="${A(c.n)}">${rmv?'🚫 removed':'✕ remove'}</span>`;
      const s=((c.n||'')+' '+(c.a||'')+' '+(c.c||'')+' '+(c.px?Object.values(c.px).join(' '):'')).toLowerCase();
-     return `<div class="cand" data-search="${A(s)}"><div class="top"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)} ${pk}</div>
+     return `<div class="cand ${rmv?'removed':''}" data-search="${A(s)}"><div class="top"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)} ${pk} ${rm}</div>
        <div class="cl">${c.a&&c.a!=='—'?'📍 '+c.a:''} ${c.c&&c.c!=='—'?'· 📞 '+c.c:''} ${map} ${list}</div>${px(c.px)}</div>`;
    }
    function card(o,pilot){
@@ -619,27 +637,34 @@
    function renderPicks(){
      const sets=Object.keys(PICKS).filter(s=>PICKS[s]&&PICKS[s].length);
      const total=sets.reduce((a,s)=>a+PICKS[s].length,0);
-     pkToggle.textContent='⭐ My picks ('+total+')';
-     if(!sets.length){ mp.innerHTML='<div style="color:var(--muted);font-size:12.5px">No picks yet — tap <b>☆ pick</b> on any candidate to rank it <b>Pick 1, 2, 3…</b> within its location. Saved on this device; reorder with ↑↓.</div>'; return; }
-     let h='<div class="pkhd"><b style="color:var(--violet)">⭐ My top picks <span style="font-weight:400;color:var(--muted);font-size:11px">· saved on this device</span></b><button class="pkclear">clear all</button></div>';
+     const rmCount=Object.keys(REMOVED).length;
+     const badge = SYNC.realtime ? '<span class="synced live">🟢 Live · synced across the crew</span>' : '<span class="synced local">this device</span>';
+     pkToggle.textContent='⭐ Picks ('+total+')'+(rmCount?' · ✕'+rmCount:'');
+     const rmLine = rmCount?'<div style="margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)">🚫 <b style="color:#e06a5f">'+rmCount+' removed</b> — dimmed on the board; tap <b>🚫 removed</b> on a card to restore. <button class="pkrestore">restore all</button></div>':'';
+     if(!sets.length){ mp.innerHTML='<div style="color:var(--muted);font-size:12.5px">No picks yet — tap <b>☆ pick</b> on any candidate to rank it <b>Pick 1, 2, 3…</b>, or <b>✕ remove</b> to strike ones that don\'t fit. '+(SYNC.realtime?'Shared <b>live</b> with the whole crew.':'Saved on this device.')+'</div>'+rmLine; return; }
+     let h='<div class="pkhd"><b style="color:var(--violet)">⭐ Top picks '+badge+'</b><button class="pkclear">clear all</button></div>';
      sets.forEach(s=>{ h+='<div class="pkset">'+s+'</div>';
-       PICKS[s].forEach((nm,i)=>{ h+='<div class="pkrow"><span class="rk">Pick '+(i+1)+'</span><span class="nm">'+nm+'</span><button data-mv="up" data-s="'+A(s)+'" data-i="'+i+'" title="move up">↑</button><button data-mv="down" data-s="'+A(s)+'" data-i="'+i+'" title="move down">↓</button><button data-rm="1" data-s="'+A(s)+'" data-i="'+i+'" title="remove">✕</button></div>'; });
+       PICKS[s].forEach((nm,i)=>{ h+='<div class="pkrow"><span class="rk">Pick '+(i+1)+'</span><span class="nm">'+nm+'</span><button data-mv="up" data-s="'+A(s)+'" data-i="'+i+'" title="move up">↑</button><button data-mv="down" data-s="'+A(s)+'" data-i="'+i+'" title="move down">↓</button><button data-rm="1" data-s="'+A(s)+'" data-i="'+i+'" title="remove from picks">✕</button></div>'; });
      });
-     mp.innerHTML=h;
+     mp.innerHTML=h+rmLine;
    }
-   function togglePick(set,nm){ const a=PICKS[set]||(PICKS[set]=[]); const i=a.indexOf(nm); if(i<0)a.push(nm); else a.splice(i,1); if(!a.length)delete PICKS[set]; savePicks(); renderPicks(); draw(); }
-   grid.addEventListener('click',e=>{ const b=e.target.closest('.pickbtn'); if(!b)return; togglePick(b.dataset.set,b.dataset.nm); });
+   function togglePick(set,nm){ const a=PICKS[set]||(PICKS[set]=[]); const i=a.indexOf(nm); if(i<0)a.push(nm); else a.splice(i,1); if(!a.length)delete PICKS[set]; saveState(); renderPicks(); draw(); }
+   function toggleRemove(set,nm){ const k=rmKey(set,nm); if(REMOVED[k])delete REMOVED[k]; else { REMOVED[k]=1; const a=PICKS[set]; if(a){const i=a.indexOf(nm); if(i>=0){a.splice(i,1); if(!a.length)delete PICKS[set];}} } saveState(); renderPicks(); draw(); }
+   grid.addEventListener('click',e=>{ const rb=e.target.closest('.rmbtn'); if(rb){ toggleRemove(rb.dataset.rmset,rb.dataset.rmnm); return; } const b=e.target.closest('.pickbtn'); if(!b)return; togglePick(b.dataset.set,b.dataset.nm); });
    mp.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b)return;
-     if(b.classList.contains('pkclear')){ if(confirm('Clear all your picks?')){PICKS={};savePicks();renderPicks();draw();} return; }
+     if(b.classList.contains('pkclear')){ if(confirm('Clear all picks'+(SYNC.realtime?' for the whole crew':'')+'?')){PICKS={};saveState();renderPicks();draw();} return; }
+     if(b.classList.contains('pkrestore')){ if(confirm('Restore all removed candidates'+(SYNC.realtime?' for the whole crew':'')+'?')){REMOVED={};saveState();renderPicks();draw();} return; }
      const s=b.dataset.s, i=+b.dataset.i, a=PICKS[s]; if(!a)return;
      if(b.dataset.rm){ a.splice(i,1); if(!a.length)delete PICKS[s]; }
      else if(b.dataset.mv==='up'&&i>0){ const t=a[i-1];a[i-1]=a[i];a[i]=t; }
      else if(b.dataset.mv==='down'&&i<a.length-1){ const t=a[i+1];a[i+1]=a[i];a[i]=t; }
-     savePicks(); renderPicks(); draw();
+     saveState(); renderPicks(); draw();
    });
    searchEl.addEventListener('input', applySearch);
    pkToggle.addEventListener('click', ()=>mp.classList.toggle('show'));
    renderPicks(); fbar(); draw();
+   SYNC.wire(applyRemote);
+   if(FB_CONFIG) enableFirebase(FB_CONFIG);
   })();
   </script>
 
@@ -732,8 +757,7 @@
       <tr><td><b>Backups on file</b><br><span style="font-size:11px;color:var(--muted)">most useful only — full 25-house rolodex in doc</span></td><td colspan="2" style="font-size:12px;line-height:1.9">
         <a href="https://www.proctormansioninn.com" target="_blank">Proctor Mansion Inn ↗</a> (Wrentham, B. Fitzgerald 781-718-1123 — Dylan/haunted) ·
         <a href="https://www.town.medfield.net/556/Medfield-State-Hospital" target="_blank">Medfield State Hosp ↗</a> &amp; <a href="https://www.mass.gov/locations/tewksbury-hospital" target="_blank">Tewksbury ↗</a> (psych-hospital EXT) ·
-        <a href="https://www.osv.org" target="_blank">Old Sturbridge Village ↗</a> (Salem-1692 meetinghouse) ·
-        <a href="https://louisamayalcott.org" target="_blank">Alcott House ↗</a> (Concord, Parris/meetinghouse) →
+        <a href="https://www.osv.org" target="_blank">Old Sturbridge Village ↗</a> (Salem-1692 meetinghouse) →
         <b>full list → LOCATIONS_AND_NEW_MANSION.md</b></td><td><span class="chip neutral">ROLODEX</span></td></tr>
     </table>
   </div>
@@ -1016,8 +1040,6 @@ const LOCS=[
   {k:'morninggarden',n:'🆕⭐ Morning Garden (Hammond Sr. Tudor)',c:'hellhouse',lat:42.59885,lng:-70.68385,r:'BEST NEW FIND — dark Tudor gothic EXT + dark-oak interior · solves the new exterior mandate',no:'190 Western Ave, Gloucester · ~30-35 min HUB 2 · retreat house, ~$2K/day · ⚠ church owner: pitch content early',ct:'via MA Film Office / mgretreats.weebly.com',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65'},
   {k:'dayhouse',n:'Fred Holland Day House (Josh-flagged)',c:'hellhouse',lat:42.19305,lng:-71.20334,r:'Half-timbered Tudor — Norwood Historical Society HQ · 51 photos on reel-scout',no:'93 Day St, Norwood · Josh texted this to the group 7/11 · between hubs (~50 min each)',ct:'Norwood Historical Society 781-762-9197',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10063080&cid=65'},
   {k:'daniellwebster',n:'Daniel Webster Estate — EXT only',c:'hellhouse',lat:42.08019,lng:-70.67949,r:'⚠ Josh 7/15: exterior is fine but INTERIOR not cool enough',no:'Marshfield (HUB 1 side) · 1880s QA · use for exterior/grounds only',ct:'via reel-scout',u:'https://ma.reel-scout.com/loc_detail.aspx?id=10250539&cid=65'},
-  {k:'hardyst',n:'18 Hardy St — Gardner pool pick',c:'option',lat:42.55875,lng:-70.92688,r:'GARDNER RESIDENCE · in-ground pool, 5BR, at base',no:'$834,900 listing · Danvers',ct:'Keller Williams Evolution',u:'https://www.zillow.com/danvers-ma/with-pool/'},
-  {k:'woburnpool',n:'Woburn Victorian w/ pool',c:'option',lat:42.47926,lng:-71.15228,r:'GARDNER fallback · $120/hr · host allows set changes',no:'Woburn · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/633cee3d8620e9000eb0b258'},
   {k:'applefield',n:'Applefield (Ipswich)',c:'option',lat:42.67927,lng:-70.84116,r:'HALL RESIDENCE · curved stair + teen bedrooms',no:'Ipswich · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/6886ee4d52324b53e2657150'},
   {k:'solomonholt',n:'Solomon Holt House',c:'option',lat:42.65717,lng:-71.14088,r:'HALL RESIDENCE option · house + barn, cap 40',no:'Andover · approx pin',ct:'via Peerspace',u:'https://www.peerspace.com/pages/listings/62f312dbd600a7000e4a2a88'},
   {k:'nsuu',n:'Northshore UU Danvers',c:'option',lat:42.59588,lng:-70.93721,r:'SACRED HEART · friendliest + runs mid-Oct Harvest Festival',no:'323 Locust St, Danvers',ct:'978-774-7582 · office@nsuu.org',u:'https://www.nsuu.org'},
@@ -1150,7 +1172,7 @@ const SETGROUPS=[["primary","Primary / recurring"],["secondary","Secondary"],["e
 /* ---- Location Guide <-> Map linking ---- */
 const SETMAP={
  "Verlice Residence":"verlice","Klaypool Residence":"klaypool","Hell House":"beauport",
- "Black Willow Academy":"penguin","Gardner Residence":"hardyst","Black Cat Coffee Shop":"blackcraft",
+ "Black Willow Academy":"penguin","Black Cat Coffee Shop":"blackcraft",
  "Black Willow Woods":"penguin","The Graveyard":"verlice","Diner":"agawam",
  "Lighthouse Beach":"winterisland","Sacred Heart Church":"oldsloop","Halloween Dance":"penguin",
  "Black Willow Courthouse":"courthouse","Psych Hospital / Ward":"tewksbury","Salem 1692 (period thread)":"osv","Small Outdoor Club":"takeoutterrace"
