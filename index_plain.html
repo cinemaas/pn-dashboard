@@ -196,7 +196,7 @@
     <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
     <a class="watchbtn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Watch the Pilot <small>· Vimeo · pw PN</small></a>
     <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· real scout photos + pilot stills</small></a>
-    <a class="watchbtn lookbook" href="conceptart.html" style="background:var(--violet);color:#0d0d0d">🎨 Concept Art Catalogue <small>· 37 location renders</small></a>
+    <a class="watchbtn lookbook" href="lookbook.html?v=art" style="background:var(--violet);color:#0d0d0d">🎨 Concept Art Catalogue <small>· 37 location renders</small></a>
   </div>
 </div>
 <nav class="nav" id="topnav">
@@ -204,9 +204,9 @@
   <div class="navlinks" id="navlinks">
     <a href="#scout">🔦 Scout Board</a>
     <a href="#locations">📍 Locations</a>
-    <a href="#map">🗺️ Map</a>
+    <a href="#map-card">🗺️ Map</a>
     <a href="lookbook.html">📸 Look Book</a>
-    <a href="conceptart.html">🎨 Concept Art</a>
+    <a href="lookbook.html?v=art">🎨 Concept Art</a>
     <a href="#board">📋 Location board</a>
     <a href="#schedule">📅 Schedule</a>
     <a href="#hellhouse">🏚️ Hell House</a>
@@ -216,7 +216,7 @@
     <a href="#scripts">🎬 Scripts</a>
   </div>
   <div class="watch">
-    <a class="btn lookbook" href="conceptart.html">🎨 Concept Art</a>
+    <a class="btn lookbook" href="lookbook.html?v=art">🎨 Concept Art</a>
     <a class="btn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a>
     <a class="btn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Pilot</a>
   </div>
@@ -233,6 +233,13 @@
 </div>
 
 <div class="grid">
+
+  <div class="card" id="map-card">
+    <h2>🗺️ Location map — every set, hub &amp; candidate <span class="tag">click a pin · toggle layers · then dig into the Scout Board below</span></h2>
+    <div class="mapfilters" id="mapfilters"></div>
+    <div id="map"></div>
+    <div class="note">Dashed rings = ~45-min pairing zone around each hub (the "no extra company move" rule). Hell House pins = candidates; ⭐ in the name = photo-verified finalist. Pins marked "approx" are film-office/marketplace listings whose exact address is gated. &middot; <a href="lookbook.html"><b>📸 Open the Location Look Book &amp; Concept Art ↗</b></a></div>
+  </div>
 
   <div class="card" id="scout">
     <style>
@@ -440,7 +447,14 @@
      {n:"New Bedford City Hall (1856 suite + film office)",a:"133 William St, New Bedford",c:"Amy DesRosiers 508-979-1745",st:"options",mk:"nbcityhall"},
      {n:"Salem City Hall (1837)",a:"93 Washington St, Salem",c:"978-745-9595",st:"open",mk:"salemcityhall",u:"https://www.salemma.gov"},
      {n:"Essex Superior Courthouse (1805 Bulfinch)",a:"145 High St, Newburyport",c:"Trial Court PIO",st:"open",mk:"courthouse"},
-     {n:"Town green (Ipswich / Salem Common)",a:"—",c:"town",st:"open"}
+     {n:"⭐ Cohasset Common (Black Willow — Hub 1 hero)",a:"Cohasset Common, Cohasset",c:"Town Administrator + Cohasset HDC",st:"options",u:"https://en.wikipedia.org/wiki/Cohasset_Common_Historic_District",px:{access:"HUB 1 · ~30–35 min",permit:"THE match. 24-acre historic town center on a common laid out 1670, ringed by 1700s–1800s houses/churches/town hall — textbook white-steeple-on-the-green. Proven witchy pedigree: Witches of Eastwick (1987) shot its town-center here (First Parish 1746 = 'Eastwick church', Bates House = newspaper). Frame on North/South Main + the white steeple."}},
+     {n:"⭐ Topsfield Town Common (Black Willow — Hub 2 hero)",a:"East Common St, Topsfield",c:"Selectmen + Historical/HDC",st:"options",u:"https://en.wikipedia.org/wiki/Topsfield_Town_Common_District",px:{access:"HUB 2 · ~15 min Danvers",permit:"Closest to your N.Shore hub + most 'Black Willow'. 1650 militia green fronted by white Greek Revival First Congregational (1842); NRHP district; steps from Parson Capen House (1683 First-Period witch-house silhouette). A memorial on the common names 3 women executed in 1692 — real lore on camera."}},
+     {n:"Sandwich — Town Hall Sq / Shawme Pond (signature frame)",a:"Sandwich",c:"Town Administrator",st:"open",u:"https://en.wikipedia.org/wiki/Town_Hall_Square_Historic_District",px:{access:"HUB 1 · at Sagamore (~20 min S)",permit:"Most camera-ready single frame: Dexter Grist Mill (working waterwheel + dam) on Shawme Pond, 1834 Greek Revival town hall, First Church (1847) Wren-style white spire, Hoxie House (c.1675 saltbox) — mill+pond+steeple+colonial in one walkable frame. Best establishing shot. Low modern-clutter risk (summer crowds only)."}},
+     {n:"Ipswich — North/Meetinghouse Green + South Green",a:"Ipswich",c:"Architectural Preservation District Cmsn",st:"open",u:"https://en.wikipedia.org/wiki/Meetinghouse_Green_Historic_District",px:{access:"HUB 2 · ~20 min Danvers",permit:"Already in your world. Two greens + densest colonial streetscape in America (59 First-Period houses). North Green white-steepled First Church (1634 meetinghouse site — also the old jail/pillory); South Green (1686) triangular militia green. Hosted 1692 hearings. More streetscape than single green."}},
+     {n:"Newbury — the Upper Green / High Road",a:"Newbury",c:"town + Historic New England (Coffin House)",st:"open",u:"https://en.wikipedia.org/wiki/Newbury_Historic_District",px:{access:"HUB 2 · ~30 min Danvers",permit:"Purest quiet First-Period green, zero commercial clutter: pre-Revolutionary Upper Green, First-Period houses on High Road, First Parish Church, Tristram Coffin House (1678). Rural green look. Heavily residential/museum-owned — private clearances matter."}},
+     {n:"Rowley Common (full 'common kit')",a:"Main St, Rowley",c:"town (no film office found)",st:"open",u:"https://www.legendsofamerica.com/rowley-massachusetts/",px:{access:"HUB 2 · ~22 min Danvers",permit:"Green with bandstand (your gazebo beat) + monument, Town Hall, First-Period Platts-Bradstreet House, Reindeer Tavern, a burial ground; Main St of colonial homes. Deep lore: Margaret Scott of Rowley hanged 1692. Coordinate directly with town."}},
+     {n:"Norwell Village (South Shore sleeper)",a:"Norwell",c:"town",st:"open",u:"https://en.wikipedia.org/wiki/Norwell_Village_Area_Historic_District",px:{access:"HUB 1 · ~8 mi S of Hingham",permit:"Cleanest quiet classic common on the S.Shore: common laid out 1640s, 1830 First Parish Church, 1874 Italianate library, Colonial-Revival town hall. Timeless, un-touristy. No film history — you'd pioneer permits."}},
+     {n:"Hingham — Main St / Old Ship Church",a:"Hingham",c:"Historic Districts Cmsn",st:"open",u:"https://en.wikipedia.org/wiki/Old_Ship_Church",px:{access:"HUB 1 · this IS the hub town",permit:"'Most beautiful Main St in America' (E. Roosevelt, 1942) — elm-canopied colonial mansions + Victorians. Old Ship Church (1681) = only surviving 17th-c Puritan meetinghouse, period-perfect for a 1693 founding. A street look, not open common — frame tight (Hingham Sq has modern retail)."}}
     ]},
    {s:"Landry Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"4",st:"open",
     needs:["Carrie's bedroom (ALL PINK)","Exterior"],
@@ -630,13 +644,6 @@
     <div class="striplbls" id="shotlbls" style="align-items:flex-end"></div>
     <div class="note"><b>Bar color = your makeability marking (ROUGH ESTIMATE.docx), not raw shots.</b> Shots = 3/scene + 1 per cast member beyond 2 (a comfortable day ≈ 25). 🟢 <b>Can be made (14):</b> Days 2, 4, 5, 6, 7, 8, 11, 14, 16, 18, 22, 23, 26, 34. 🟠 <b>At risk / flagged (3):</b> Days 20, 21, 24 — makeable but worth watching (5–6 night exteriors, or 37 shots). 🔴 <b>Unmakeable (18):</b> Days 1, 3, 9, 10, 12, 13, 15, 17, 19, 25, 27, 28, 29, 30, 31, 32, 33, 35 — the bold+underlined days in your estimate (40+ shots, company moves, or heavy night exterior).</div>
     <div class="note"><b>The killers behind the flags:</b> <b>night exteriors</b> — D9 = 7, D24 & D28 = 6, D20 = 5, D35 = 4 (you can't beat the sun); <b>company moves</b> — D33 ×4, D27 & D32 ×3, D25 & D28 ×2, D31 & D35 ×1 (each 2nd move ≈ a lost half-day). Send-ready writeup → <a href="scripts/Schedule-Feasibility-Report.pdf" target="_blank"><b>Schedule Feasibility Report (PDF) ↗</b></a>; full per-day markup → the annotated one-liner.</div>
-  </div>
-
-  <div class="card">
-    <h2>Location map — every set, hub &amp; candidate <span class="tag">click a pin · toggle layers</span></h2>
-    <div class="mapfilters" id="mapfilters"></div>
-    <div id="map"></div>
-    <div class="note">Dashed rings = ~45-min pairing zone around each hub (the "no extra company move" rule). Hell House pins = candidates; ⭐ in the name = photo-verified finalist. Pins marked "approx" are film-office/marketplace listings whose exact address is gated. &middot; <a href="lookbook.html"><b>📸 Open the Location Look Book — descriptions + concept art for every unselected set ↗</b></a></div>
   </div>
 
   <div class="card c5">
