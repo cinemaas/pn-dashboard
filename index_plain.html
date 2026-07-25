@@ -293,6 +293,8 @@
      #scout .cand b{font-size:12.5px} #scout .cand .cl{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:11.5px;color:var(--ink2);margin-top:1px;align-items:center}
      #scout .cand .cl a{color:var(--accent)} #scout .lead{color:var(--good)!important;font-weight:700}
      #scout .none{font-size:12px;color:var(--warn);font-style:italic}
+     #scout .newdiv{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:7px 0 2px;white-space:nowrap}
+     #scout .newdiv:before,#scout .newdiv:after{content:"";flex:1;height:2px;background:var(--accent);opacity:.45;border-radius:2px}
      #scout .flagp{font-size:11.5px;color:var(--warn);font-weight:600}
      #scout .stoolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
      #scout .ssearch{flex:1;min-width:220px;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:10px 14px;color:var(--ink);font-size:14px}
@@ -368,7 +370,7 @@
     cands:[
      {n:"Old Sturbridge Village",a:"1 Old Sturbridge Village Rd, Sturbridge",c:"osv.org — film office",st:"options",mk:"osv",u:"https://www.osv.org"},
      {n:"Rebecca Nurse Homestead",a:"149 Pine St, Danvers",c:"rebeccanurse.org",st:"open",u:"https://rebeccanurse.org",mk:"rebeccanursehomestead"},
-     {n:"1680s Frontier Colonial, Gloucester (Josh's Salem-period lead · Peerspace)",a:"Gloucester",c:"Peerspace · $200/hr",st:"options",u:"https://www.peerspace.com/pages/listings/6424d530464ca6000e0521c3",px:{access:"Gloucester · HUB 2",permit:"Josh's lead — a real First-Period 1680s colonial with period New England furnishings, bookable for Production on Peerspace; authentic 1600s bones for the Salem-1692 interiors (also a Marrero option). Verify no modern intrusion in frame."},mk:"salem1680colonial"}
+     {n:"1680s Frontier Colonial, Gloucester (Josh's Salem-period lead · Peerspace)",a:"Gloucester",c:"Peerspace · $200/hr",st:"options",u:"https://www.peerspace.com/pages/listings/6424d530464ca6000e0521c3",mk:"frontiercolonial",px:{access:"Gloucester · HUB 2",permit:"📝 DP: “this should just be for salem house” — pulled off Marrero, Salem-period only. Josh's lead — a real First-Period 1680s colonial with period New England furnishings, bookable for Production on Peerspace; authentic 1600s bones for the Salem-1692 interiors (also a Marrero option). Verify no modern intrusion in frame."},mk:"salem1680colonial"}
     ]},
   {s:"Mary's Bath",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"2·3·4·5",st:"options",needs:["Dark pond — night in-water","A 1692 version of the water","Shoreline picnic / pumpkin-carving spot (day)","Reads as located behind Hell House"],flag:"The dark pond on the town's edge where Dylan nearly drowns reaching for the book — reeds, fog, moon reflection; must read as behind Hell House. Also a day picnic/pumpkin-carving shore.",
     cands:[
@@ -438,7 +440,8 @@
     cands:[
      {n:"⭐ 'Elegant Yet Cozy House' — colorful Victorian, Newton (Peerspace)",a:"Newton",c:"Peerspace listing",st:"options",u:"https://www.peerspace.com/pages/listings/65c51333b7519f000e47b38c",px:{access:"Newton · ~40 min · between hubs",permit:"Josh's lead — striking colorful Victorian EXT + eclectic refined INT; dress as Madame Zugasti's storybook cottage. Rents on Peerspace."},mk:"elegantyetcozyhousecol"},
      {n:"⭐ VRBO cottage rental (Josh's lead — verify)",a:"— (verify on listing)",c:"VRBO listing",st:"options",u:"https://www.vrbo.com/4964558ha",px:{permit:"Josh's Willow Reader lead — VRBO rental; couldn't auto-pull details (site rate-limited). Verify the location + storybook/whimsy fit on the listing photos."}},
-     {n:"Bunny Cottage, Annisquam",a:"Annisquam, Gloucester",c:"via Airbnb host",st:"open",u:"https://www.airbnb.com/rooms/29340046",mk:"bunnycottageannisquam"}
+     {n:"Bunny Cottage, Annisquam",a:"Annisquam, Gloucester",c:"via Airbnb host",st:"open",u:"https://www.airbnb.com/rooms/29340046",mk:"bunnycottageannisquam"},
+     {n:"Witchy boudoir @ Hollywood Glamour house, Burlington (INTERIOR ONLY — psychic room)",a:"Burlington, MA (exact addr after booking)",c:"Peerspace host Mandy N. · $150/hr",st:"options",u:"https://www.peerspace.com/pages/listings/5e3041bdbf21f2000d04df2c",px:{access:"Burlington · ~25–30 min to Danvers/HUB 2",permit:"📝 DP: “possibly psychic house.” ✅ photos reviewed — the 'dark moody vintage witchy boudoir' is a genuine Madame Zugasti room: crimson velvet drapes, full wall of ornate gilt-framed portraits, oil lamps, antique dresser + mirror, heavy Victorian clutter. ⚠ INTERIOR ONLY — this set also needs Exterior + ext driveway, and the listing has NO exterior photos, so pair it with a separate crooked-cottage EXT. ⚠ 5-person cap, no night hours listed. Same house as the Landry/Carrie pink option — could bag two sets in one booking."}}
     ]},
   {s:"Town Center / Police / Morgan's Office / Courthouse",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"3·4·5·6",st:"options",needs:["Town center (1 scene, day)","Police — interior","Police — exterior","Hodge's office (in the station)","Morgan's office (day)","Courthouse — exterior bench (day)","✂ Courthouse interior"],flag:"Bundle these civic sets into one company day.",
     cands:[
@@ -456,8 +459,8 @@
     ]},
   {s:"Landry Residence",hub:"F",d:"1 day",dn:1,t:"D+N",ep:"4",st:"open",needs:["Carrie's bedroom (ALL PINK)","Exterior"],flag:"Carrie's bedroom can be cheated at another house if the schedule needs it.",
     cands:[
-     {n:"Saunders Cottage, Rockport (BoNE)",a:"Rockport",c:"BuildingsofNewEngland — private",st:"open",u:"https://buildingsofnewengland.com/2024/05/07/saunders-cottage-c-1900/",px:{access:"Rockport · HUB 2",permit:"c.1900 Shingle cottage w/ a little corner tower + wrap porch — cute, modest. Private (LOOK LEAD)."},mk:"saunderscottagerockpor"},
-     {n:"⭐ Mid-Century Hollywood Glamour house, Salem (dresses to ALL-PINK)",a:"Salem",c:"Peerspace host · $150/hr",st:"options",u:"https://www.peerspace.com/pages/listings/5e3041bdbf21f2000d04df2c",px:{access:"Salem · HUB 2",permit:"⭐ Best Landry — a house of dressed vintage vignettes incl. a bulb-lit Hollywood-Glamour/vanity room that dresses to Carrie's all-pink most easily of anything found; films for photo/TV. Also doubles Marrero + Sandra."},mk:"midcentglamour"}
+     {n:"Saunders Cottage, Rockport (BoNE)",a:"Rockport",c:"BuildingsofNewEngland — private",st:"open",u:"https://buildingsofnewengland.com/2024/05/07/saunders-cottage-c-1900/",px:{access:"Rockport · HUB 2",permit:"📝 DP: “cleaner and nicer and a little glamorous but we like the architecture.” → chase the ARCHITECTURE (shingle + corner tower + wrap porch), expect to dress it down//less glam. c.1900 Shingle cottage. Private (LOOK LEAD)."},mk:"saunderscottagerockpor"},
+     {n:"⭐ Mid-Century Hollywood Glamour house, BURLINGTON (dresses to ALL-PINK · Carrie's bedroom)",a:"Burlington, MA (exact addr after booking)",c:"Peerspace host Mandy N. · $150/hr · 5.0(30)",st:"options",u:"https://www.peerspace.com/pages/listings/5e3041bdbf21f2000d04df2c",px:{access:"Burlington · ~25–30 min to Danvers/HUB 2 (⚠ NOT Salem — earlier listing said Salem, corrected)",permit:"📝 DP: “could be carrie bedroom and possibly psychic house.” ✅ 26 listing photos reviewed — hot-pink rose-maximalist parlor + pink 1950s bedroom = Carrie's ALL-PINK with almost no dressing; ALSO a dark moody witchy boudoir (crimson velvet, gilt portrait wall, oil lamps) → see Willow Reader/psychic. 1,200 sqft, host Mandy. ⚠⚠ HARD LIMITS: rules say NO LARGE CREWS/GROUPS (5-person cap), no catering, no messy props; hours are tight (several weekdays 9–12 only, Sun closed) and NO night hours listed. ⚠ ZERO exterior photos — house's street face unknown (one deck-railing shot + a reported 'gingerbread shed' out back); EXT would need its own location. Quiet dead-end street, free onsite + street parking."},mk:"midcentglamour"}
     ]},
   {s:"Sandra's House (Boston)",hub:"B",d:"½ day",dn:0.5,t:"Day + 1 ext night",ep:"6",st:"open",needs:["Interior","Ext / front porch / doorway","Ext sidewalk outside"],
     cands:[
@@ -465,7 +468,6 @@
     ]},
   {s:"Marrero Residence",hub:"F",d:"2 scenes",dn:0.3,t:"1 Day / 1 Night",ep:"4·5",st:"open",needs:["Ext front of house (day)","Interior (night)"],
     cands:[
-     {n:"Rural 1680s Frontier Colonial, Gloucester (bookish/literary)",a:"Gloucester",c:"Peerspace · $200/hr",st:"options",u:"https://www.peerspace.com/pages/listings/6424d530464ca6000e0521c3",px:{access:"Gloucester · HUB 2",permit:"Period New England furnishings + antique/literary feel = Ms. Marrero's bookish young-teacher home."},mk:"frontiercolonial"},
      {n:"31 Russell St, Plymouth — modest hillside home, backs onto Burial Hill (FOR SALE)",a:"31 Russell St, Plymouth",c:"Redfin MLS 73186933",st:"options",u:"https://www.redfin.com/MA/Plymouth/31-Russell-St-02360/home/16424562",px:{access:"Plymouth · HUB 1",permit:"Josh's Marrero idea (moved off the Verlice list) — ordinary modest for-sale home ($759K, 3bd) at the top of the hill = right scale for a young teacher's house; day EXT front + night INT. BONUS: backs onto BURIAL HILL (1622 Pilgrim hilltop graveyard) so a graveyard can be cheated in the bg if wanted. ⚠ Street-View confirm this parcel actually abuts the hill (vs a S. Russell neighbor)."},mk:"v31russell"}
     ]},
   {s:"Hodge Residence",hub:"F",d:"2 scenes",dn:0.2,t:"1 Day / 1 Night",ep:"5·6",st:"open",needs:["Bathroom (both scenes — can cheat D4N)"],flag:"Both scenes are in the bathroom → cheat day-for-night; brick exterior is just an establishing insert.",
@@ -486,10 +488,6 @@
     cands:[
      {n:"Onset 'Flamingo House' cottage, Onset/Wareham (a rentable HOUSE)",a:"Onset, Wareham",c:"Peerspace · $350/hr",st:"options",u:"https://www.peerspace.com/pages/listings/645d47b0613cb2000e2665ed",px:{access:"Onset · HUB 1 (min from Sagamore)",permit:"4-BR cottage + sunroom, part of a multi-house rental compound = a literal rentable HOUSE (bedroom+exterior) for the road-trip Airbnb; several house looks in one move."},mk:"onsetflamingo"}
     ]},
-  {s:"Beauty Store",hub:"F",d:"3–4 hrs",dn:0.3,t:"Day",ep:"4 (flashback)",st:"cut",needs:["Interior only"],flag:"1 scene, trying to cut — low priority.",
-    cands:[
-
-    ]},
   {s:"Bennet Residence",hub:"F",d:"1 scene",dn:0.2,t:"Day",ep:"6",st:"open",needs:["Ext front door"],
     cands:[
      {n:"'Production Residence', Plymouth (modest, cheapest S.Shore)",a:"Plymouth",c:"Peerspace · $75/hr",st:"options",u:"https://www.peerspace.com/pages/listings/61d7d71fbdb172000d35fee0",px:{access:"Plymouth · HUB 1",permit:"Modest bright window-filled home, cheapest S.Shore option = a modest house front (Bennet) / dress-able base."},mk:"plymprodres"}
@@ -504,7 +502,6 @@
      cands:[
       {n:"Filmed in the pilot",a:"63 Bridge St, West Newbury (graveyard)",c:"OWNER: Jonathan & Mary Harada (Harada RE LLC), Carmel CA · pilot contact Sean (on file) · cemetery J. Walsh 978-363-1100 x115",st:"shot",mk:"verlice",u:"https://gis.vgsi.com/westnewburyma/Parcel.aspx?Pid=685"},
       {n:"High St / County St, Ipswich — Old North Burying Ground",a:"High St, Ipswich",c:"private — owner outreach",st:"open",u:"https://historicipswich.net/ipswich-old-north-burying-ground/",px:{access:"Ipswich · HUB 2",permit:"Residences on High/County St abut the 1634 OLD NORTH BURYING GROUND (sloped hillside graveyard right behind/beside the houses). Private homes (not museums) → door-knock. High hit-rate street."},mk:"vipswichhigh"},
-      {n:"Grove St, Sandwich — Old Town Cemetery on Shawme Pond",a:"17/36/38 Grove St, Sandwich",c:"private / periodic listings",st:"open",u:"https://www.redfin.com/MA/Sandwich/17-Grove-St-02563/home/77479869",px:{access:"Sandwich · HUB 1 (~10 min Sagamore)",permit:"Grove St homes line Shawme Pond opposite the OLD TOWN CEMETERY (1660s) on its point. ⚠ graveyard is ACROSS the water → great wide/eerie establishing across the pond, less a fence-line 'graves outside the window'."},mk:"v17grove"},
       {n:"Ben Abbey Rd / Sandwich Rd, Bourne — Sagamore Cemetery (canal-side)",a:"Ben Abbey Rd, Bourne",c:"private — owner outreach",st:"open",u:"https://www.findagrave.com/cemetery/1200274/sagamore-cemetery",px:{access:"Bourne/Sagamore · HUB 1",permit:"Homes on Ben Abbey Rd/Sandwich Rd abut the moody canal-side SAGAMORE CEMETERY ('haunted' rep) by the Sagamore Bridge — right at the Hub-1 base. Private → confirm the exact abutting parcel on Street View."},mk:"vbenabbey"},
       {n:"Main St, Wareham — Agawam / Center Cemetery",a:"Main St, Wareham",c:"private — owner outreach",st:"open",u:"https://agawamcentercemetery.com/",px:{access:"Wareham · HUB 1",permit:"Private homes on Main St sit by the AGAWAM CENTER / Wareham Center cemeteries — small-town adjacency. ⚠ lowest-confidence; confirm the exact abutting house on maps."},mk:"vwareham"}
      ]},
@@ -580,6 +577,7 @@
      return `<div class="cand ${rmv?'removed':''} ${cur&&cur.s==='passed'?'passed':''}" data-search="${A(s)}"><div class="top"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)} ${pk} ${rm}</div>
        <div class="cl">${c.a&&c.a!=='—'?'📍 '+c.a:''} ${c.c&&c.c!=='—'?'· 📞 '+c.c:''} ${map} ${list}</div>${px(c.px)}${stline}${noteList}</div>`;
    }
+   const NEWTAG='· Jul 25';
    function card(o,pilot){
      const needs=o.needs.map(n=>`<span class="nk ${n.indexOf('✂')===0?'cut':''}">${n.replace('✂ ','')}</span>`).join('');
      const meta=[o.hub?`<span class="m">${HUBL[o.hub]}</span>`:'',o.d?`<span class="m">📅 ${o.d}</span>`:'',o.t?`<span class="m">${/Night/.test(o.t)&&!/D\+N|Day/.test(o.t)?'🌙':/D\+N/.test(o.t)?'🌗':'☀️'} ${o.t}</span>`:'',o.ep?`<span class="m">Eps ${o.ep}</span>`:''].join('');
@@ -592,7 +590,7 @@
        <div class="meta">${meta}</div>
        ${o.flag?`<div class="flagp">▸ ${o.flag}</div>`:''}
        <div><div class="needlbl">Location must have</div><div class="needs">${needs}</div></div>
-       <div class="cands">${o.cands&&o.cands.length?o.cands.map(c=>cand(c,o.s)).join(''):'<span class="none">🔦 open — needs scouting</span>'}</div>
+       <div class="cands">${o.cands&&o.cands.length?(()=>{const fn=o.cands.findIndex(c=>c.nw);return o.cands.map((c,i)=>(i===fn?`<div class="newdiv">✨ new finds ${NEWTAG}</div>`:'')+cand(c,o.s)).join('');})():'<span class="none">🔦 open — needs scouting</span>'}</div>
        </div>
      </div>`;
    }
@@ -974,7 +972,7 @@ const SHOTS=[
  [22,'Tue Oct 27','6⅝',8,26,'Verlice Residence'],
  [23,'Wed Oct 28','5¾',10,30,'Verlice Residence'],
  [24,'Thu Oct 29','7½',7,23,'Verlice / Graveyard'],
- [25,'Fri Oct 30','7½',9,32,'Beauty store / Willow Reader / Coffee'],
+ [25,'Fri Oct 30','7½',9,32,'Willow Reader / Coffee'],
  [26,'Mon Nov 2','7¼',11,33,'Hall Residence'],
  [27,'Tue Nov 3','6⅝',11,36,'Town Center / Courthouse / PD'],
  [28,'Wed Nov 4','4⅞',8,27,'Abandoned Park / Outdoor Club'],
@@ -1078,13 +1076,12 @@ const LOCS=[
   {k:"endicottpark",n:"Endicott Park",c:"option",lat:42.57419,lng:-70.96192,r:"PLAYGROUND/PARK · 165-acre farm-park, at base",no:"57 Forest St, Danvers",ct:"Erika 978-774-6518 · egioia@danversma.gov",u:"https://www.danversma.gov/286/Reservation-Permit-Information"},
   {k:"stagefortparkglouceste",n:"Stage Fort Park, Gloucester (10pm ordinance)",c:"option",lat:42.61536,lng:-70.66246,r:"Playground (night) · open",no:"Gloucester",ct:"city of Gloucester",u:"https://www.gloucester-ma.gov/1218/Film-Permitting"},
   {k:"salemwillowskiddieland",n:"Salem Willows / Kiddieland",c:"option",lat:42.51953,lng:-70.89672,r:"Playground (night) · open",no:"Salem",ct:"city of Salem",u:"https://willowsarcade.com/park/"},
-  {k:"midcentglamour",n:"⭐ Mid-Century Hollywood Glamour house, Salem (dresses to ALL-PINK)",c:"option",lat:42.51953,lng:-70.89672,r:"Landry Residence · options",no:"Salem",ct:"Peerspace host · $150/hr",u:"https://www.peerspace.com/pages/listings/5e3041bdbf21f2000d04df2c"},
-  {k:"frontiercolonial",n:"Rural 1680s Frontier Colonial, Gloucester (bookish/literary)",c:"option",lat:42.61536,lng:-70.66246,r:"Marrero Residence · options",no:"Gloucester",ct:"Peerspace · $200/hr",u:"https://www.peerspace.com/pages/listings/6424d530464ca6000e0521c3"},
+  {k:"midcentglamour",n:"⭐ Mid-Century Hollywood Glamour house, BURLINGTON (ALL-PINK Carrie bedroom + witchy boudoir)",c:"option",lat:42.5047,lng:-71.1956,r:"Landry (Carrie's bedroom) + Willow Reader/psychic · INT only, 5-person cap · options",no:"Burlington, MA (exact addr after booking) · quiet dead-end st",ct:"Peerspace host Mandy N. · $150/hr",u:"https://www.peerspace.com/pages/listings/5e3041bdbf21f2000d04df2c"},
+  {k:"frontiercolonial",n:"1680s Frontier Colonial, Gloucester (Josh's Salem-period lead · Peerspace)",c:"option",lat:42.61536,lng:-70.66246,r:"Salem, 1692 (period thread) · DP: this one is for the Salem house only · options",no:"Gloucester",ct:"Peerspace · $200/hr",u:"https://www.peerspace.com/pages/listings/6424d530464ca6000e0521c3"},
   {k:"plymprodres",n:"'Production Residence', Plymouth (modest, cheapest S.Shore)",c:"option",lat:41.94267,lng:-70.76186,r:"Bennet Residence · options",no:"Plymouth",ct:"Peerspace · $75/hr",u:"https://www.peerspace.com/pages/listings/61d7d71fbdb172000d35fee0"},
   {k:"onsetflamingo",n:"Onset 'Flamingo House' cottage, Onset/Wareham (a rentable HOUSE)",c:"option",lat:41.74203,lng:-70.65966,r:"Airbnb (Boston) · options",no:"Onset, Wareham",ct:"Peerspace · $350/hr",u:"https://www.peerspace.com/pages/listings/645d47b0613cb2000e2665ed"},
   {k:"v31russell",n:"31 Russell St, Plymouth — modest hillside home, backs onto Burial Hill (FOR SALE)",c:"option",lat:42.28103,lng:-70.8752,r:"Marrero Residence · modest teacher's house (graveyard cheatable in bg) · options",no:"31 Russell St, Plymouth",ct:"Redfin MLS 73186933",u:"https://www.redfin.com/MA/Plymouth/31-Russell-St-02360/home/16424562"},
   {k:"vipswichhigh",n:"High St / County St, Ipswich — Old North Burying Ground",c:"option",lat:42.6858,lng:-70.84499,r:"Verlice backup · house by a graveyard · open",no:"High St, Ipswich",ct:"private — owner outreach",u:"https://historicipswich.net/ipswich-old-north-burying-ground/"},
-  {k:"v17grove",n:"Grove St, Sandwich — Old Town Cemetery on Shawme Pond",c:"option",lat:41.75615,lng:-70.50096,r:"Verlice backup · house by a graveyard · open",no:"17/36/38 Grove St, Sandwich",ct:"private / periodic listings",u:"https://www.redfin.com/MA/Sandwich/17-Grove-St-02563/home/77479869"},
   {k:"vbenabbey",n:"Ben Abbey Rd / Sandwich Rd, Bourne — Sagamore Cemetery (canal-side)",c:"option",lat:41.77082,lng:-70.534,r:"Verlice backup · house by a graveyard · open",no:"Ben Abbey Rd, Bourne",ct:"private — owner outreach",u:"https://www.findagrave.com/cemetery/1200274/sagamore-cemetery"},
   {k:"vwareham",n:"Main St, Wareham — Agawam / Center Cemetery",c:"option",lat:41.78626,lng:-70.75975,r:"Verlice backup · house by a graveyard · open",no:"Main St, Wareham",ct:"private — owner outreach",u:"https://agawamcentercemetery.com/"},
   {k:"hallturkeyhill",n:"100 Turkey Hill Rd, Newburyport — colonial, big lawn + fieldstone wall (photo-verified · FOR SALE)",c:"option",lat:42.80082,lng:-70.92474,r:"Gardner Residence · for-sale look-ref (⚠ verify pool) · options",no:"100 Turkey Hill Rd, Newburyport",ct:"Verani MLS 73535852 (agent via MLS)",u:"https://www.verani.com/ma-real-estate/newburyport/100-turkey-hill-road-mls-73535852"}
@@ -1173,7 +1170,6 @@ const SETS=[
  {n:"Psych Hospital / Ward",ep:"Eps 2,5,6",c:"secondary",sl:"open · consolidate w/ Hospital + ER",sc:"warn",v:"A Chicago-linked psych facility; the padded cell holds Nathan (Dylan's father). A lucid-man-in-a-mad-place tension — not generic asylum horror.",d:"Lab / lobby / padded cell. Combine with Hospital + ER to limit company moves.<br><span class='k'>Props</span> CHICAGO SMUGGLING RIG (food-supply truck, cans hiding codeine, whiteboard w/ Nathan's photo) · padded cell."},
  {n:"Abandoned Park",ep:"Ep 5",c:"secondary",sl:"open",sc:"warn",v:"An abandoned parking lot posing as an orchard — cracked asphalt, weeds, a rusted carousel; flat overcast light, faintly menacing.",d:"<span class='k'>Props</span> abandoned carousel · Sawyer's guitar + skateboard."},
  {n:"Ms. Marrero's House",ep:"Eps 4,5",c:"secondary",sl:"open",sc:"warn",v:"An old-world, bookish young-teacher's home — warm lamplight, stacked books, vintage charm; Halloween decor being boxed up.",d:"Holds the framed photo of Mitch & his mother Carleen (the scar) — a quiet tie to the Verlice mystery."},
- {n:"Beauty Store",ep:"Ep 4 (flashback)",c:"secondary",sl:"open",sc:"warn",v:"Bright, glossy retail normalcy — fluorescents, pinks, mirrors; a deliberate un-haunted palate-cleanser flashback.",d:"The commercial counterpoint to Black Willow."},
  {n:"Sandra's House (Boston)",ep:"Ep 6",c:"secondary",sl:"open · Boston, winter",sc:"warn",v:"Adult Sandra's modest, faded Boston home in winter — tea-service gentility, haunted by memory not ghosts. SEPARATE from Hell House.",d:"Dusty rose / cream / sage, aged wood; curated family photos.<br><span class='k'>Props</span> FRAMED TEEN POLAROID of Sandra & Raymond · tea + fruit cake."},
 
  {n:"Boston Airbnb",ep:"Ep 6",c:"ep6",sl:"open · make it a HOUSE",sc:"warn",v:"Road-trip lodging in Boston — a rented Airbnb house (not a city apartment). Bedroom + exterior.",d:"<span class='k'>Props</span> Chinese take-out · lamp · double beds."},
