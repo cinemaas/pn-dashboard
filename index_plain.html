@@ -279,7 +279,13 @@
      #scout .scoutgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
      #scout .sc{background:var(--surface2);border:1px solid var(--ring);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:9px}
      #scout .sc.dim{opacity:.4}
-     #scout .sc-h{display:flex;align-items:flex-start;gap:8px} #scout .sc-h b{font-size:15px;flex:1;line-height:1.25}
+     #scout .sc-h{display:flex;align-items:flex-start;gap:8px;cursor:pointer;user-select:none} #scout .sc-h b{font-size:15px;flex:1;line-height:1.25}
+     #scout .sc-h .cc{font-size:10.5px;color:var(--muted);font-weight:700;white-space:nowrap;align-self:center}
+     #scout .sc-h .chev{align-self:center;color:var(--muted);font-size:12px;width:12px;text-align:center}
+     #scout .sc-h .chev:before{content:"▸"} #scout .sc:not(.collapsed) .sc-h .chev:before{content:"▾"}
+     #scout .sc.collapsed{gap:0} #scout .sc.collapsed .sc-body{display:none}
+     #scout .sc-body{display:flex;flex-direction:column;gap:9px}
+     #scout .scoutgrid.q-open .sc.collapsed .sc-body{display:flex}
      #scout .meta{display:flex;flex-wrap:wrap;gap:6px} #scout .m{font-size:10.5px;letter-spacing:.03em;color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
      #scout .needs{display:flex;flex-wrap:wrap;gap:5px} #scout .nk{font-size:11px;background:rgba(144,133,233,.13);border:1px solid rgba(144,133,233,.32);color:var(--ink);border-radius:20px;padding:2px 9px} #scout .nk.cut{opacity:.5;text-decoration:line-through}
      #scout .needlbl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:1px}
@@ -587,15 +593,21 @@
    function card(o,pilot){
      const needs=o.needs.map(n=>`<span class="nk ${n.indexOf('✂')===0?'cut':''}">${n.replace('✂ ','')}</span>`).join('');
      const meta=[o.hub?`<span class="m">${HUBL[o.hub]}</span>`:'',o.d?`<span class="m">📅 ${o.d}</span>`:'',o.t?`<span class="m">${/Night/.test(o.t)&&!/D\+N|Day/.test(o.t)?'🌙':/D\+N/.test(o.t)?'🌗':'☀️'} ${o.t}</span>`:'',o.ep?`<span class="m">Eps ${o.ep}</span>`:''].join('');
-     return `<div class="sc" data-hub="${o.hub||'F'}" data-st="${o.st}" data-search="${A(((o.s||'')+' '+(o.flag||'')+' '+(o.needs||[]).join(' ')).toLowerCase())}">
-       <div class="sc-h"><b>${o.s}</b>${chip(o.st)}</div>
+     const nc=(o.cands||[]).length;
+     const np=(o.cands||[]).filter(c=>rankOf(o.s,c.n)).length;
+     const cc=`<span class="cc">${nc?nc+' opt'+(nc>1?'s':''):'🔦 to scout'}${np?' · ★'+np:''}</span>`;
+     return `<div class="sc collapsed" data-set="${A(o.s)}" data-hub="${o.hub||'F'}" data-st="${o.st}" data-search="${A(((o.s||'')+' '+(o.flag||'')+' '+(o.needs||[]).join(' ')).toLowerCase())}">
+       <div class="sc-h"><b>${o.s}</b>${chip(o.st)}${cc}<span class="chev"></span></div>
+       <div class="sc-body">
        <div class="meta">${meta}</div>
        ${o.flag?`<div class="flagp">▸ ${o.flag}</div>`:''}
        <div><div class="needlbl">Location must have</div><div class="needs">${needs}</div></div>
        <div class="cands">${o.cands&&o.cands.length?o.cands.map(c=>cand(c,o.s)).join(''):'<span class="none">🔦 open — needs scouting</span>'}</div>
+       </div>
      </div>`;
    }
    function draw(){
+     const expanded=new Set([...grid.querySelectorAll('.sc:not(.collapsed)')].map(s=>s.dataset.set));
      grid.innerHTML='';
      const show=SCOUT.filter(o=>(fHub==='all'||o.hub===fHub)&&(fSt==='all'||o.st===fSt));
      grid.insertAdjacentHTML('beforeend', show.map(o=>card(o)).join(''));
@@ -603,6 +615,7 @@
        grid.insertAdjacentHTML('beforeend', `<div class="pilotlbl" style="grid-column:1/-1;margin:6px 0 -4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Pilot — already shot / locked</div>`);
        grid.insertAdjacentHTML('beforeend', SCOUT_PILOT.map(o=>card(o,1)).join(''));
      }
+     if(expanded.size) grid.querySelectorAll('.sc').forEach(s=>{ if(expanded.has(s.dataset.set)) s.classList.remove('collapsed'); });
      applySearch();
    }
    // summary
@@ -625,12 +638,17 @@
      filt.innerHTML='<span style="font-size:11px;color:var(--muted);align-self:center;margin-right:2px">Hub:</span>'+
        hubs.map(h=>`<button class="mf ${fHub===h[0]?'on':''}" data-h="${h[0]}">${h[1]}</button>`).join('')+
        '<span style="font-size:11px;color:var(--muted);align-self:center;margin:0 2px 0 10px">Status:</span>'+
-       sts.map(s=>`<button class="mf ${fSt===s[0]?'on':''}" data-s="${s[0]}">${s[1]}</button>`).join('');
+       sts.map(s=>`<button class="mf ${fSt===s[0]?'on':''}" data-s="${s[0]}">${s[1]}</button>`).join('')+
+       '<span style="flex:1 0 8px"></span><button class="mf" data-x="open">⊕ Expand all</button><button class="mf" data-x="close">⊖ Collapse all</button>';
    }
-   filt.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.h!==undefined)fHub=b.dataset.h;if(b.dataset.s!==undefined)fSt=b.dataset.s;fbar();draw();});
+   filt.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+     if(b.dataset.x==='open'){grid.querySelectorAll('.sc').forEach(s=>s.classList.remove('collapsed'));return;}
+     if(b.dataset.x==='close'){grid.querySelectorAll('.sc').forEach(s=>s.classList.add('collapsed'));return;}
+     if(b.dataset.h!==undefined)fHub=b.dataset.h;if(b.dataset.s!==undefined)fSt=b.dataset.s;fbar();draw();});
    const searchEl=document.getElementById('scoutsearch'), mp=document.getElementById('mypicks'), pkToggle=document.getElementById('pickstoggle');
    function applySearch(){
      const q=(searchEl.value||'').trim().toLowerCase();
+     grid.classList.toggle('q-open', !!q);
      let matches=0;
      grid.querySelectorAll('.sc').forEach(sc=>{
        const setMatch=q&&(sc.getAttribute('data-search')||'').includes(q);
@@ -669,7 +687,7 @@
    function addNote(set,nm){ if(!noteModal){return;} pendingNote={set,nm}; noteTitle.innerHTML='📝 Note on <b>'+A(nm)+'</b>'+(WHO?' <span style="color:var(--muted);font-weight:400">— as '+A(WHO)+'</span>':''); noteTA.value=''; noteModal.classList.add('show'); setTimeout(()=>{try{noteTA.focus();}catch(e){}},30); }
    if(noteModal){ document.getElementById('nm-save').addEventListener('click',saveNoteModal); document.getElementById('nm-cancel').addEventListener('click',closeNoteModal); noteModal.addEventListener('click',e=>{ if(e.target===noteModal) closeNoteModal(); }); noteTA.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeNoteModal();} else if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();saveNoteModal();} }); }
    function deleteNote(set,nm,i){ const k=rmKey(set,nm); const a=NOTES[k]; if(!a)return; a.splice(i,1); if(!a.length)delete NOTES[k]; saveState(); renderPicks(); draw(); }
-   grid.addEventListener('click',e=>{ const nb=e.target.closest('.notebtn'); if(nb){ if(ensureWho()) addNote(nb.dataset.noteset,nb.dataset.notenm); return; } const nd=e.target.closest('.ndel'); if(nd){ if(confirm('Delete this note?')) deleteNote(nd.dataset.ntset,nd.dataset.ntnm,+nd.dataset.nti); return; } const sb=e.target.closest('.stbtn'); if(sb){ if(ensureWho()) setStatus(sb.dataset.stset,sb.dataset.stnm,sb.dataset.st); return; } const rb=e.target.closest('.rmbtn'); if(rb){ if(ensureWho()) toggleRemove(rb.dataset.rmset,rb.dataset.rmnm); return; } const b=e.target.closest('.pickbtn'); if(!b)return; if(ensureWho()) togglePick(b.dataset.set,b.dataset.nm); });
+   grid.addEventListener('click',e=>{ const hh=e.target.closest('.sc-h'); if(hh&&!e.target.closest('a')){ hh.parentElement.classList.toggle('collapsed'); return; } const nb=e.target.closest('.notebtn'); if(nb){ if(ensureWho()) addNote(nb.dataset.noteset,nb.dataset.notenm); return; } const nd=e.target.closest('.ndel'); if(nd){ if(confirm('Delete this note?')) deleteNote(nd.dataset.ntset,nd.dataset.ntnm,+nd.dataset.nti); return; } const sb=e.target.closest('.stbtn'); if(sb){ if(ensureWho()) setStatus(sb.dataset.stset,sb.dataset.stnm,sb.dataset.st); return; } const rb=e.target.closest('.rmbtn'); if(rb){ if(ensureWho()) toggleRemove(rb.dataset.rmset,rb.dataset.rmnm); return; } const b=e.target.closest('.pickbtn'); if(!b)return; if(ensureWho()) togglePick(b.dataset.set,b.dataset.nm); });
    mp.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b)return;
      if(b.classList.contains('pkclear')){ if(confirm('Clear all picks'+(SYNC.realtime?' for the whole crew':'')+'?')){PICKS={};saveState();renderPicks();draw();} return; }
      if(b.classList.contains('pkrestore')){ if(confirm('Restore all removed candidates'+(SYNC.realtime?' for the whole crew':'')+'?')){REMOVED={};saveState();renderPicks();draw();} return; }
