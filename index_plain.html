@@ -128,7 +128,7 @@
   .card.foldable > h2:after{content:"▾";color:var(--muted);font-size:13px;font-weight:400;margin-left:auto;padding-left:8px}
   .card.foldable.collapsed > h2:after{content:"▸"}
   .card.foldable.collapsed > h2{margin-bottom:0}
-  .card.foldable.collapsed > *:not(h2){display:none}
+  .card.foldable.collapsed > *:not(h2){display:none !important}
   /* website-like top menu bar */
   .card[id], h2[id]{scroll-margin-top:70px}
   .nav{align-items:center}
@@ -209,7 +209,7 @@
 
 <div class="intro">
   <div class="lead">📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
-  <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers), Sept 21–Nov 13.
+  <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers). <b>Day 1 = Sept 28</b> (moved from 9/21 on 7/24) · ~35 days · two weeks of prep on the ground from ~Sept 14 · scout trip Aug 16–21.
   <div style="margin-top:8px"><b>New here? Start with the <a href="#locations">Location Guide</a></b> (every set + its vibe, from the director), then the <a href="#map">map</a> and <a href="#schedule">schedule</a>. Everything else is detail you can open when you need it.</div>
   <div class="watchrow">
     <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
@@ -234,6 +234,8 @@
     <a href="#castcrew">👥 Cast &amp; Crew</a>
     <a href="#gear">🎥 Gear</a>
     <a href="#scripts">🎬 Scripts</a>
+    <a href="#" data-foldall="open" title="Open every section">⊕ expand all</a>
+    <a href="#" data-foldall="shut" title="Close every section">⊖ collapse all</a>
   </div>
   <div class="watch">
     <a class="btn lookbook" href="lookbook.html">📸 Look Book</a>
@@ -263,7 +265,7 @@
   <div class="tile hot"><div class="n" id="d-outreach">–</div><div class="l">Days to location outreach</div><div class="s">Mon Jul 13</div></div>
   <div class="tile"><div class="n" id="d-deposit">–</div><div class="l">Days to cash-flow deposit</div><div class="s">Sat Aug 15</div></div>
   <div class="tile"><div class="n" id="d-flights">–</div><div class="l">Days to flights booking</div><div class="s">Mon Aug 17</div></div>
-  <div class="tile ok"><div class="n" id="d-camera">–</div><div class="l">Days to camera</div><div class="s">Target Sep 21 · board D1 Sep 28</div></div>
+  <div class="tile ok"><div class="n" id="d-camera">–</div><div class="l">Days to camera</div><div class="s">Day 1 = Mon Sep 28 (confirmed 7/24)</div></div>
   <div class="tile"><div class="n">35<span style="font-size:16px;color:var(--muted)"> +3</span></div><div class="l">Board days + contingency</div><div class="s">Wrap Nov 13 → pad Nov 18</div></div>
   <div class="tile crit"><div class="n">22</div><div class="l">Locations still to lock</div><div class="s">Hell House + Academy (awaiting reply) + 20 net-new</div></div>
 </div>
@@ -277,7 +279,7 @@
     <div class="note">Dashed rings = ~45-min pairing zone around each hub (the "no extra company move" rule). Hell House pins = candidates; ⭐ in the name = photo-verified finalist. Pins marked "approx" are film-office/marketplace listings whose exact address is gated. &middot; <a href="lookbook.html"><b>📸 Open the Location Look Book &amp; Concept Art ↗</b></a></div>
   </div>
 
-  <div class="card" id="scout">
+  <div class="card foldable" id="scout">
     <style>
      #scout .scoutsum{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
      #scout .ss{background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:8px 12px;min-width:74px}
@@ -425,8 +427,7 @@
      {n:"⭐ Blackcraft Coffee, Salem (witch-brand café that rents)",a:"Salem",c:"blackcraftcult.com",st:"options",mk:"blackcraft",u:"https://blackcraftcult.com"},
      {n:"Lone Gull Coffeehouse, Gloucester (Josh's lead)",a:"Gloucester",c:"via Yelp",st:"options",u:"https://www.yelp.com/biz/lone-gull-coffeehouse-gloucester-2",px:{access:"Gloucester · HUB 2",permit:"Josh's lead — independent Gloucester coffeehouse; scout for the Veda dark/punk-witchy dress + a flippable-sign corner. Verify it rents / after-hours filming."},mk:"lonegullcoffeehouseglo"},
      {n:"Source Bakery, Gloucester (Josh's lead)",a:"Gloucester",c:"sourcebakery.com",st:"options",u:"https://www.sourcebakery.com/",px:{access:"Gloucester · HUB 2",permit:"Josh's lead — artisanal Gloucester bakery/café (reads wholesome/handmade, not moody) → would need heavy Veda dressing to get punk-witchy. Verify rental / off-hours shoot."},mk:"sourcebakerygloucester"},
-     {n:"Snowy Owl Coffee Roasters, Sandwich / Brewster (Josh's lead)",a:"Sandwich, Brewster & Chatham",c:"socoffee.co",st:"options",u:"https://socoffee.co/",px:{access:"Cape Cod · HUB 1 — Sandwich café is right at the Sagamore base",permit:"Josh's lead — craft roastery (3 Cape locations; Sandwich = blue café w/ red trim). Bright/welcoming, not moody → heavy Veda dressing needed. Best logistical fit for Hub 1. Verify off-hours filming."},mk:"snowyowlcoffeeroasters"},
-     {n:"⭐⭐ Zumi's Espresso, Ipswich — OXBLOOD walls, black ceiling, rust-orange accent (INTERIOR PHOTO-VERIFIED)",a:"40 Market St, Ipswich",c:"978-356-1988 · zumis.com",st:"options",u:"https://zumis.com",nw:1,px:{access:"Ipswich · HUB 2 (~20 min Danvers)",permit:"✅ INTERIOR SEEN — EXT: black fascia with GOLD hand-painted lettering, TEAL awning, RED market umbrellas, pastel prayer flags. INT: OXBLOOD/DEEP-RED lower walls, BLACK CEILING, salon-hung framed photographs, red-and-white checked cloths, a RUST-ORANGE accent wall. Genuinely dark, arty and worn — no white. ⚠ operating café; drop-tile ceiling in one corner."},mk:"zumis"}
+     {n:"Snowy Owl Coffee Roasters, Sandwich / Brewster (Josh's lead)",a:"Sandwich, Brewster & Chatham",c:"socoffee.co",st:"options",u:"https://socoffee.co/",px:{access:"Cape Cod · HUB 1 — Sandwich café is right at the Sagamore base",permit:"Josh's lead — craft roastery (3 Cape locations; Sandwich = blue café w/ red trim). Bright/welcoming, not moody → heavy Veda dressing needed. Best logistical fit for Hub 1. Verify off-hours filming."},mk:"snowyowlcoffeeroasters"}
     ]},
   {s:"Small Outdoor Club (night gig)",hub:"N",d:"½ day",dn:0.5,t:"Night",ep:"106",st:"options",needs:["Exterior — any outdoor space that will have us at night","Stage — existing OR built","Backstage / holding (can be a tent or a truck)"],flag:"🟢 OPEN BRIEF (Josh, Jul 26) — wide open. Any outdoor space that will host us at night and can take a stage (built or existing). Half a day, one scene — proximity and a yes matter more than the look.",
     cands:[
@@ -472,7 +473,6 @@
      {n:"⭐ Capitol Diner, Lynn — 1928 J.G. Brill car, believed the last operating Brill (photo-verified)",a:"431 Union St, Lynn",c:"781-595-9314",st:"options",u:"https://visitlynnma.org/business-listings/listing/the-capitol-diner/",nw:1,px:{access:"Lynn · ~20 min S of Danvers",permit:"✅ PHOTOS VIEWED — fire-engine-red 1928 J.G. Brill railcar diner, believed THE LAST OPERATING BRILL IN EXISTENCE. 'Capitol Diner' hand-lettered in white blackletter down the side, red-and-white striped awning, monitor roof, concrete steps + iron rail to an end-bay door, set tight against a soot-stained BRICK MILL WALL. Genuinely cinematic and URBAN rather than roadside. ⚠ a Brill is narrow — camera placement inside will be tight. ⚠ breakfast/lunch only, which HELPS an after-hours buyout ask."},mk:"capitoldiner"},
      {n:"Portside Diner, Danvers — Worcester Lunch Car #813 (1948), IN-HUB",a:"2 River St, Danvers",c:"978-777-1437",st:"options",u:"https://www.dinerville.info/ma/danvers/portside-diner",nw:1,px:{access:"Danvers · HUB 2 — IN HUB, ~5 min",permit:"Worcester Lunch Car #813, built 1948, originally the Cape Ann Diner in Gloucester: original wood ceiling, original coolers, marble floor, long counter w/ stools bolted to the floor, wooden booths. ON PAPER THE MOST INTACT PERIOD INTERIOR of the set and it is literally in your hub. ⚠ TEXT ONLY — could not photo-verify; the source write-up is from 2009, so confirm nothing was remodelled. ⚠ no website, Facebook only."},mk:"portside"},
      {n:"Dave's Diner, Middleborough — red booths + red swivel stools + checkerboard (INTERIOR ONLY — ⚠ modern exterior)",a:"390 W Grove St, Middleborough",c:"508-923-4755 · daves-diner.com",st:"open",u:"https://daves-diner.com",nw:1,px:{access:"Middleborough · HUB 1 (~25 min)",permit:"✅ INTERIOR SEEN — <b>RIGHT INTERIOR, WRONG EXTERIOR.</b> Inside is exactly the 1950s brief: RED VINYL BOOTHS, chrome counter with RED SWIVEL STOOLS, BLACK-AND-WHITE CHECKERBOARD FLOOR, pressed-tin ceiling, navy boomerang laminate. ⚠ CORRECTION (Jul 26, my error): the EXTERIOR is NOT a chrome dining car — it's a modern brick building with a red roof and only stainless banding at the base. Treat as an INT-only cover; shoot the chrome establishing at Agawam."},mk:"davesdiner"},
-     {n:"Little Depot Diner, Peabody — narrow railroad-car room, turquoise + checkerboard (VERIFIED)",a:"1 Railroad Ave, Peabody",c:"978-977-7775",st:"open",u:"https://www.dinerville.info/",nw:1,px:{access:"Peabody · HUB 2 (~10 min Danvers)",permit:"✅ INTERIOR SEEN — narrow railroad-car room, long counter, TURQUOISE placemats, CHECKERBOARD tile, red condiment bottles, menu boards papering the walls. Closest diner to the Danvers base. ⚠ cream/white ceiling; no neon."},mk:"littledepot"},
      {n:"⭐⭐ Yellow Deli, Plymouth — hand-hewn TIMBER interior, twisted-branch railings, mustard exterior (INTERIOR VERIFIED)",a:"7 North St, Plymouth",c:"508-747-3354 · yellowdeli.com/plymouth",st:"options",u:"https://yellowdeli.com/plymouth",nw:1,px:{access:"Plymouth · HUB 1 (~20 min Sagamore)",permit:"✅ INTERIOR SEEN — an EXTRAORDINARY hand-hewn HONEY-AND-DARK-BROWN TIMBER interior: rough-sawn beams, TWISTED-BRANCH RAILINGS, a mezzanine over a lower level, live-edge slab tables, AMBER lamplight, OCHRE hand-lettered boards, trailing greenery. EXT: MUSTARD-YELLOW clapboard with dark green trim. Crooked and storybook — zero white. ⭐ also a serious WILLOW READER candidate. ⚠⚠ RUN BY THE TWELVE TRIBES COMMUNITY — worth thinking through permission and any reputational questions up front, before anyone falls in love with it."},mk:"yellowdeli"}
     ]},
   {s:"Willow Reader Cottage",hub:"F",d:"4–5 hrs",dn:0.5,t:"Day",ep:"4·5",st:"open",needs:["Exterior","Ext driveway","Interior"],flag:"Crooked storybook fortune-teller cottage ('Madame Zugasti') — the on-screen Halloween→Christmas crossover.",
@@ -624,7 +624,7 @@
      return `<div class="cand ${rmv?'removed':''} ${cur&&cur.s==='passed'?'passed':''}" data-search="${A(s)}"><div class="top"><b class="${lead?'lead':''}">${c.n}</b> ${chip(c.st)} ${pk} ${rm}</div>
        <div class="cl">${c.a&&c.a!=='—'?'📍 '+c.a:''} ${c.c&&c.c!=='—'?'· 📞 '+c.c:''} ${map} ${list}</div>${px(c.px)}${stline}${noteList}</div>`;
    }
-   const NEWTAG='· Jul 25';
+   const NEWTAG='· Jul 26';
    function card(o,pilot){
      const needs=o.needs.map(n=>`<span class="nk ${n.indexOf('✂')===0?'cut':''}">${n.replace('✂ ','')}</span>`).join('');
      const meta=[o.hub?`<span class="m">${HUBL[o.hub]}</span>`:'',o.d?`<span class="m">📅 ${o.d}</span>`:'',o.t?`<span class="m">${/Night/.test(o.t)&&!/D\+N|Day/.test(o.t)?'🌙':/D\+N/.test(o.t)?'🌗':'☀️'} ${o.t}</span>`:'',o.ep?`<span class="m">Eps ${o.ep}</span>`:''].join('');
@@ -746,7 +746,7 @@
   })();
   </script>
 
-  <div class="card" id="locations">
+  <div class="card foldable collapsed" id="locations">
     <h2>📍 Location Guide <span class="tag">from the director's list · every set + its vibe</span></h2>
     <p class="note" style="margin:0 0 12px">Every location in Eps 2–6, grouped by how much we see it. Each card: what it is, which episodes, and its status. <b>Tap "▸ detail"</b> for sub-areas, hero props, seasonal dress &amp; bedroom color/light. <span style="color:var(--ink2)">Global look: <i>gothic Americana · permanent late-October · fog · ox-blood/rust/amber/moss/slate · candlelight &amp; wet stone · Crimson Peak × Wednesday × Coraline.</i></span></p>
     <div class="mapfilters" id="setfilters"></div>
@@ -754,7 +754,7 @@
     <p class="note">🎨 <b>Two on-screen seasons:</b> Eps 2–5 = permanent Halloween/harvest (pumpkins, hay, string lights, Spirit Week); <b>Ep 6</b> jumps to first snow + Christmas/Thanksgiving (Halloween comes down). The Willow Reader Cottage is the on-screen crossover. · <b>Bedrooms are color-keyed</b> so cutting between them reads instantly (Carrie=pink, Dylan=moss green, Mitch=teal/amber, Dakota=boho terracotta, etc.). · See the <a href="#lookbible">🎨 World &amp; Look Bible</a> below for the full comp recipe + palette.</p>
   </div>
 
-  <div class="card" id="lookbible">
+  <div class="card foldable collapsed" id="lookbible">
     <style>
      #lookbible .lbh{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--violet);font-weight:750;margin:18px 0 7px} #lookbible .lbh:first-of-type{margin-top:4px}
      #lookbible .keybox{background:var(--page);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:10px;padding:12px 15px;font-size:13.5px;color:var(--ink);line-height:1.6}
@@ -790,7 +790,7 @@
     <p class="note" style="margin:8px 0 0">If their rooms come up: <b>Lexie</b> = washed-out pastels echoing Carrie · <b>Mia</b> = old-money jewel tones. · <b>Pilot precedent:</b> a goth base with whimsical decor that flexes by location — darker in the haunted/witch spaces, lighter &amp; more playful in the teen/domestic ones.</p>
   </div>
 
-  <div class="card" id="schedule">
+  <div class="card foldable collapsed" id="schedule">
     <h2>Shoot board — 35 days (posted 7/10/26 one-liner) <span class="tag">hover a block</span></h2>
     <div class="strip" id="strip"></div>
     <div class="striplbls" id="striplbls"></div>
@@ -802,7 +802,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card foldable collapsed">
     <h2>⚠ Schedule load — "unmakeable days" <span class="tag">shot model over the 7/10 one-liner · hover a bar</span></h2>
     <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;margin-bottom:12px">
       <div><div style="font-size:30px;font-weight:750;color:var(--crit);line-height:1">18<span style="font-size:15px;color:var(--muted)"> / 35</span></div><div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">🔴 unmakeable</div></div>
@@ -817,12 +817,12 @@
     <div class="note"><b>The killers behind the flags:</b> <b>night exteriors</b> — D9 = 7, D24 & D28 = 6, D20 = 5, D35 = 4 (you can't beat the sun); <b>company moves</b> — D33 ×4, D27 & D32 ×3, D25 & D28 ×2, D31 & D35 ×1 (each 2nd move ≈ a lost half-day). Send-ready writeup → <a href="scripts/Schedule-Feasibility-Report.pdf" target="_blank"><b>Schedule Feasibility Report (PDF) ↗</b></a>; full per-day markup → the annotated one-liner.</div>
   </div>
 
-  <div class="card c5">
+  <div class="card c5 foldable collapsed">
     <h2>Milestones</h2>
     <ul class="ms" id="ms"></ul>
   </div>
 
-  <div class="card c7">
+  <div class="card c7 foldable collapsed">
     <h2 id="board">📋 Locations board <span class="tag">pilot legacy → 2026 status</span></h2>
     <table>
       <tr><th>Set</th><th>Location / links</th><th>Contact</th><th>Status</th></tr>
@@ -840,9 +840,9 @@
     </table>
   </div>
 
-  <div class="card c6 tiers" id="hellhouse">
+  <div class="card c6 tiers foldable collapsed" id="hellhouse">
     <h2>🏚️ Hell House — strategy &amp; scouting notes <span class="tag">the candidate list lives in the Scout Board ↑</span></h2>
-    <div class="flag" style="border-left-color:var(--good)">🔥 <b>LEAD — Beauport (Sleeper-McCann House, Gloucester).</b> Formal inquiry to Historic New England (7/16): ~6 days, shoot right after Beauport <b>closes Oct 17</b>; museum-safe FX (blood = post-VFX, boarded EXT = VFX + temp padlock); location fee OR donation to HNE. <b>Awaiting reply.</b> Scenes in Eps 103/104/106. <span class="btn-map" onclick="showOnMap('beauport')">🗺️ show on map</span></div>
+    <div class="flag" style="border-left-color:var(--good)">🔥 <b>LEAD — Beauport (Sleeper-McCann House, Gloucester).</b> Formal inquiry to Historic New England (7/16): ~6 days, shoot right after Beauport <b>closes Oct 17</b>; museum-safe FX (blood = post-VFX, boarded EXT = VFX + temp padlock); location fee OR donation to HNE. <b>⏰ NO REPLY IN 10 DAYS (sent 7/16 → 7/26) — CHASE IT.</b> And per the HNE policy below, the email route may be the wrong door: commercial photography is <b>outdoor only</b>, so the interior has to come through <b>functions@historicnewengland.org · 617-994-6671</b>. Scenes in Eps 103/104/106. <span class="btn-map" onclick="showOnMap('beauport')">🗺️ show on map</span></div>
     <p class="note" style="margin:8px 0 10px">📋 <b>All tracked Hell House candidates now live in ONE place — the <a href="#scout">🔦 Scout Board</a> above.</b> Search them and mark your <b>Pick 1 / 2 / 3</b> there. This card is just the <b>strategy, the rejected list &amp; the scouting pools</b> below. 👁️ Target look: match the burned original — <b>dark mahogany paneling, carved stair, hardwood, NO carpet</b> — plus a hero dark <b>EXTERIOR</b> (Richard 7/12), paired with a hub.</p>
     <details class="fold" style="margin-top:16px"><summary>🆕 Hero-EXTERIOR leads — photo-verify next <span class="tag">7/14 harvest</span></summary><div class="foldbody note" style="color:var(--ink2)">For the "establish a dark exterior" mandate: <b>The Ledges, Wenham</b> (stone Tudor, 14 acres, IN hub, FOR SALE) · <b>Sharksmouth, Manchester-by-the-Sea</b> (granite+shingle, 40 oceanfront acres) · <b>Margaret Cummings, Topsfield</b> (brick Tudor Revival) · <b>Carcassonne Castle, Marblehead</b> (oceanfront stone) · <b>John Faulkner House, Lowell</b> (1887 Shingle — closest sibling to the burned original, FOR SALE) · HUB 1: <b>Nathan Durfee</b> + <b>Mansion at the Highlands</b>, Fall River (stone + iron gates). Full 147 → LOCATIONS_AND_NEW_MANSION.md §6.</div></details>
     <details class="fold"><summary>❌ Rejected on photos + ✂️ cut</summary><div class="foldbody note"><b>Rejected:</b> Tupper Manor (bright cream/gold) · 51 Cliff St Nahant (white-painted stair/paneling, modern kitchen) · Westwood House (just colonials) · stone castles Hammond/Searles/Winnekenni (EXT-night cheats only). "Glynallen" = Glynallyn Castle NJ.<br><b>Cut:</b> Penguin Hall (our SCHOOL — not the Hell House) · Boston "Gothic Victorian" (pink Painted-Lady) · Kimball Jenkins (NH, no tax credit) · Methuen 1879 (warm/bright backup only).</div></details>
@@ -865,7 +865,7 @@
     <b style="color:var(--warn)">🔴 HISTORIC NEW ENGLAND'S ACTUAL POLICY (March 2025) — AND IT'S A PROBLEM FOR BEAUPORT.</b><br>
     We finally got the real text. Two hard limits:<br>
     · <b>"Photography is limited to OUTDOOR AREAS ONLY; no commercial photography is permitted INDOORS."</b> The only confirmed interior route is the entirely separate <b>FUNCTION RENTAL</b> track — <b>functions@historicnewengland.org · 617-994-6671.</b><br>
-    · <b>"Dates cannot be confirmed more than THREE MONTHS in advance."</b> For a Sept 21 start that window opened in late June — <b>IT IS OPEN NOW.</b><br>
+    · <b>"Dates cannot be confirmed more than THREE MONTHS in advance."</b> For a late-Sept start (Day 1 is now <b>9/28</b>) that window opened in late June — <b>IT IS OPEN NOW.</b><br>
     <b style="color:var(--warn)">⚠️⚠️ AND BEAUPORT'S OWN PAGE SAYS: "There is no indoor functions space on site." So for Beauport specifically, the function-rental workaround MAY NOT EXIST — meaning we might only get the EXTERIOR of our Hell House lead. RESOLVE THIS BEFORE ANYTHING ELSE.</b><br>
     Rates: commercial photography $100/hr non-member · small studio/student film $275/hr · <b>"Large studio film shoot — fees available upon request."</b> Booking <b>Marketing@HistoricNewEngland.org</b>, min 3 weeks. <b>Easements are 127 properties</b> (not 125) — Easements@HistoricNewEngland.org, 617-994-6642; their FAQ notes <b>easements do NOT prevent a lease.</b><br>
     <b>✅ One piece of good news:</b> <b>Gloucester is the ONLY town in our set that explicitly permits filming "on public OR PRIVATE property"</b> — which is exactly the Beauport situation. Community Development, 978-325-5230.<br><br>
@@ -928,7 +928,7 @@
     <div class="note" style="color:var(--warn);font-weight:600">Four things here can cost us locations if they slip. Read before anything else.</div>
     <div class="note" style="color:var(--ink2)">
     <b>1. ⏰ MBTA — FILE BY EARLY AUGUST 2026 OR DROP RAIL.</b> <b>filming@mbta.com</b> · 617-316-1654 · <b>minimum 30 BUSINESS days</b> (≈6 calendar weeks) + a <b>$1,000 administration fee due at application that is NONREFUNDABLE even if they deny you.</b> $1M CGL naming MBTA. They want script/storyboard with the letter of intent. Covers every station + right-of-way incl. Salem, Beverly, Ipswich, Gloucester, Rockport, Prides Crossing, Kingston/Plymouth, Greenbush.<br>
-    <b>2. ⏰ IPSWICH — ONE MONTH MINIMUM, stated twice in caps. For a Sept 21 start, FILE BY ~AUG 21.</b> Leah Niska, <a href="tel:9783566609">978-356-6609</a> · leahn@ipswichma.gov · <b>$50 standard / $150 if significant impact</b> · COI naming Town of Ipswich as additional insured. Cleanest written policy in the region.<br>
+    <b>2. ⏰ IPSWICH — ONE MONTH MINIMUM, stated twice in caps. Day 1 is now 9/28, so the hard floor is ~Aug 28 — but FILE BY ~AUG 21 and keep the cushion.</b> Leah Niska, <a href="tel:9783566609">978-356-6609</a> · leahn@ipswichma.gov · <b>$50 standard / $150 if significant impact</b> · COI naming Town of Ipswich as additional insured. Cleanest written policy in the region.<br>
     <b>3. 🚩🚩 DANVERS PROHIBITS FILMING IN RESIDENTIAL ZONES — NOW CONFIRMED BY TWO INDEPENDENT RESEARCH PASSES.</b> Filming is restricted to <b>commercial, industrial and town-owned zones only.</b> (An earlier pass found it, a second could not reproduce it, and a third has now independently confirmed it — treat as REAL until Danvers says otherwise in writing.) <b>For a horror series that needs houses, in our own Hub 2 base town, this is potentially disqualifying — RUN IT DOWN FIRST.</b> Planning 978-777-0001 x3029. ⚠ MFO's contact (Brian Szekely) does NOT appear on the town's own staff list — ask for Josh Morris (x3099) or Jennifer Manson (x3027). <i>Note the Rebecca Nurse Homestead is in Danvers.</i><br>
     <b>4. 🚩 BEAUPORT — OUR HELL HOUSE LEAD — IS A HISTORIC NEW ENGLAND PROPERTY, and HNE is unreachable by any automated means</b> (Cloudflare 403 on every attempt, every user-agent). <b>This gates our lead location and needs a human phone call.</b> Believed entry point historicnewengland.org/visit/property-rentals/ · Functions@HistoricNewEngland.org · rentals 617-994-6671. Cogswell's Grant (Essex) is also theirs.<br><br>
     <b>⚠ SALEM'S "OCTOBER BLACKOUT" IS NOT WRITTEN POLICY.</b> Every city source was checked — <b>no published rule bans or restricts October filming.</b> What IS documented: Oct 31 road closures, weekend downtown closures all month, resident-only parking with towing, triple fines to $300. So it's <b>operationally brutal but it's a CONVERSATION, not a lookup.</b> <b>⭐ Highest-value single call on the list: Jeremy Fiske, Special Events Mgr, <a href="tel:9787459595">978-745-9595 x46206</a> · JFiske@salem.com.</b> Salem fee: <b>feature film $800/day.</b> Also needs Electrical (generators), Fire detail (open flame), Health (craft services), Parks &amp; Rec, and Cemetery Commission sign-off. ⚠ don't cold-call "Ellen Talkowsky" — stale listing, filmography stops ~2011.<br><br>
@@ -1012,7 +1012,7 @@
     <b>Search URL: <a href="https://ma.reel-scout.com/loc_results.aspx" target="_blank">ma.reel-scout.com/loc_results.aspx ↗</a></b> — ⚠ blocks bots (Cloudflare), <b>NOT humans — open it in a normal browser</b>. Crew/vendor directory: ma.reel-scout.com/crew_login.aspx<br><br>
     <b>Also live:</b> mafilm.org/notification/ is <i>not</i> a production form — it's how MFO <b>vets and rosters professional location scouts</b>. Useful in reverse: <b>they maintain a list of vetted MA scouts they can refer you to.</b><br><br>
     <b style="color:var(--warn)">SEND THIS EMAIL — to mafilminfo@mass.gov, cc meg.jarrett@mass.gov</b><br>
-    <span style="display:block;border-left:3px solid var(--accent);padding-left:9px;margin:6px 0;color:var(--ink2)">Subject: <b>Location package request — scripted series, MA shoot Sept 21–Nov 13 2026</b><br>Ask for all five: (1) a <b>location package</b> of private residences matching our Scout Board breakdown, filtered to the two hubs; (2) <b>brokered introductions to owners</b> of Reel-Scout residential listings, since contacts are withheld publicly; (3) the <b>roster of vetted MA location scouts</b>; (4) whether they'll <b>push a call-for-locations to their homeowner list</b> on our behalf; (5) current <b>tax-credit paperwork guidance</b> (Meg Jarrett is the incentive contact).</span>
+    <span style="display:block;border-left:3px solid var(--accent);padding-left:9px;margin:6px 0;color:var(--ink2)">Subject: <b>Location package request — scripted series, MA shoot Sept 28–Nov 2026</b><br>Ask for all five: (1) a <b>location package</b> of private residences matching our Scout Board breakdown, filtered to the two hubs; (2) <b>brokered introductions to owners</b> of Reel-Scout residential listings, since contacts are withheld publicly; (3) the <b>roster of vetted MA location scouts</b>; (4) whether they'll <b>push a call-for-locations to their homeowner list</b> on our behalf; (5) current <b>tax-credit paperwork guidance</b> (Meg Jarrett is the incentive contact).</span>
     <b style="color:var(--warn)">⚠ PERMIT SCHEDULE RISK — act now, not in August.</b> There is <b>no state-level shortcut</b>: Commonwealth-controlled facilities go through the MFO, but <b>everything else is permitted locally</b> by the mayor's office or Board of Selectmen. The MFO's own page warns that <b>smaller towns may require TOWN MEETING approval — which can add months.</b> Bourne/Sagamore, Manchester-by-the-Sea, Rockport and Essex are exactly that cadence of town. Pull the A–Z contacts at <a href="https://mafilm.org/filming-in-massachusetts/permits/" target="_blank">mafilm.org permits ↗</a> and start those conversations immediately.</div></details>
 
     <details class="fold"><summary>🏘️ Vacation-rental &amp; home-watch managers — one call reaches dozens of houses</summary><div class="foldbody note">
@@ -1032,7 +1032,7 @@
     · <b>⭐ Breakwater Home Watch</b> — <a href="tel:9785598275">978-559-8275</a> · info@breakwaterhomewatch.com — Gloucester/Rockport/Essex/Manchester. NHWA-accredited, MA Watch Guard Lic. #LW0548A, © 2026. They already do <b>"contractor monitoring" and "key holder services"</b> — supervising a crew is a familiar motion, not a novel ask.<br>
     · <b>⭐ Coastal Home Watch</b> — <a href="tel:9784179853">978-417-9853</a> · Jameson@CoastalCheck.com — <b>widest town list found: Beverly, Salem, Hamilton, DANVERS, Peabody, Wenham, Manchester, Marblehead, Ipswich, Newbury</b> — one call partly fills the Marblehead→Ipswich gap the rental market doesn't serve. ⚠ site © 2023, confirm still trading.<br>
     · <b>Cape Ann Property Services</b> — 978-290-1488 · sarahjwilk@gmail.com — has a <b>rental arm</b>, so those owners already have a rate card and expect strangers to pay to occupy.<br>
-    <b>The home-watch ask:</b> "Which watched properties are owner-absent Sept 21–Nov 13 2026? We pay <b>10% of any signed location agreement plus your day rate as on-site key holder.</b>" Ask for large water-view or historic homes, and whether any owner has allowed filming before.<br><br>
+    <b>The home-watch ask:</b> "Which watched properties are owner-absent Sept 28–Nov 2026? We pay <b>10% of any signed location agreement plus your day rate as on-site key holder.</b>" Ask for large water-view or historic homes, and whether any owner has allowed filming before.<br><br>
     <b>⚠ NOT managers — by-owner portals:</b> WeNeedaVacation.com (4,000+ listings) and CapeCodVacationRentals.com are marketplaces — that's 4,000 separate calls, not one. Use them to <i>find</i> houses visually, then negotiate one owner at a time.</div></details>
 
     <details class="fold"><summary>⚖️ CRITICAL — a rental booking is NOT filming rights</summary><div class="foldbody note">
@@ -1073,8 +1073,8 @@
     <b>The offer that makes a fiduciary say yes:</b> a location fee that <b>offsets a month of carrying costs</b>, plus production insurance naming the estate as additional insured. Vague "we'd love to film here" does not work on a fiduciary with no incentive to take risk.<br>
     ⚠ <b>Don't cold-call estate attorneys</b> — go through the estate-sale firms above; they work for these executors every week and a warm liquidator intro lands far better.</div></details>
 
-    <details class="fold"><summary>🗺️ North Shore societies — ⏰ one starts TOMORROW + address-level inventories</summary><div class="foldbody note">
-    <b style="color:var(--warn)">⏰ MOST TIME-SENSITIVE ITEM IN THE ENTIRE ROLODEX — "IF THIS HOUSE COULD TALK" RUNS JUL 26 – AUG 2, 2026. THAT IS TOMORROW.</b><br>
+    <details class="fold"><summary>🗺️ North Shore societies — ⏰ one is RUNNING NOW + address-level inventories</summary><div class="foldbody note">
+    <b style="color:var(--warn)">⏰ MOST TIME-SENSITIVE ITEM IN THE ENTIRE ROLODEX — "IF THIS HOUSE COULD TALK" RUNS JUL 26 – AUG 2, 2026 — IT IS OPEN TODAY AND CLOSES AUG 2.</b><br>
     Newburyport Preservation Trust's 10th-anniversary edition, during Yankee Homecoming. <b>Residents WRITE AND POST THEIR OWN SIGNS telling their house's story</b> — that is a self-selecting list of owners who volunteered to tell the world about their old house, and it is happening on the street this week. Registration <b>walknewbyport.com</b> · Barb Bailey, <b>Barb.Bailey03@gmail.com</b> · NPT <b>npt@nbptpreservationtrust.org</b>.<br>
     Also theirs: the <b><a href="https://nbptpreservationtrust.org/historic-house-plaque-program/" target="_blank">Historic House Plaque interactive MAP ↗</a></b> — pins colour-coded by century, each clickable for the inscription. <b>These owners paid $1,000 to advertise their house's history.</b> ⚠ NPT has <b>no official standing with the City</b> — don't route permitting through them.<br><br>
     <b style="color:var(--good)">⭐ BEST COLD CONTACT ANYWHERE: Gloucester Archives Committee — <a href="tel:9783255136">978-325-5136</a> · garchives@gloucester-ma.gov</b> — City Hall basement, open daily except Thu, 9am–12pm. <b>Volunteers who will research individual houses ON REQUEST.</b> Also Julie Travers, Local Historian, Sawyer Free Library 978-325-5500 (she also sits on the Historical Commission).<br><br>
@@ -1127,7 +1127,7 @@
     <details class="fold"><summary>🏆 Preservation networks — the two best channels found anywhere</summary><div class="foldbody note">
     <b style="color:var(--good)">⭐⭐ #1 — ESSEX NATIONAL HERITAGE / "TRAILS &amp; SAILS"</b> · <a href="tel:9787400444">978-740-0444</a> · <b>Info@EssexHeritage.org</b> · 10 Federal St, Salem · <a href="https://essexheritage.org/" target="_blank">essexheritage.org ↗</a><br>
     They cover <b>all 34 cities and towns of Essex County — our ENTIRE North Shore hub</b> (Danvers, Beverly, Gloucester, Ipswich, Salem, Marblehead, Newburyport, Rockport, Topsfield, Saugus), including the Beauport lead. They run <b>TRAILS &amp; SAILS: a free 10-day series over the LAST TWO WEEKENDS OF SEPTEMBER in which historic properties across the county open to the public.</b><br>
-    <b>Why this is the best channel found:</b> it runs in <i>exactly</i> our window (we start Sept 21), and every participating owner has <b>already volunteered to open their historic house to the public.</b> Essex Heritage holds that owner list.<br>
+    <b>Why this is the best channel found:</b> it runs in <i>exactly</i> our window (Day 1 = 9/28), and every participating owner has <b>already volunteered to open their historic house to the public.</b> Essex Heritage holds that owner list.<br>
     <b>⚠ AND IT CUTS BOTH WAYS — ask about conflicts:</b> Trails &amp; Sails crowds and road closures could collide with our Danvers-hub shoot days. <i>"Can you share the roster of privately owned properties that participated over the past three years, or forward an introduction to those owners? And flag any 2026 dates/sites that might conflict with filming in Danvers, Beverly or Gloucester?"</i><br><br>
 
     <b style="color:var(--good)">⭐⭐ #2 — HISTORIC NEW ENGLAND PRESERVATION EASEMENTS</b> · <b>direct line <a href="tel:6179946642">617-994-6642</a></b> · <b>Easements@HistoricNewEngland.org</b><br>
@@ -1185,7 +1185,7 @@
     <div class="note" style="color:var(--muted);margin-top:8px">Highest-yield for the gothic/decayed look: Preservation Mass "Most Endangered" + CIRCA / Old House Dreams + estate-sale calendars. Turnkey yes-to-crews: The Trustees (Castle Hill) + Historic New England (Eustis).</div>
   </div>
 
-  <div class="card" id="castcrew">
+  <div class="card foldable collapsed" id="castcrew">
     <h2>Cast &amp; Crew <span class="tag">updated Jul 26 — from the Hell Bound text thread + the PN-Casting email chain</span></h2>
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px">
       <div>
@@ -1241,7 +1241,7 @@
     <div class="note" style="margin-top:14px">📅 <b>Dates moved — from the Jul 24 thread:</b> scout trip to MA <b>Aug 16–21</b> · back on the ground ~<b>Sept 14</b> for two weeks of prep · <b>Day 1 = 9/28</b>. ⚠ That collides with <b>Klaypool, which is unavailable 9/28–10/2</b> — the locked hero house can't be the first week. (Klaypool also re-shingled the exterior: same colour, new shingles; Laura says it doesn't read. No interior work.)</div>
   </div>
 
-  <div class="card" id="gear">
+  <div class="card foldable collapsed" id="gear">
     <h2>Grip truck + lighting <span class="tag">3-ton G&amp;E · sourced in MA for the 25% tax credit</span></h2>
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px">
       <div>
@@ -1267,7 +1267,7 @@
     <div class="note"><b>Plan:</b> get written quotes from <b>FastLights + High Output</b> first (none publish rates), then call <b>Kaye</b> for the owner-op route (his labor <i>and</i> gear both count toward the credit). Spec for heavy <b>night EXT</b> (HMIs) + practical interiors (SkyPanel/Astera/LED). Loop in the <b>key grip once hired</b> on the package. Out-of-state (KJfilms CT, Rat Race CT/RI) = weaker for the credit. Pulls from account <b>2600 G&amp;E $92.5K</b>.</div>
   </div>
 
-  <div class="card c6" id="scripts">
+  <div class="card c6 foldable collapsed" id="scripts">
     <h2>Scripts — click to open <span class="tag">numbered 101–106 · matches the schedule</span></h2>
     <table>
       <tr><th>Ep</th><th>Title</th><th>Scenes</th><th>Script PDF</th></tr>
@@ -1289,14 +1289,16 @@ const today = new Date(); today.setHours(0,0,0,0);
 document.getElementById('today').textContent = today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 const dd = (d)=>Math.round((new Date(d) - today)/864e5);
 const put=(id,d)=>{const n=dd(d);document.getElementById(id).textContent = n>=0?n:'✓';};
-put('d-outreach','2026-07-13'); put('d-deposit','2026-08-15'); put('d-flights','2026-08-17'); put('d-camera','2026-09-21');
+put('d-outreach','2026-07-13'); put('d-deposit','2026-08-15'); put('d-flights','2026-08-17'); put('d-camera','2026-09-28');
 
 // ---- milestones
 const MS=[
  ['2026-07-13','warn','<b>Location outreach begins</b> — Klaypool first, then all legacy'],
  ['2026-08-15','neutral','<b>Cash-flow deposit</b> due'],
  ['2026-08-17','neutral','<b>Flights booking date</b> (pinned, revisit)'],
- ['2026-09-21','good','<b>Camera target</b> (call notes) — board Day 1 Mon Sep 28'],
+  ['2026-08-16','warn','<b>Scout trip to MA</b> — Josh/Lindsay/Johanna, Aug 16–21'],
+  ['2026-09-14','warn','<b>Back on the ground</b> — two weeks of prep before Day 1'],
+ ['2026-09-28','good','<b>DAY 1 — camera</b> (confirmed 7/24; moved from 9/21) &middot; ⚠ Klaypool unavailable 9/28–10/2'],
  ['2026-10-03','neutral','<b>Company move → Hub 2</b> North Shore / Danvers (~Oct 3–4)'],
  ['2026-10-12','crit','<b>Hell House block</b> D11–15 — stand-in must be locked'],
  ['2026-11-13','neutral','<b>Wrap Day 35</b> — pad wraps Nov 18 · all home for Thanksgiving Nov 26'],
@@ -1404,7 +1406,7 @@ const SHOTS=[
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const LOCS=[
-  {k:"hub1",n:"HUB 1 — Cape Cod Canal base",c:"hub",lat:41.7454,lng:-70.6178,r:"Basecamp Sept 21–Oct 2 · Hampton Inn, Buzzards Bay",no:"Klaypool/Salem-1692/Mary's Bath/Gardner block",ct:"",u:"https://www.hilton.com/en/hotels/bosbbhx-hampton-suites-buzzards-bay-cape-cod-canal/"},
+  {k:"hub1",n:"HUB 1 — Cape Cod Canal base",c:"hub",lat:41.7454,lng:-70.6178,r:"Basecamp — Hampton Inn, Buzzards Bay · ⚠ block was booked Sept 21–Oct 2; Day 1 moved to 9/28 AND Klaypool is unavailable 9/28–10/2 — REBOOK",no:"Klaypool/Salem-1692/Mary's Bath/Gardner block",ct:"",u:"https://www.hilton.com/en/hotels/bosbbhx-hampton-suites-buzzards-bay-cape-cod-canal/"},
   {k:"hub2",n:"HUB 2 — Danvers base",c:"hub",lat:42.5665,lng:-70.9363,r:"Basecamp ~Oct 3 → wrap · North Shore",no:"Hell House D11–15, Academy, Verlice, all option sets",ct:"",u:""},
   {k:"beauport",n:"⭐ Beauport (Sleeper-McCann) — LEAD · INQUIRY SENT",c:"hellhouse",lat:42.5786,lng:-70.6639,r:"🔥 FRONT-RUNNER — Lindsay sent a formal filming inquiry 7/16; Henry Sleeper collector rooms, colored glass, cabinet-of-curiosities INT = exactly the tone",no:"75 Eastern Point Blvd, Gloucester · ~30 min from Danvers (HUB 2) · ~6 days · shoot AFTER Beauport closes Oct 17 (pre-winterize) · blood = post VFX (chocolate syrup, nothing on walls), boarded EXT = VFX + temp padlock · location fee OR donation to Historic New England · awaiting Kristen/Beauport reply",ct:"Beauport / Historic New England — Kristen · 978-283-0800",u:"https://www.historicnewengland.org/property/beauport-sleeper-mccann-house/"},
   {k:"morninggarden",n:"🆕⭐ Morning Garden (Hammond Sr. Tudor)",c:"hellhouse",lat:42.59885,lng:-70.68385,r:"BEST NEW FIND — dark Tudor gothic EXT + dark-oak interior · solves the new exterior mandate",no:"190 Western Ave, Gloucester · ~30-35 min HUB 2 · retreat house, ~$2K/day · ⚠ church owner: pitch content early",ct:"via MA Film Office / mgretreats.weebly.com",u:"https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65"},
@@ -1503,10 +1505,8 @@ const LOCS=[
   {k:"gardnerbentwood",n:"⭐ Bentwood by the Sea (1902 estate), Bourne — WHOLE-HOUSE Victorian, 6 acres, 250ft private beach",c:"option",lat:41.69588,lng:-70.62723,r:"Gardner Residence · options",no:"Wing's Neck, Bourne",ct:"Airbnb ~$715/night (6-night pref, $5,000/wk) · bentwoodbythesea.com",u:"https://www.airbnb.com/rooms/1414493043846294889"},
   {k:"dorchwarm",n:"'Warm Cozy Unit', Dorchester — gold velvet + charcoal walls (⚠ too upscale, needs dressing down)",c:"option",lat:42.29732,lng:-71.0745,r:"Sandra's House (Boston) · open",no:"Dorchester, Boston",ct:"Peerspace · 1,600 sqft · 4.7★",u:"https://www.peerspace.com/pages/listings/63c0dea924cc28000e3558f3"},
   {k:"baileycottage",n:"⭐⭐ ROCKPORT'S HAVEN AVE / PHILLIPS AVE SUMMER COLONY — 5 colourful Victorians in walking distance",c:"option",lat:42.68382,lng:-70.62533,r:"Willow Reader Cottage · options",no:"Haven Ave & Phillips Ave, Rockport",ct:"private residences — DOOR-KNOCK CANVASS · route via Rockport Historical Commission, rockporthistorical@rockportma.gov",u:"https://buildingsofnewengland.com/2024/05/06/haven-avenue-cottages-c-1877/"},
-  {k:"zumis",n:"⭐⭐ Zumi's Espresso, Ipswich — OXBLOOD walls, black ceiling, rust-orange accent (INTERIOR PHOTO-VERIFIED)",c:"option",lat:42.67917,lng:-70.83792,r:"Coffee Shop (Black Cat) · options",no:"40 Market St, Ipswich",ct:"978-356-1988 · zumis.com",u:"https://zumis.com"},
   {k:"yellowdeli",n:"⭐⭐ Yellow Deli, Plymouth — hand-hewn TIMBER interior, twisted-branch railings, mustard exterior (INTERIOR VERIFIED)",c:"option",lat:41.95721,lng:-70.66443,r:"Coffee Shop (Black Cat) · options",no:"7 North St, Plymouth",ct:"508-747-3354 · yellowdeli.com/plymouth",u:"https://yellowdeli.com/plymouth"},
   {k:"davesdiner",n:"Dave's Diner, Middleborough — turquoise bands, red booths, checkerboard floor (VERIFIED)",c:"option",lat:41.89526,lng:-70.94705,r:"Diner · open",no:"390 W Grove St, Middleborough",ct:"508-923-4755 · daves-diner.com",u:"https://daves-diner.com"},
-  {k:"littledepot",n:"Little Depot Diner, Peabody — narrow railroad-car room, turquoise + checkerboard (VERIFIED)",c:"option",lat:42.52703,lng:-70.92757,r:"Diner · open",no:"1 Railroad Ave, Peabody",ct:"978-977-7775",u:"https://www.dinerville.info/"},
   {k:"wigwam",n:"⭐ On-I-Set Wigwam Spiritualist Camp (1894), Onset — octagonal WITCH-HAT chapel, oldest Spiritualist camp in the US",c:"option",lat:41.74704,lng:-70.65889,r:"Willow Reader Cottage · open",no:"9 Crescent Pl, Onset",ct:"508-436-3105",u:"https://www.onisetwigwam.com/"},
   {k:"fallriverpd",n:"⭐⭐ Bedford Street Police Station (1916), Fall River — a TWO-TIER BLACK IRON CELL BLOCK. THE HERO.",c:"option",lat:41.69957,lng:-71.14261,r:"Town Center / Police / Morgan's Office / Courthouse · options",no:"Bedford St, Fall River",ct:"City of Fall River 508-324-2000",u:"https://www.fallriverma.org/"},
   {k:"salemcourt",n:"⭐⭐ Old Essex County Superior Courthouse (1861/1891), Salem — PEACOCK-TEAL law library, carved OWLS ⚠ CALL NOW",c:"option",lat:42.5234,lng:-70.89728,r:"Town Center / Police / Morgan's Office / Courthouse · options",no:"32–34 Federal St, Salem",ct:"⭐ Kate Newhall-Smith — knewhallsmith@salem.com · 978-745-9595",u:"https://www.salem.com/"},
@@ -1720,16 +1720,25 @@ const HHOUSE=[
     var h=e.target.closest('.card.foldable > h2');
     if(h && !e.target.closest('a')) h.parentElement.classList.toggle('collapsed');
   });
-  /* if someone deep-links or uses the top menu, open the card they landed on */
+  /* if someone deep-links or uses the top menu, open the card they landed on.
+     the anchor id may sit on the card OR on the h2 inside it, so walk up. */
   function openHash(){
     var id=location.hash.slice(1); if(!id) return;
-    var c=document.getElementById(id);
-    if(c && c.classList.contains('foldable')){
+    var el=document.getElementById(id); if(!el) return;
+    var c=el.closest('.card.foldable');
+    if(c){
       c.classList.remove('collapsed');
-      setTimeout(function(){ c.scrollIntoView({block:'start'}); },0);
+      setTimeout(function(){ (el.id===c.id?c:el).scrollIntoView({block:'start'}); },0);
     }
   }
   window.addEventListener('hashchange',openHash); openHash();
+  /* expand / collapse everything at once */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-foldall]'); if(!b) return;
+    e.preventDefault();
+    var open=b.dataset.foldall==='open';
+    document.querySelectorAll('.card.foldable').forEach(function(c){ c.classList.toggle('collapsed',!open); });
+  });
 })();
 </script>
 </body>
