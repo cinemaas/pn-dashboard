@@ -222,32 +222,75 @@
   </div>
 </div>
 <nav class="nav" id="topnav">
-  <a class="navhome" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">🏠 Home</a>
-  <input class="navsearch" id="navsearch" type="search" placeholder="🔎 Search any location…" aria-label="Search all locations" autocomplete="off">
-  <button class="navtoggle" type="button" aria-expanded="false" aria-controls="navlinks" onclick="var n=document.getElementById('topnav');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.querySelector('.lbl').textContent=o?'Close menu':'Menu';"><span><span class="bars">☰</span><span class="lbl">Menu</span></span><span class="caret">▾</span></button>
+  <a class="navhome" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" title="Back to top">👻<span class="hm">PN</span></a>
+  <input class="navsearch" id="navsearch" type="search" placeholder="🔎 Search any location — town, style, feature…" aria-label="Search all locations" autocomplete="off">
+  <button class="navtoggle" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><span class="bars">☰</span></button>
   <div class="navlinks" id="navlinks">
-    <a href="#scout">🔦 Scout Board</a>
-    <a href="#locations">📍 Locations</a>
-    <a href="#lookbible">🎨 Look Bible</a>
-    <a href="#map-card">🗺️ Map</a>
-    <a href="lookbook.html">📸 Look Book</a>
-    <a href="#board">📋 Location board</a>
-    <a href="#schedule">📅 Schedule</a>
-    <a href="#hellhouse">🏚️ Hell House</a>
-    <a href="#pipelines">📇 Rolodex</a>
-    <a href="#castcrew">👥 Cast &amp; Crew</a>
-    <a href="#gear">🎥 Gear</a>
-    <a href="#scripts">🎬 Scripts</a>
-    <a href="#" data-foldall="open" title="Open every section">⊕ expand all</a>
-    <a href="#" data-foldall="shut" title="Close every section">⊖ collapse all</a>
-  </div>
-  <div class="watch">
-    <a class="btn lookbook" href="lookbook.html">📸 Look Book</a>
-    <a class="btn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a>
-    <a class="btn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Pilot</a>
+
+    <div class="navgrp">
+      <button class="ngb" type="button" aria-expanded="false">📍 <span>Locations</span> <i class="cx">▾</i></button>
+      <div class="navdrop">
+        <span class="ndh">Find &amp; track</span>
+        <a href="#scout">🔦 Scout Board <em>every set + candidates</em></a>
+        <a href="#map-card">🗺️ Map <em>colour per location</em></a>
+        <a href="#locations">📍 Location Guide <em>each set + its vibe</em></a>
+        <a href="#board">📋 Locations board <em>pilot legacy → 2026</em></a>
+        <a href="#hellhouse">🏚️ Hell House <em>strategy + notes</em></a>
+        <span class="ndh">Look</span>
+        <a href="lookbook.html">📸 Look Book <em>concept art + scout photos</em></a>
+        <a href="#lookbible">🎨 World &amp; Look Bible <em>the visual key</em></a>
+      </div>
+    </div>
+
+    <div class="navgrp">
+      <button class="ngb" type="button" aria-expanded="false">🎬 <span>Production</span> <i class="cx">▾</i></button>
+      <div class="navdrop">
+        <a href="#schedule">📅 Schedule <em>35 days + load</em></a>
+        <a href="#scripts">🎬 Scripts <em>101–106</em></a>
+        <a href="#castcrew">👥 Cast &amp; Crew <em>who's locked</em></a>
+        <a href="#gear">🎥 Gear <em>grip truck + lighting</em></a>
+        <a href="#pipelines">📇 Rolodex <em>brokers, film office, tours</em></a>
+      </div>
+    </div>
+
+    <div class="navgrp">
+      <button class="ngb" type="button" aria-expanded="false">▶ <span>Watch</span> <i class="cx">▾</i></button>
+      <div class="navdrop">
+        <a href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer <em>YouTube</em></a>
+        <a href="https://vimeo.com/956314696" target="_blank">▶ Pilot <em>Vimeo · password PN</em></a>
+      </div>
+    </div>
+
+    <div class="navutil" role="group" aria-label="Show or hide all sections">
+      <button type="button" data-foldall="open" title="Open every section">⊕</button>
+      <button type="button" data-foldall="shut" title="Close every section">⊖</button>
+    </div>
   </div>
 </nav>
-<script>document.getElementById('navlinks').addEventListener('click',function(e){if(e.target.closest('a')){var n=document.getElementById('topnav');n.classList.remove('open');var t=n.querySelector('.navtoggle');if(t){t.setAttribute('aria-expanded','false');var l=t.querySelector('.lbl');if(l)l.textContent='Menu';}}});
+<script>
+(function(){
+  var nav=document.getElementById('topnav'), links=document.getElementById('navlinks'),
+      burger=nav.querySelector('.navtoggle');
+  function closeDrops(except){ nav.querySelectorAll('.navgrp.open').forEach(function(g){
+    if(g!==except){ g.classList.remove('open'); g.querySelector('.ngb').setAttribute('aria-expanded','false'); } }); }
+  function closeSheet(){ nav.classList.remove('open'); if(burger) burger.setAttribute('aria-expanded','false'); }
+  // desktop: group buttons open their own dropdown (one at a time)
+  nav.addEventListener('click',function(e){
+    var b=e.target.closest('.ngb');
+    if(b){ var g=b.parentElement, willOpen=!g.classList.contains('open');
+           closeDrops(g); g.classList.toggle('open',willOpen);
+           b.setAttribute('aria-expanded',willOpen?'true':'false'); e.preventDefault(); return; }
+    if(e.target.closest('.navtoggle')){ var o=nav.classList.toggle('open');
+           burger.setAttribute('aria-expanded',o?'true':'false'); e.preventDefault(); return; }
+    if(e.target.closest('.navdrop a')){ closeDrops(); closeSheet(); }      // navigating closes everything
+  });
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)){ closeDrops(); closeSheet(); } });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeDrops(); closeSheet(); } });
+  // hairline under the bar only once it's actually stuck
+  var sentinel=document.createElement('div'); sentinel.style.cssText='position:absolute;top:0;height:1px;width:1px';
+  nav.parentNode.insertBefore(sentinel,nav);
+  if(window.IntersectionObserver) new IntersectionObserver(function(en){ nav.classList.toggle('stuck',!en[0].isIntersecting); }).observe(sentinel);
+})();
 // frozen-bar search → drives the Scout Board search + jumps to it; floating up/down pager
 (function(){
  var ns=document.getElementById('navsearch');
@@ -768,7 +811,70 @@
      #lookbible .palgrid b{color:#fff} #lookbible .palgrid .who{display:flex;align-items:center;gap:8px} #lookbible .palgrid .who span{color:var(--muted);font-size:11.5px}
      #lookbible .sw{width:13px;height:13px;border-radius:50%;flex:0 0 13px;border:1px solid rgba(255,255,255,.25)}
      @media(max-width:640px){ #lookbible .palgrid{grid-template-columns:1fr} #lookbible .palgrid .ph{display:none} #lookbible .palgrid>div{padding:8px 11px} #lookbible .palgrid .who{background:var(--surface2)} }
-    </style>
+    
+  /* ===== NAV v2 — search-first, grouped menus, mobile sheet ===== */
+  .nav{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;margin:0 0 16px;position:sticky;top:0;
+       background:color-mix(in srgb,var(--page) 88%,transparent);backdrop-filter:blur(12px);
+       padding:9px 0;z-index:1002;border-bottom:1px solid transparent}
+  .nav.stuck{border-bottom-color:var(--ring)}
+  .navhome{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--ring);
+           border-radius:11px;padding:8px 12px;color:var(--ink);font-weight:800;font-size:13px;text-decoration:none;
+           letter-spacing:.04em;flex:0 0 auto}
+  .navhome:hover{border-color:var(--violet);text-decoration:none}
+  .navsearch{flex:1 1 auto;min-width:0;background:var(--surface2);border:1px solid var(--ring);border-radius:11px;
+             padding:9px 14px;color:var(--ink);font-size:13.5px;font-family:inherit}
+  .navsearch::placeholder{color:var(--muted)}
+  .navsearch:focus{outline:none;border-color:var(--violet);background:var(--page);box-shadow:0 0 0 3px rgba(144,133,233,.16)}
+  .nav .navlinks{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+
+  .navgrp{position:relative}
+  .ngb{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid transparent;border-radius:11px;
+       padding:8px 12px;color:var(--ink2);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap}
+  .ngb:hover{background:var(--surface2);color:var(--ink)}
+  .ngb .cx{font-style:normal;color:var(--muted);font-size:10px;transition:transform .15s ease}
+  .navgrp.open .ngb{background:var(--surface2);color:var(--ink);border-color:var(--ring)}
+  .navgrp.open .ngb .cx{transform:rotate(180deg)}
+  .navdrop{display:none;position:absolute;right:0;top:calc(100% + 7px);min-width:290px;background:var(--surface);
+           border:1px solid var(--ring);border-radius:14px;padding:7px;z-index:1200;
+           box-shadow:0 18px 44px rgba(0,0,0,.55)}
+  .navgrp.open .navdrop{display:block}
+  .navdrop a{display:flex;flex-direction:column;gap:1px;padding:8px 11px;border-radius:9px;color:var(--ink);
+             font-size:13px;font-weight:650;text-decoration:none;background:none;border:0;white-space:normal}
+  .navdrop a:hover{background:var(--surface2);text-decoration:none}
+  .navdrop a em{font-style:normal;font-size:11px;color:var(--muted);font-weight:500}
+  .ndh{display:block;padding:7px 11px 3px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800}
+
+  .navutil{display:inline-flex;gap:3px;margin-left:2px;background:var(--surface2);border:1px solid var(--ring);border-radius:11px;padding:3px}
+  .navutil button{background:none;border:0;color:var(--muted);font-size:14px;line-height:1;padding:5px 8px;border-radius:8px;cursor:pointer;font-family:inherit}
+  .navutil button:hover{background:var(--surface);color:var(--ink)}
+  .navtoggle{display:none}
+
+  @media(max-width:860px){
+    .nav{flex-wrap:wrap;gap:8px}
+    .navhome .hm{display:none}
+    .navhome{padding:9px 11px;font-size:15px}
+    .navsearch{flex:1 1 120px;font-size:16px}            /* 16px stops iOS zoom-on-focus */
+    .navtoggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+               width:44px;height:40px;background:var(--surface2);border:1px solid var(--ring);
+               border-radius:11px;color:var(--ink);font-size:17px;cursor:pointer;font-family:inherit}
+    .nav.open .navtoggle{background:var(--violet);color:#0d0d0d;border-color:var(--violet)}
+    .nav .navlinks{display:none;order:9;width:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:8px;
+                   max-height:min(74vh,560px);overflow:auto;-webkit-overflow-scrolling:touch;
+                   background:var(--surface);border:1px solid var(--ring);border-radius:14px;padding:9px;margin-top:2px}
+    .nav.open .navlinks{display:flex}
+    .navgrp{position:static}
+    .ngb{pointer-events:none;padding:5px 4px 2px;background:none;border:0;color:var(--muted);
+         font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+    .ngb .cx{display:none}                                /* group buttons become section headings */
+    .navdrop{display:block;position:static;min-width:0;border:0;background:none;box-shadow:none;padding:0}
+    .navdrop a{padding:12px 12px;min-height:44px;justify-content:center;background:var(--surface2);margin-bottom:6px}
+    .navdrop a em{font-size:11.5px}
+    .ndh{padding:4px 4px 6px}
+    .navgrp+.navgrp{border-top:1px solid var(--ring);padding-top:9px}
+    .navutil{margin:2px 0 0;justify-content:center}
+    .navutil button{flex:1;padding:11px;font-size:15px}
+  }
+</style>
     <h2>🎨 World &amp; Look Bible <span class="tag">one visual key — pull every comp to this</span></h2>
     <p class="note" style="margin:0 0 4px">One world, one look. Whatever you're building a mood board for — a bedroom, the diner, Hell House — append the keywords below so it all reads as <b>Black Willow</b>. From the director's master locations list.</p>
 
@@ -846,7 +952,7 @@
 
   <div class="card c6 tiers foldable collapsed" id="hellhouse">
     <h2>🏚️ Hell House — strategy &amp; scouting notes <span class="tag">the candidate list lives in the Scout Board ↑</span></h2>
-    <div class="flag" style="border-left-color:var(--good)">🔥 <b>LEAD — Beauport (Sleeper-McCann House, Gloucester).</b> Formal inquiry to Historic New England (7/16): ~6 days, shoot right after Beauport <b>closes Oct 17</b>; museum-safe FX (blood = post-VFX, boarded EXT = VFX + temp padlock); location fee OR donation to HNE. <b>⏰ NO REPLY IN 10 DAYS (sent 7/16 → 7/26) — CHASE IT.</b> And per the HNE policy below, the email route may be the wrong door: commercial photography is <b>outdoor only</b>, so the interior has to come through <b>functions@historicnewengland.org · 617-994-6671</b>. Scenes in Eps 103/104/106. <span class="btn-map" onclick="showOnMap('beauport')">🗺️ show on map</span></div>
+    <div class="flag" style="border-left-color:var(--good)">🔥 <b>LEAD — Beauport (Sleeper-McCann House, Gloucester).</b> Formal inquiry to Historic New England (7/16): ~6 days, shoot right after Beauport <b>closes Oct 17</b>; museum-safe FX (blood = post-VFX, boarded EXT = VFX + temp padlock); location fee OR donation to HNE. <b>⏰ NO REPLY SINCE THE 7/16 INQUIRY — CHASE IT.</b> And per the HNE policy below, the email route may be the wrong door: commercial photography is <b>outdoor only</b>, so the interior has to come through <b>functions@historicnewengland.org · 617-994-6671</b>. Scenes in Eps 103/104/106. <span class="btn-map" onclick="showOnMap('beauport')">🗺️ show on map</span></div>
     <p class="note" style="margin:8px 0 10px">📋 <b>All tracked Hell House candidates now live in ONE place — the <a href="#scout">🔦 Scout Board</a> above.</b> Search them and mark your <b>Pick 1 / 2 / 3</b> there. This card is just the <b>strategy, the rejected list &amp; the scouting pools</b> below. 👁️ Target look: match the burned original — <b>dark mahogany paneling, carved stair, hardwood, NO carpet</b> — plus a hero dark <b>EXTERIOR</b> (Richard 7/12), paired with a hub.</p>
     <details class="fold" style="margin-top:16px"><summary>🆕 Hero-EXTERIOR leads — photo-verify next <span class="tag">7/14 harvest</span></summary><div class="foldbody note" style="color:var(--ink2)">For the "establish a dark exterior" mandate: <b>The Ledges, Wenham</b> (stone Tudor, 14 acres, IN hub, FOR SALE) · <b>Sharksmouth, Manchester-by-the-Sea</b> (granite+shingle, 40 oceanfront acres) · <b>Margaret Cummings, Topsfield</b> (brick Tudor Revival) · <b>Carcassonne Castle, Marblehead</b> (oceanfront stone) · <b>John Faulkner House, Lowell</b> (1887 Shingle — closest sibling to the burned original, FOR SALE) · HUB 1: <b>Nathan Durfee</b> + <b>Mansion at the Highlands</b>, Fall River (stone + iron gates). Full 147 → LOCATIONS_AND_NEW_MANSION.md §6.</div></details>
     <details class="fold"><summary>❌ Rejected on photos + ✂️ cut</summary><div class="foldbody note"><b>Rejected:</b> Tupper Manor (bright cream/gold) · 51 Cliff St Nahant (white-painted stair/paneling, modern kitchen) · Westwood House (just colonials) · stone castles Hammond/Searles/Winnekenni (EXT-night cheats only). "Glynallen" = Glynallyn Castle NJ.<br><b>Cut:</b> Penguin Hall (our SCHOOL — not the Hell House) · Boston "Gothic Victorian" (pink Painted-Lady) · Kimball Jenkins (NH, no tax credit) · Methuen 1879 (warm/bright backup only).</div></details>
