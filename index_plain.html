@@ -148,13 +148,7 @@
   .navtoggle .caret{color:var(--muted);transition:transform .15s ease}
   .nav.open .navtoggle .caret{transform:rotate(180deg)}
   /* watch buttons in the intro */
-  .watchrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-  .watchbtn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:9px 15px;font-weight:700;font-size:13px;text-decoration:none}
-  .watchbtn.trailer{background:#ff4d4d;color:#fff} .watchbtn.pilot{background:var(--violet);color:#0d0d0d}
-  .watchbtn.lookbook{background:var(--accent);color:#fff}
   .nav a.btn.lookbook{background:var(--accent);color:#fff}
-  .watchbtn:hover{filter:brightness(1.08);text-decoration:none}
-  .watchbtn small{font-weight:500;opacity:.85}
   /* home button + always-on search in the frozen top bar */
   .navhome{display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--ring);border-radius:10px;padding:8px 13px;color:var(--ink);font-weight:750;font-size:13px;text-decoration:none;white-space:nowrap}
   .navhome:hover{border-color:var(--violet);text-decoration:none}
@@ -216,15 +210,21 @@
 </header>
 
 <div class="intro">
-  <div class="lead">📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
-  <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers). <b>Day 1 = Sept 28</b> (moved from 9/21 on 7/24) · ~35 days · two weeks of prep on the ground from ~Sept 14 · scout trip Aug 16–21.
-  <div style="margin-top:8px"><b>New here? Start with the <a href="#locations">Location Guide</a></b> (every set + its vibe, from the director), then the <a href="#map">map</a> and <a href="#schedule">schedule</a>. Everything else is detail you can open when you need it.</div>
-  <div class="watchrow">
-    <a class="watchbtn trailer" href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Watch the Trailer <small>· YouTube</small></a>
-    <a class="watchbtn pilot" href="https://vimeo.com/956314696" target="_blank">▶ Watch the Pilot <small>· Vimeo · pw PN</small></a>
-    <a class="watchbtn lookbook" href="lookbook.html">📸 Location Look Book <small>· concept art + scout photos, one per location</small></a>
+  <p class="showline">A supernatural teen dramedy — <b>Edward Scissorhands × Twilight × Wednesday</b> — set in <b>Black Willow</b>, a permanently-autumn New England witch town built on Salem bones. This is the living hub for its locations, schedule &amp; prep.</p>
+  <div class="facts">
+    <div><span>Day 1</span><b>Mon Sept 28</b><em>moved from 9/21 on 7/24</em></div>
+    <div><span>Shoot</span><b>~35 days</b><em>Eps 2–6, wrap ~Nov 13</em></div>
+    <div><span>Prep on the ground</span><b>from ~Sept 14</b><em>two weeks</em></div>
+    <div><span>Scout trip</span><b>Aug 16–21</b><em>Josh · Lindsay · Johanna</em></div>
+    <div><span>Hubs</span><b>South Shore → North Shore</b><em>Sagamore, then Danvers</em></div>
   </div>
+  <div class="startline">
+    <span class="sl-txt"><b>New here?</b> Start with the <a href="#locations">Location Guide</a>, then the <a href="#map-card">map</a> and <a href="#schedule">schedule</a>. Everything else opens when you need it.</span>
+    <span class="sl-watch"><a href="https://youtu.be/miAmRyOLM5c" target="_blank">▶ Trailer</a><a href="https://vimeo.com/956314696" target="_blank">▶ Pilot <small>pw PN</small></a></span>
+  </div>
+  <a class="cta" href="lookbook.html">📸 Open the Location Look Book <em>concept art + scout photos, one per location</em> <i>→</i></a>
 </div>
+
 <nav class="nav" id="topnav">
   <a class="navhome" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" title="Back to top">👻<span class="hm">PN</span></a>
   <input class="navsearch" id="navsearch" type="search" placeholder="🔎 Search any location — town, style, feature…" aria-label="Search all locations" autocomplete="off">
@@ -910,6 +910,38 @@
     .mast-in{padding:16px 15px 14px;gap:8px}
     .mast .role{text-align:left}
     .mast-cred{display:none}
+  }
+
+  /* ===== intro block — facts as data, matching the nav/dropdown grammar ===== */
+  .intro{background:var(--surface);border:1px solid var(--ring);border-left:3px solid var(--violet);
+         border-radius:12px;padding:15px 18px 16px;margin:4px 0 12px;font-size:13.5px;color:var(--ink2)}
+  .intro .showline{font-size:14.5px;line-height:1.5;color:var(--ink2);max-width:104ch}
+  .intro .showline b{color:var(--ink);font-weight:700}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;
+         background:var(--ring);border:1px solid var(--ring);border-radius:10px;overflow:hidden;margin:13px 0 12px}
+  .facts>div{background:var(--surface);padding:9px 12px 10px;display:flex;flex-direction:column;gap:1px}
+  .facts span{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:800}
+  .facts b{font-size:14px;color:var(--ink);font-weight:750;line-height:1.2}
+  .facts em{font-style:normal;font-size:11px;color:var(--muted)}
+  .startline{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;line-height:1.5}
+  .startline .sl-txt{flex:1 1 320px}
+  .startline b{color:var(--ink)}
+  .sl-watch{display:inline-flex;gap:6px;margin-left:auto}
+  .sl-watch a{background:var(--surface2);border:1px solid var(--ring);border-radius:99px;padding:4px 11px;
+              font-size:11.5px;font-weight:700;color:var(--ink2);text-decoration:none;white-space:nowrap}
+  .sl-watch a:hover{color:var(--ink);border-color:var(--violet);text-decoration:none}
+  .sl-watch small{font-weight:500;color:var(--muted)}
+  .cta{display:inline-flex;align-items:center;gap:9px;margin-top:13px;background:var(--accent);color:#fff;
+       border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:750;text-decoration:none}
+  .cta em{font-style:normal;font-weight:500;font-size:11.5px;opacity:.88}
+  .cta i{font-style:normal;opacity:.8}
+  .cta:hover{filter:brightness(1.08);text-decoration:none}
+  @media(max-width:640px){
+    .facts{grid-template-columns:1fr 1fr}
+    .facts>div:last-child:nth-child(odd){grid-column:1/-1}
+    .sl-watch{margin-left:0;width:100%}
+    .sl-watch a{flex:1;text-align:center}
+    .cta{width:100%;justify-content:center;flex-wrap:wrap;gap:4px}
   }
 </style>
     <h2>🎨 World &amp; Look Bible <span class="tag">one visual key — pull every comp to this</span></h2>
