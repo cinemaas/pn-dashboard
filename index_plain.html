@@ -317,7 +317,7 @@
   <div class="tile"><div class="n" id="d-deposit">–</div><div class="l">Days to cash-flow deposit</div><div class="s">Sat Aug 15</div></div>
   <div class="tile"><div class="n" id="d-flights">–</div><div class="l">Days to flights booking</div><div class="s">Mon Aug 17</div></div>
   <div class="tile ok"><div class="n" id="d-camera">–</div><div class="l">Days to camera</div><div class="s">Day 1 = Mon Sep 28 (confirmed 7/24)</div></div>
-  <div class="tile"><div class="n">35<span style="font-size:16px;color:var(--muted)"> +3</span></div><div class="l">Board days + contingency</div><div class="s">Wrap Nov 13 → pad Nov 18</div></div>
+  <div class="tile"><div class="n">38</div><div class="l">Shooting days</div><div class="s">⚠ NEW ONE-LINER 7/28 — not yet reflected below</div></div>
   <div class="tile crit"><div class="n">22</div><div class="l">Locations still to lock</div><div class="s">Hell House (no lead — Beauport dead) · Academy awaiting reply · +20 net-new</div></div>
 </div>
 
@@ -416,7 +416,7 @@
   </div>
   <script>
   const SCOUT=[
-  {s:"Hell House",hub:"N",d:"6 days",dn:6,t:"D+N",ep:"103·104·106",st:"lead",needs:["Hero dark EXTERIOR","Foyer","Grand staircase","Living room","Office","Hallway","Upstairs hallway","Master bedroom (walls 'bleed')","Sandra's room","Black Willow Woods just outside"],flag:"🖤 LOOK — ORIGINAL BRIEF RESTORED (Jul 25): DARK GOTHIC. WOOD TONES. Crimson Peak decay — faded grandeur, patina, carved dark-stained timber, heavy staircases, dim saturated shadow. The colourful/polychrome direction is for GARDNER, LANDRY and MARRERO and does NOT apply here. · Heaviest new set (6 days) — one place should cover foyer+stair, a parlor for ~30 (séance), an upstairs + 2 bedrooms, an office, front gates & crowd parking.",
+  {s:"Hell House",hub:"N",d:"6 days",dn:6,t:"D+N",ep:"103·104·106",st:"options",needs:["Hero dark EXTERIOR","Foyer","Grand staircase","Living room","Office","Hallway","Upstairs hallway","Master bedroom (walls 'bleed')","Sandra's room","Black Willow Woods just outside"],flag:"🖤 LOOK — ORIGINAL BRIEF RESTORED (Jul 25): DARK GOTHIC. WOOD TONES. Crimson Peak decay — faded grandeur, patina, carved dark-stained timber, heavy staircases, dim saturated shadow. The colourful/polychrome direction is for GARDNER, LANDRY and MARRERO and does NOT apply here. · Heaviest new set (6 days) — one place should cover foyer+stair, a parlor for ~30 (séance), an upstairs + 2 bedrooms, an office, front gates & crowd parking.",
     cands:[
      {n:"Morning Garden, Gloucester",a:"190 Western Ave, Gloucester",c:"MA Film Office / mgretreats",st:"options",mk:"morninggarden",u:"https://ma.reel-scout.com/loc_detail.aspx?id=10252383&cid=65",px:{permit:"Unification Church owner — pitch FX early"}},
      {n:"Stevens Estate, N. Andover",a:"723 Osgood St, N. Andover",c:"781-738-0511 · events@stevensestateevents.com",st:"options",mk:"stevens",u:"https://www.stevensestateevents.com"},
@@ -706,10 +706,10 @@
    // summary
    const all=SCOUT.concat(SCOUT_PILOT);
    const cnt=s=>all.filter(o=>o.st===s).length;
-   const days=SCOUT.reduce((a,o)=>a+(o.dn||0),0);
+   const days=SCOUT.reduce((a,o)=>a+(o.dn||0),0); // per-set day load, shown on each card
    sum.innerHTML=[
      ['🎬 '+SCOUT.length,'new-build sets'],
-     ['📅 ~'+Math.round(days),'est. shoot days'],
+     ['📅 38','shoot days (7/28 one-liner)'],
      [cnt('locked'),'✓ locked'],
      [cnt('lead'),'🔥 leads'],
      [cnt('options'),'⚠ options'],
@@ -969,7 +969,7 @@
   </div>
 
   <div class="card foldable collapsed" id="schedule">
-    <h2>Shoot board — 35 days (posted 7/10/26 one-liner) <span class="tag">hover a block</span></h2>
+    <h2>Shoot board — built on the 7/10 one-liner ⚠ SUPERSEDED <span class="tag">hover a block</span></h2>
     <div class="strip" id="strip"></div>
     <div class="striplbls" id="striplbls"></div>
     <div class="legend">
