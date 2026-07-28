@@ -212,7 +212,7 @@
 </header>
 
 <div class="intro">
-  <div class="lead">📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
+  <div class="lead"><figure class="introstill"><img src="hero-silo.jpg" alt="Silo attic HQ — pilot frame" loading="eager"><figcaption>From the pilot · the silo attic HQ</figcaption></figure>📖 What this is — a living production hub for our locations, schedule &amp; prep.</div>
   <b>The show:</b> a supernatural teen dramedy (Edward Scissorhands × Twilight × Wednesday) set in <b>Black Willow</b>, a permanently-autumn New England witch town on Salem bones. We're shooting <b>Eps 2–6</b> across two MA hubs (South Shore, then North Shore/Danvers). <b>Day 1 = Sept 28</b> (moved from 9/21 on 7/24) · ~35 days · two weeks of prep on the ground from ~Sept 14 · scout trip Aug 16–21.
   <div style="margin-top:8px"><b>New here? Start with the <a href="#locations">Location Guide</a></b> (every set + its vibe, from the director), then the <a href="#map">map</a> and <a href="#schedule">schedule</a>. Everything else is detail you can open when you need it.</div>
   <div class="watchrow">
@@ -874,6 +874,16 @@
     .navutil{margin:2px 0 0;justify-content:center}
     .navutil button{flex:1;padding:11px;font-size:15px}
   }
+
+
+  /* small pilot frame tucked into the intro card — decorative, costs no page height on desktop */
+  .introstill{float:right;width:236px;margin:2px 0 10px 18px;border-radius:10px;overflow:hidden;
+              border:1px solid var(--ring);position:relative;line-height:0}
+  .introstill img{width:100%;height:104px;object-fit:cover;object-position:center 46%;display:block}
+  .introstill figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 8px 5px;line-height:1.25;
+              font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:#ded9c9;
+              background:linear-gradient(transparent,rgba(0,0,0,.88))}
+  @media(max-width:760px){ .introstill{float:none;width:100%;margin:0 0 12px} .introstill img{height:118px} }
 </style>
     <h2>🎨 World &amp; Look Bible <span class="tag">one visual key — pull every comp to this</span></h2>
     <p class="note" style="margin:0 0 4px">One world, one look. Whatever you're building a mood board for — a bedroom, the diner, Hell House — append the keywords below so it all reads as <b>Black Willow</b>. From the director's master locations list.</p>
