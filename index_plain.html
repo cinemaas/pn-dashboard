@@ -983,16 +983,15 @@
     <div class="strip" id="strip"></div>
     <div class="striplbls" id="striplbls"></div>
     <div class="legend">
-      <span><i style="background:rgba(12,163,12,.55)"></i>🟢 ≤24 shots — makeable</span>
-      <span><i style="background:rgba(250,178,25,.5)"></i>🟠 25–32 — tight</span>
-      <span><i style="background:rgba(208,59,59,.6)"></i>🔴 &gt;32 — unmakeable as drawn</span>
-      <span style="color:var(--muted)">hover any block for scenes · shots · lock status</span>
+      <span><i style="background:rgba(12,163,12,.55)"></i>✓ Locked / already shot</span>
+      <span><i style="background:rgba(250,178,25,.5)"></i>⚠ In talks</span>
+      <span><i style="background:rgba(208,59,59,.6)"></i>✖ No lead yet</span>
+      <span><i style="background:var(--surface2);box-shadow:inset 0 0 0 1px var(--ring)"></i>Options — see the Scout Board</span>
+      <span style="color:var(--muted)">hover any day for its location + status</span>
     </div>
   </div>
 
-  <div class="card foldable collapsed">
-    <h2>⚠ Schedule load — "unmakeable days" <span class="tag">shot model over the WHITE 7/28 one-liner · 38 days</span></h2><div class="note">Rebuilt <b>7/28/26</b> from the <b>WHITE one-liner</b> (38 days, Sept 28 – Nov 18). Same metric as before: <b>3 shots minimum per scene, +1 for every cast member past the first two</b> (shots = 3 + max(0, cast−2)). Bands: <span class="chip good">🟢 ≤24</span> <span class="chip warn">🟠 25–32 tight</span> <span class="chip crit">🔴 &gt;32 unmakeable</span> — a fast non-union single-unit day realistically holds ~25 lit setups.</div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--ring);border:1px solid var(--ring);border-radius:10px;overflow:hidden;margin:12px 0"><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px">38</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">board days</span></div><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px">322</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">scenes</span></div><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px">1153</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">shots · ~30/day</span></div><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px;color:var(--crit)">11</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">🔴 unmakeable</span></div><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px;color:var(--warn)">14</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">🟠 tight</span></div><div style="background:var(--surface);padding:9px 12px"><b style="font-size:17px;color:var(--good)">13</b><br><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">🟢 ok</span></div></div><div id="shotbars" style="display:flex;align-items:flex-end;gap:2px;height:150px;margin:14px 0 3px"></div><div id="shotlbls" style="display:flex;gap:2px;font-size:9px;color:var(--muted);margin-bottom:12px"></div>
-<div class="note"><b>Read:</b> the 7/28 board asks ~30 setups a day against a realistic ~25. <b>11 days are unmakeable as drawn</b> and 14 more are tight — 25 of 38 with no slack. It is better than the 7/10 board (15 red of 35) but the shape of the problem is the same. <b>Worst five:</b> D14 Hell House <b>62</b> · D27 Hospital <b>62</b> · D19 Halloween Dance <b>51</b> · D32 Klaypool Residence <b>48</b> · D13 Hell House <b>45</b>. ⚠ Page count still hides it — <b>D35 is 4⅞ pages and RED</b> (5 scenes, 8-hand ensemble); <b>D17 is 8½ pages and GREEN</b> (6 quiet scenes).</div><table><tr><th>Day</th><th>Date</th><th>Pgs</th><th>Sc</th><th>&gt;2 cast</th><th>Max</th><th>Shots</th><th></th><th>Anchor</th></tr><tr><td><b>1</b></td><td>Monday, September 28</td><td>6 7/8</td><td>9</td><td>1</td><td>3</td><td><b>28</b></td><td><span class="chip warn">🟠</span></td><td>Hall Residence</td></tr><tr><td><b>2</b></td><td>Tuesday, September 29</td><td>7</td><td>10</td><td>0</td><td>2</td><td><b>30</b></td><td><span class="chip warn">🟠</span></td><td>Black Willow Woods</td></tr><tr><td><b>3</b></td><td>Wednesday, September 30</td><td>5</td><td>11</td><td>4</td><td>5</td><td><b>40</b></td><td><span class="chip crit">🔴</span></td><td>Mary'S Bath</td></tr><tr><td><b>4</b></td><td>Thursday, October 1</td><td>3 4/8</td><td>7</td><td>2</td><td>4</td><td><b>24</b></td><td><span class="chip good">🟢</span></td><td>Lighthouse Beach</td></tr><tr><td><b>5</b></td><td>Friday, October 2</td><td>5 7/8</td><td>8</td><td>0</td><td>2</td><td><b>24</b></td><td><span class="chip good">🟢</span></td><td>Playground</td></tr><tr><td><b>6</b></td><td>Monday, October 5</td><td>3 7/8</td><td>8</td><td>4</td><td>4</td><td><b>29</b></td><td><span class="chip warn">🟠</span></td><td>Sacred Heart Church</td></tr><tr><td><b>7</b></td><td>Tuesday, October 6</td><td>6 7/8</td><td>8</td><td>2</td><td>4</td><td><b>28</b></td><td><span class="chip warn">🟠</span></td><td>Black Cat Coffee Shop</td></tr><tr><td><b>8</b></td><td>Wednesday, October 7</td><td>5 4/8</td><td>7</td><td>2</td><td>3</td><td><b>23</b></td><td><span class="chip good">🟢</span></td><td>Police Station</td></tr><tr><td><b>9</b></td><td>Thursday, October 8</td><td>2 3/8</td><td>8</td><td>4</td><td>3</td><td><b>28</b></td><td><span class="chip warn">🟠</span></td><td>Gardner Residence</td></tr><tr><td><b>10</b></td><td>Friday, October 9</td><td>6 2/8</td><td>10</td><td>5</td><td>6</td><td><b>38</b></td><td><span class="chip crit">🔴</span></td><td>Gardner Residence</td></tr><tr><td><b>11</b></td><td>Monday, October 12</td><td>3 4/8</td><td>6</td><td>2</td><td>4</td><td><b>21</b></td><td><span class="chip good">🟢</span></td><td>Hell House</td></tr><tr><td><b>12</b></td><td>Tuesday, October 13</td><td>6 4/8</td><td>6</td><td>2</td><td>4</td><td><b>22</b></td><td><span class="chip good">🟢</span></td><td>Hell House</td></tr><tr><td><b>13</b></td><td>Wednesday, October 14</td><td>5 4/8</td><td>13</td><td>3</td><td>5</td><td><b>45</b></td><td><span class="chip crit">🔴</span></td><td>Hell House</td></tr><tr><td><b>14</b></td><td>Thursday, October 15</td><td>7</td><td>11</td><td>7</td><td>7</td><td><b>62</b></td><td><span class="chip crit">🔴</span></td><td>Hell House</td></tr><tr><td><b>15</b></td><td>Friday, October 16</td><td>8 3/8</td><td>5</td><td>5</td><td>7</td><td><b>34</b></td><td><span class="chip crit">🔴</span></td><td>Hell House</td></tr><tr><td><b>16</b></td><td>Monday, October 19</td><td>6 5/8</td><td>8</td><td>2</td><td>4</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Black Willow Academy</td></tr><tr><td><b>17</b></td><td>Tuesday, October 20</td><td>8 4/8</td><td>6</td><td>1</td><td>3</td><td><b>19</b></td><td><span class="chip good">🟢</span></td><td>Black Willow Academy</td></tr><tr><td><b>18</b></td><td>Wednesday, October 21</td><td>6 2/8</td><td>6</td><td>2</td><td>5</td><td><b>22</b></td><td><span class="chip good">🟢</span></td><td>Black Willow Academy</td></tr><tr><td><b>19</b></td><td>Thursday, October 22</td><td>6 7/8</td><td>15</td><td>4</td><td>4</td><td><b>51</b></td><td><span class="chip crit">🔴</span></td><td>Halloween Dance</td></tr><tr><td><b>20</b></td><td>Friday, October 23</td><td>2 3/8</td><td>3</td><td>2</td><td>7</td><td><b>19</b></td><td><span class="chip good">🟢</span></td><td>Black Willow Woods</td></tr><tr><td><b>21</b></td><td>Monday, October 26</td><td>7 2/8</td><td>8</td><td>3</td><td>3</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Sandra'S House</td></tr><tr><td><b>22</b></td><td>Tuesday, October 27</td><td>6 5/8</td><td>8</td><td>3</td><td>3</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Verlice Residence</td></tr><tr><td><b>23</b></td><td>Wednesday, October 28</td><td>5 6/8</td><td>10</td><td>0</td><td>2</td><td><b>30</b></td><td><span class="chip warn">🟠</span></td><td>Verlice Residence</td></tr><tr><td><b>24</b></td><td>Thursday, October 29</td><td>6 4/8</td><td>11</td><td>6</td><td>5</td><td><b>43</b></td><td><span class="chip crit">🔴</span></td><td>Verlice Residence</td></tr><tr><td><b>25</b></td><td>Friday, October 30</td><td>7 2/8</td><td>7</td><td>1</td><td>3</td><td><b>22</b></td><td><span class="chip good">🟢</span></td><td>Graveyard</td></tr><tr><td><b>26</b></td><td>Monday, November 2</td><td>3 5/8</td><td>8</td><td>2</td><td>4</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Diner</td></tr><tr><td><b>27</b></td><td>Tuesday, November 3</td><td>8 1/8</td><td>18</td><td>5</td><td>5</td><td><b>62</b></td><td><span class="chip crit">🔴</span></td><td>Hospital</td></tr><tr><td><b>28</b></td><td>Wednesday, November 4</td><td>4 7/8</td><td>8</td><td>2</td><td>4</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Small Outdoor Club</td></tr><tr><td><b>29</b></td><td>Thursday, November 5</td><td>6 3/8</td><td>11</td><td>0</td><td>2</td><td><b>33</b></td><td><span class="chip crit">🔴</span></td><td>Landry Residence</td></tr><tr><td><b>30</b></td><td>Friday, November 6</td><td>4 5/8</td><td>4</td><td>3</td><td>6</td><td><b>20</b></td><td><span class="chip good">🟢</span></td><td>Salem, 1692</td></tr><tr><td><b>31</b></td><td>Monday, November 9</td><td>4</td><td>8</td><td>1</td><td>3</td><td><b>25</b></td><td><span class="chip warn">🟠</span></td><td>Klaypool Residence</td></tr><tr><td><b>32</b></td><td>Tuesday, November 10</td><td>7 2/8</td><td>16</td><td>0</td><td>2</td><td><b>48</b></td><td><span class="chip crit">🔴</span></td><td>Klaypool Residence</td></tr><tr><td><b>33</b></td><td>Wednesday, November 11</td><td>8 5/8</td><td>5</td><td>3</td><td>4</td><td><b>20</b></td><td><span class="chip good">🟢</span></td><td>Klaypool Residence</td></tr><tr><td><b>34</b></td><td>Thursday, November 12</td><td>5</td><td>5</td><td>1</td><td>3</td><td><b>16</b></td><td><span class="chip good">🟢</span></td><td>Klaypool Residence</td></tr><tr><td><b>35</b></td><td>Friday, November 13</td><td>4 7/8</td><td>5</td><td>5</td><td>8</td><td><b>34</b></td><td><span class="chip crit">🔴</span></td><td>Klaypool Residence</td></tr><tr><td><b>36</b></td><td>Monday, November 16</td><td>4 5/8</td><td>8</td><td>2</td><td>4</td><td><b>27</b></td><td><span class="chip warn">🟠</span></td><td>Klaypool Residence</td></tr><tr><td><b>37</b></td><td>Tuesday, November 17</td><td>3 2/8</td><td>10</td><td>0</td><td>2</td><td><b>30</b></td><td><span class="chip warn">🟠</span></td><td>Klaypool Residence</td></tr><tr><td><b>38</b></td><td>Wednesday, November 18</td><td>7 3/8</td><td>7</td><td>0</td><td>2</td><td><b>21</b></td><td><span class="chip good">🟢</span></td><td>Klaypool Residence</td></tr></table></div>
+  
 
   <div class="card c5 foldable collapsed">
     <h2>Milestones</h2>
@@ -1489,52 +1488,51 @@ document.getElementById('ms').innerHTML = MS.map(([d,c,t])=>{
 
 // ---- shoot board strip (from 7/10/26 one-liner)
 const DAYS=[
-  [1,"September 28","Hall Res","warn",9,28,""],
-  [2,"September 29","BW Woods","warn",10,30,""],
-  [3,"September 30","Mary's Bath","crit",11,40,""],
-  [4,"October 1","Lighthouse","good",7,24,""],
-  [5,"October 2","Playground","good",8,24,""],
-  [6,"October 5","Sacred Heart","warn",8,29,""],
-  [7,"October 6","Black Cat","warn",8,28,""],
-  [8,"October 7","Police Stn","good",7,23,""],
-  [9,"October 8","Gardner","warn",8,28,""],
-  [10,"October 9","Gardner","crit",10,38,""],
-  [11,"October 12","HELL HOUSE","good",6,21,"\u2716 NO LEAD \u2014 biggest open item"],
-  [12,"October 13","HELL HOUSE","good",6,22,"\u2716 NO LEAD \u2014 biggest open item"],
-  [13,"October 14","HELL HOUSE","crit",13,45,"\u2716 NO LEAD \u2014 biggest open item"],
-  [14,"October 15","HELL HOUSE","crit",11,62,"\u2716 NO LEAD \u2014 biggest open item"],
-  [15,"October 16","HELL HOUSE","crit",5,34,"\u2716 NO LEAD \u2014 biggest open item"],
-  [16,"October 19","BW Academy","warn",8,27,"\u26a0 Penguin Hall awaiting reply"],
-  [17,"October 20","BW Academy","good",6,19,"\u26a0 Penguin Hall awaiting reply"],
-  [18,"October 21","BW Academy","good",6,22,"\u26a0 Penguin Hall awaiting reply"],
-  [19,"October 22","Halloween Dance","crit",15,51,""],
-  [20,"October 23","BW Woods","good",3,19,""],
-  [21,"October 26","Sandra's","warn",8,27,""],
-  [22,"October 27","Verlice","warn",8,27,"\u2713 shot in pilot \u2014 chasing it back"],
-  [23,"October 28","Verlice","warn",10,30,"\u2713 shot in pilot \u2014 chasing it back"],
-  [24,"October 29","Verlice","crit",11,43,"\u2713 shot in pilot \u2014 chasing it back"],
-  [25,"October 30","Graveyard","good",7,22,"\u2713 shot in pilot"],
-  [26,"November 2","Diner","warn",8,27,""],
-  [27,"November 3","Hospital","crit",18,62,""],
-  [28,"November 4","Outdoor Club","warn",8,27,""],
-  [29,"November 5","Landry","crit",11,33,""],
-  [30,"November 6","Salem 1692","good",4,20,""],
-  [31,"November 9","Klaypool","warn",8,25,"\u2713 LOCKED"],
-  [32,"November 10","Klaypool","crit",16,48,"\u2713 LOCKED"],
-  [33,"November 11","Klaypool","good",5,20,"\u2713 LOCKED"],
-  [34,"November 12","Klaypool","good",5,16,"\u2713 LOCKED"],
-  [35,"November 13","Klaypool","crit",5,34,"\u2713 LOCKED"],
-  [36,"November 16","Klaypool","warn",8,27,"\u2713 LOCKED"],
-  [37,"November 17","Klaypool","warn",10,30,"\u2713 LOCKED"],
-  [38,"November 18","Klaypool","good",7,21,"\u2713 LOCKED"]
+  [1,"September 28","Hall Res","neutral","options \u2014 see the Scout Board"],
+  [2,"September 29","BW Woods","neutral","options \u2014 see the Scout Board"],
+  [3,"September 30","Mary's Bath","neutral","options \u2014 see the Scout Board"],
+  [4,"October 1","Lighthouse","neutral","options \u2014 see the Scout Board"],
+  [5,"October 2","Playground","neutral","options \u2014 see the Scout Board"],
+  [6,"October 5","Sacred Heart","neutral","options \u2014 see the Scout Board"],
+  [7,"October 6","Black Cat","neutral","options \u2014 see the Scout Board"],
+  [8,"October 7","Police Stn","neutral","options \u2014 see the Scout Board"],
+  [9,"October 8","Gardner","neutral","options \u2014 see the Scout Board"],
+  [10,"October 9","Gardner","neutral","options \u2014 see the Scout Board"],
+  [11,"October 12","HELL HOUSE","crit","\u2716 NO LEAD \u2014 biggest open item"],
+  [12,"October 13","HELL HOUSE","crit","\u2716 NO LEAD \u2014 biggest open item"],
+  [13,"October 14","HELL HOUSE","crit","\u2716 NO LEAD \u2014 biggest open item"],
+  [14,"October 15","HELL HOUSE","crit","\u2716 NO LEAD \u2014 biggest open item"],
+  [15,"October 16","HELL HOUSE","crit","\u2716 NO LEAD \u2014 biggest open item"],
+  [16,"October 19","BW Academy","warn","\u26a0 Penguin Hall \u2014 awaiting reply"],
+  [17,"October 20","BW Academy","warn","\u26a0 Penguin Hall \u2014 awaiting reply"],
+  [18,"October 21","BW Academy","warn","\u26a0 Penguin Hall \u2014 awaiting reply"],
+  [19,"October 22","Halloween Dance","neutral","options \u2014 see the Scout Board"],
+  [20,"October 23","BW Woods","neutral","options \u2014 see the Scout Board"],
+  [21,"October 26","Sandra's","neutral","options \u2014 see the Scout Board"],
+  [22,"October 27","Verlice","good","\u2713 shot in the pilot \u2014 chasing it back"],
+  [23,"October 28","Verlice","good","\u2713 shot in the pilot \u2014 chasing it back"],
+  [24,"October 29","Verlice","good","\u2713 shot in the pilot \u2014 chasing it back"],
+  [25,"October 30","Graveyard","good","\u2713 shot in the pilot \u2014 chasing it back"],
+  [26,"November 2","Diner","neutral","options \u2014 see the Scout Board"],
+  [27,"November 3","Hospital","neutral","options \u2014 see the Scout Board"],
+  [28,"November 4","Outdoor Club","neutral","options \u2014 see the Scout Board"],
+  [29,"November 5","Landry","neutral","options \u2014 see the Scout Board"],
+  [30,"November 6","Salem 1692","neutral","options \u2014 see the Scout Board"],
+  [31,"November 9","Klaypool","good","\u2713 LOCKED"],
+  [32,"November 10","Klaypool","good","\u2713 LOCKED"],
+  [33,"November 11","Klaypool","good","\u2713 LOCKED"],
+  [34,"November 12","Klaypool","good","\u2713 LOCKED"],
+  [35,"November 13","Klaypool","good","\u2713 LOCKED"],
+  [36,"November 16","Klaypool","good","\u2713 LOCKED"],
+  [37,"November 17","Klaypool","good","\u2713 LOCKED"],
+  [38,"November 18","Klaypool","good","\u2713 LOCKED"]
 ];
 
 const strip=document.getElementById('strip'), lbls=document.getElementById('striplbls'), tip=document.getElementById('tip');
-DAYS.forEach(([n,dt,set,st,sc,sh,lock])=>{
+DAYS.forEach(([n,dt,set,st,note])=>{
   const b=document.createElement('div'); b.className='blk '+st; b.innerHTML=`<span>${n}</span>`;
-  const band = st==='crit'?'🔴 UNMAKEABLE as drawn':st==='warn'?'🟠 tight':'🟢 makeable';
   b.onmousemove=(e)=>{tip.style.display='block';
-    tip.innerHTML=`<b>Day ${n} — ${dt}</b>${set}<br><span style="color:#898781">${sc} scenes · <b style="color:#fff">${sh} shots</b> · ${band}</span>`+(lock?`<br><span style="color:#898781">${lock}</span>`:'');
+    tip.innerHTML=`<b>Day ${n} — ${dt}</b>${set}<br><span style="color:#898781">${note}</span>`;
     tip.style.left=Math.min(e.clientX+12,innerWidth-300)+'px';tip.style.top=(e.clientY+14)+'px';};
   b.onmouseleave=()=>tip.style.display='none'; strip.appendChild(b);
 });
@@ -1548,68 +1546,8 @@ document.querySelectorAll('.persist').forEach(cb=>{
 });
 
 // ---- schedule shot-load bars  [day, date, pages, scenes, litShots, anchor]
-const SHOTS=[
-  [1,"September 28","6 7/8",9,28,"Hall Res"],
-  [2,"September 29","7",10,30,"BW Woods"],
-  [3,"September 30","5",11,40,"Mary's Bath"],
-  [4,"October 1","3 4/8",7,24,"Lighthouse"],
-  [5,"October 2","5 7/8",8,24,"Playground"],
-  [6,"October 5","3 7/8",8,29,"Sacred Heart"],
-  [7,"October 6","6 7/8",8,28,"Black Cat"],
-  [8,"October 7","5 4/8",7,23,"Police Stn"],
-  [9,"October 8","2 3/8",8,28,"Gardner"],
-  [10,"October 9","6 2/8",10,38,"Gardner"],
-  [11,"October 12","3 4/8",6,21,"HELL HOUSE"],
-  [12,"October 13","6 4/8",6,22,"HELL HOUSE"],
-  [13,"October 14","5 4/8",13,45,"HELL HOUSE"],
-  [14,"October 15","7",11,62,"HELL HOUSE"],
-  [15,"October 16","8 3/8",5,34,"HELL HOUSE"],
-  [16,"October 19","6 5/8",8,27,"BW Academy"],
-  [17,"October 20","8 4/8",6,19,"BW Academy"],
-  [18,"October 21","6 2/8",6,22,"BW Academy"],
-  [19,"October 22","6 7/8",15,51,"Halloween Dance"],
-  [20,"October 23","2 3/8",3,19,"BW Woods"],
-  [21,"October 26","7 2/8",8,27,"Sandra's"],
-  [22,"October 27","6 5/8",8,27,"Verlice"],
-  [23,"October 28","5 6/8",10,30,"Verlice"],
-  [24,"October 29","6 4/8",11,43,"Verlice"],
-  [25,"October 30","7 2/8",7,22,"Graveyard"],
-  [26,"November 2","3 5/8",8,27,"Diner"],
-  [27,"November 3","8 1/8",18,62,"Hospital"],
-  [28,"November 4","4 7/8",8,27,"Outdoor Club"],
-  [29,"November 5","6 3/8",11,33,"Landry"],
-  [30,"November 6","4 5/8",4,20,"Salem 1692"],
-  [31,"November 9","4",8,25,"Klaypool"],
-  [32,"November 10","7 2/8",16,48,"Klaypool"],
-  [33,"November 11","8 5/8",5,20,"Klaypool"],
-  [34,"November 12","5",5,16,"Klaypool"],
-  [35,"November 13","4 7/8",5,34,"Klaypool"],
-  [36,"November 16","4 5/8",8,27,"Klaypool"],
-  [37,"November 17","3 2/8",10,30,"Klaypool"],
-  [38,"November 18","7 3/8",7,21,"Klaypool"]
-];
-(function(){
-  const wrap=document.getElementById('shotbars'), lb=document.getElementById('shotlbls'), tip=document.getElementById('tip');
-  const max=Math.max(...SHOTS.map(s=>s[4])); const makeable=25;
-  // Makeability call (Josh, 7/14): u=unmakeable, a=at risk, m=makeable. The 17 makeable days are locked non-unmakeable.
-  const shotsOf={}; SHOTS.forEach(r=>shotsOf[r[0]]=r[4]);   // tier straight off the 7/28 numbers
-  const COL={u:'var(--crit)',a:'var(--warn)',m:'var(--good)'}, LBL={u:'UNMAKEABLE',a:'AT RISK',m:'MAKEABLE'};
-  const tier=n=>shotsOf[n]>32?'u':(shotsOf[n]>=25?'a':'m');
-  wrap.style.position='relative';
-  const ref=document.createElement('div');
-  ref.style.cssText=`position:absolute;left:0;right:0;bottom:${makeable/max*100}%;border-top:1px dashed var(--muted);pointer-events:none`;
-  ref.innerHTML='<span style="position:absolute;right:0;top:-14px;font-size:10px;color:var(--muted)">~25 shots</span>';
-  wrap.appendChild(ref);
-  SHOTS.forEach(([n,dt,pg,sc,sh,loc])=>{
-    const t=tier(n), col=COL[t];
-    const b=document.createElement('div');
-    b.style.cssText=`flex:1;min-width:0;height:${sh/max*100}%;background:${col};border-radius:3px 3px 0 0;opacity:${t==='a'?0.7:0.85};cursor:default`;
-    b.onmousemove=(e)=>{tip.style.display='block';tip.innerHTML=`<b>Day ${n} — ${dt} · ${pg} pg</b><b style="color:${col}">${LBL[t]}</b> · ${sc} scenes → ${sh} shots<br>${loc}`;tip.style.left=Math.min(e.clientX+12,innerWidth-280)+'px';tip.style.top=(e.clientY+14)+'px';};
-    b.onmouseleave=()=>tip.style.display='none';
-    wrap.appendChild(b);
-  });
-  SHOTS.forEach(s=>{const d=document.createElement('div');d.style.cssText='flex:1;min-width:0;text-align:center';d.textContent=(s[0]%2?s[0]:'');d.style.fontVariantNumeric='tabular-nums';lb.appendChild(d);});
-})();
+
+
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
