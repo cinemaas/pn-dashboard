@@ -376,6 +376,34 @@
      #scout .notebtn{cursor:pointer;font-size:10.5px;font-weight:700;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:7px;padding:2px 8px;white-space:nowrap;user-select:none} #scout .notebtn:hover{border-color:var(--accent);color:var(--accent)}
      #scout .cnotes{margin-top:7px;display:flex;flex-direction:column;gap:4px}
      #scout .cnote{font-size:11.5px;color:var(--ink2);background:var(--page);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:5px 9px;line-height:1.45} #scout .cnote .nby{color:#fff} #scout .cnote .nt{color:var(--muted);font-size:10px} #scout .cnote .ndel{cursor:pointer;color:var(--muted);margin-left:4px;font-weight:700} #scout .cnote .ndel:hover{color:#e06a5f}
+     #scout .sugbtn{background:var(--good);color:#0d0d0d;font-weight:700;padding:8px 14px;border-radius:9px;border:0;font-family:inherit;font-size:13px;cursor:pointer}
+     #scout .sugbtn:hover{filter:brightness(1.08)}
+     #scout .sg-box{background:var(--surface2);border:1px solid var(--good);border-radius:14px;padding:18px 20px;width:100%;max-width:520px;max-height:88vh;overflow:auto;box-shadow:0 14px 50px rgba(0,0,0,.6)}
+     #scout .sg-title{font-size:14px;font-weight:750;color:var(--good);margin-bottom:2px}
+     #scout .sg-sub{font-size:11.5px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+     #scout .sg-f{margin-bottom:12px}
+     #scout .sg-f label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:700;margin-bottom:5px}
+     #scout .sg-f label .req{color:var(--good)}
+     #scout .sg-f input,#scout .sg-f select,#scout .sg-f textarea{width:100%;background:var(--page);border:1px solid var(--ring);border-radius:9px;color:var(--ink);font-family:inherit;font-size:13.5px;padding:9px 11px}
+     #scout .sg-f textarea{resize:vertical;min-height:64px;line-height:1.5}
+     #scout .sg-f input:focus,#scout .sg-f select:focus,#scout .sg-f textarea:focus{outline:none;border-color:var(--good)}
+     #scout .sg-f input::placeholder,#scout .sg-f textarea::placeholder{color:var(--muted)}
+     #scout .sg-f.bad input,#scout .sg-f.bad select{border-color:var(--crit)}
+     #scout .sg-err{font-size:11px;color:var(--crit);margin-top:4px;display:none}
+     #scout .sg-f.bad .sg-err{display:block}
+     #scout .sg-ok{font-size:11px;color:var(--good);margin-top:4px;display:none}
+     #scout .sg-f.good .sg-ok{display:block}
+     #scout .sg-btns{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+     #scout .sg-cancel{background:transparent;border:1px solid var(--ring);color:var(--ink2);border-radius:9px;padding:8px 14px;font-family:inherit;font-size:13px;cursor:pointer}
+     #scout .sg-send{background:var(--good);color:#0d0d0d;border:0;border-radius:9px;padding:9px 18px;font-family:inherit;font-size:13.5px;font-weight:750;cursor:pointer}
+     #scout .sg-send:disabled{background:var(--surface);color:var(--muted);cursor:not-allowed;box-shadow:inset 0 0 0 1px var(--ring)}
+     #scout .sg-gate{font-size:11px;color:var(--muted)}
+     #scout .sg-done{text-align:center;padding:12px 4px}
+     #scout .sg-done h4{color:var(--good);font-size:15px;margin-bottom:6px}
+     #scout .sg-done p{font-size:12.5px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+     #scout .sg-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+     #scout .sg-mine{font-size:11px;color:var(--muted);margin-top:10px;border-top:1px solid var(--ring);padding-top:8px}
+     #scout .sg-mine b{color:var(--ink2)}
      #scout .notemodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:2000;align-items:center;justify-content:center;padding:20px} #scout .notemodal.show{display:flex}
      #scout .nm-box{background:var(--surface2);border:1px solid var(--violet);border-radius:14px;padding:16px 18px;width:100%;max-width:460px;box-shadow:0 14px 50px rgba(0,0,0,.6)}
      #scout .nm-title{font-size:13px;font-weight:750;color:var(--violet);margin-bottom:10px} #scout .nm-title b{color:#fff}
@@ -399,7 +427,7 @@
     <h2>🔦 Scout Board <span class="tag">the director's breakdown → what each location must have + tracked candidates</span></h2>
     <p class="note" style="margin:0 0 12px">Every set in Eps 2–6 as a scouting brief: the <b>spaces one location has to contain</b> (these are requirements, not assignments — we're not saying <i>where</i> the bedroom is, just that the place needs one), its <b>hub · est. shoot days · day/night</b>, and tracked <b>candidates with address, contact &amp; 🗺️ map</b>. Filter by hub or status. Pilot sets already shot/locked are grouped at the bottom.</p>
     <div class="scoutsum" id="scoutsum"></div>
-    <div style="margin:0 0 12px"><a class="btn" style="background:var(--good);color:#0d0d0d;font-weight:700;padding:8px 14px;border-radius:9px;display:inline-block" href="mailto:cinemaasinc@gmail.com?subject=PN%20location%20suggestion&body=Set%20it%27s%20for%3A%0ALocation%20name%3A%0AAddress%3A%0AContact%20(name%20%2B%20phone%2Femail)%3A%0ALink%2Flisting%3A%0AParking%20%2F%20power%20%2F%20sound%20%2F%20permit%20notes%3A%0AWhy%20it%20fits%3A%0A(attach%20photos)%0A">➕ Suggest a location / add info</a> <span style="font-size:11.5px;color:var(--muted)">— anyone (scouts, crew, locals) can send a candidate; it lands in the PN inbox to add here.</span></div>
+    <div style="margin:0 0 12px"><button class="sugbtn" id="sugopen" type="button">➕ Suggest a location</button> <span style="font-size:11.5px;color:var(--muted)">— anyone can add one. You need a <b>link</b> and <b>which set it's for</b> before it will send.</span></div>
     <div class="stoolbar">
       <select class="whosel unset" id="whosel" title="Tell the board who you are — this tags your picks & status changes so the crew can see who did what"><option value="">👤 I am… (set once)</option></select>
       <input class="ssearch" id="scoutsearch" type="search" placeholder="🔎 Search any location — town, feature, style… (e.g. mansard, Beverly, ballroom, corn maze)">
@@ -412,6 +440,37 @@
     <b>Hell House</b> = dark gothic, wood tones, Crimson Peak decay. <b>Gardner · Landry · Marrero</b> = Victorian and colourful, saturated interiors.<br>
     ⚠ <b>Two rules, from the DP's own cuts:</b> <b>no visible interior = out</b> ("couldnt see inside i removed") · <b>white = out</b> ("was painted white on the outside"). And look before you add — confirm what you're grabbing is actually what you think it is.</div>
     <div class="scoutgrid" id="scoutgrid"></div>
+    <div class="notemodal" id="sugmodal"><div class="sg-box">
+      <div id="sg-form">
+        <div class="sg-title">Suggest a location</div>
+        <div class="sg-sub">Anyone can send one in — scouts, crew, locals. It goes to the producers for review, it does not post to the board automatically. <b>The link and the set are required.</b></div>
+        <div class="sg-f" id="sgf-set">
+          <label>Which location is this for? <span class="req">*</span></label>
+          <select id="sg-set"><option value="">Choose the set…</option></select>
+          <div class="sg-err">Pick which set this is for — that is how we know where it belongs.</div>
+        </div>
+        <div class="sg-f" id="sgf-url">
+          <label>Link <span class="req">*</span></label>
+          <input id="sg-url" type="url" inputmode="url" placeholder="https://… listing, Airbnb, Peerspace, Google Maps, anything with photos" />
+          <div class="sg-err" id="sg-urlerr">Needs a full link starting with http:// or https://</div>
+          <div class="sg-ok">Link looks good</div>
+        </div>
+        <div class="sg-f"><label>Place name</label><input id="sg-name" type="text" placeholder="e.g. Hammond Castle, Gloucester" /></div>
+        <div class="sg-f"><label>Your name</label><input id="sg-who" type="text" placeholder="so we know who to thank" /></div>
+        <div class="sg-f"><label>Why it fits / anything we should know</label><textarea id="sg-why" placeholder="Access, parking, power, who to call, what it gives us…"></textarea></div>
+        <input class="sg-hp" id="sg-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="sg-btns">
+          <span class="sg-gate" id="sg-gate">Add a link and a set to enable Send</span>
+          <span style="display:flex;gap:8px"><button class="sg-cancel" id="sg-cancel" type="button">Cancel</button><button class="sg-send" id="sg-send" type="button" disabled>Send it</button></span>
+        </div>
+        <div class="sg-mine" id="sg-mine"></div>
+      </div>
+      <div id="sg-thanks" style="display:none" class="sg-done">
+        <h4>Sent — thank you</h4>
+        <p id="sg-thanksmsg"></p>
+        <span style="display:flex;gap:8px;justify-content:center"><button class="sg-cancel" id="sg-close2" type="button">Close</button><button class="sg-send" id="sg-again" type="button">Add another</button></span>
+      </div>
+    </div></div>
     <div class="notemodal" id="notemodal"><div class="nm-box"><div class="nm-title" id="nm-title">Add a note</div><textarea class="nm-ta" id="nm-ta" rows="4" placeholder="Type your note… your role is added automatically. (⌘/Ctrl+Enter to save)"></textarea><div class="nm-btns"><button class="nm-cancel" id="nm-cancel" type="button">Cancel</button><button class="nm-save" id="nm-save" type="button">Save note</button></div></div></div>
     <p class="note">Statuses: <span class="chip good">✓ LOCKED</span> signed · <span class="chip" style="background:rgba(57,135,229,.18);color:#8fbaf0">🔥 LEAD</span> inquiry out · <span class="chip warn">⚠ OPTIONS</span> shortlist to call · <span class="chip crit">🔦 OPEN</span> needs scouting · <span class="chip neutral">✂ CUT</span> may be dropped. Full contacts/notes per set → <i>LOCATION_OPTIONS.md</i>.</p>
   </div>
@@ -775,6 +834,108 @@
    function setStatus(set,nm,state){ const k=rmKey(set,nm); const cur=STATUS[k]; if(cur&&cur.s===state){ delete STATUS[k]; logAdd('cleared status on',nm); } else { STATUS[k]={s:state,by:WHO||'someone',ts:Date.now()}; logAdd('marked '+STMETA[state][0],nm); } saveState(); renderPicks(); draw(); }
    function ensureWho(){ if(WHO) return true; var sel=document.getElementById('whosel'); if(sel){sel.classList.add('unset');sel.focus();try{sel.scrollIntoView({block:'center'});}catch(e){}} alert('First, tell the board who you are — pick your role in the “👤 I am…” menu at the top of the Scout Board. Then every pick & status you set is tagged with your role so the crew can see who did what.'); return false; }
    let pendingNote=null;
+
+  /* ---- Suggest a location: validated public submission form ---- */
+  (function(){
+    /* Set this to a Formspree / Apps Script POST endpoint to collect submissions
+       automatically. Left empty = the form opens a pre-filled email instead, which
+       needs no account and no key. NEVER put an API key here — this page is public. */
+    const SUBMIT_ENDPOINT = "";
+    const TO = "cinemaasinc@gmail.com";
+
+    const modal=document.getElementById('sugmodal'); if(!modal) return;
+    const $=id=>document.getElementById(id);
+    const selEl=$('sg-set'), urlEl=$('sg-url'), nameEl=$('sg-name'), whoEl=$('sg-who'),
+          whyEl=$('sg-why'), hpEl=$('sg-hp'), sendEl=$('sg-send'), gateEl=$('sg-gate'),
+          fSet=$('sgf-set'), fUrl=$('sgf-url'), urlErr=$('sg-urlerr');
+
+    /* set list is built from the board itself, so it can never go stale */
+    try{
+      const names=[];
+      [SCOUT_PILOT,SCOUT].forEach(arr=>arr.forEach(st=>{ if(st&&st.s&&names.indexOf(st.s)<0) names.push(st.s); }));
+      names.sort((a,b)=>a.localeCompare(b));
+      names.forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent=n; selEl.appendChild(o); });
+      const o=document.createElement('option'); o.value='__other'; o.textContent="Not sure / something else"; selEl.appendChild(o);
+    }catch(e){}
+
+    function validUrl(v){
+      v=(v||'').trim(); if(!v) return null;
+      try{ const u=new URL(v); return (u.protocol==='http:'||u.protocol==='https:') ? u.href : null; }catch(e){ return null; }
+    }
+    function check(){
+      const okSet=!!selEl.value, u=validUrl(urlEl.value), okUrl=!!u;
+      fSet.classList.toggle('bad', selEl.dataset.t==='1' && !okSet);
+      fUrl.classList.toggle('bad', urlEl.dataset.t==='1' && !okUrl);
+      fUrl.classList.toggle('good', okUrl);
+      sendEl.disabled = !(okSet && okUrl);
+      gateEl.textContent = sendEl.disabled
+        ? (!okSet && !okUrl ? 'Add a link and a set to enable Send'
+           : !okSet ? 'Still need: which set it is for'
+           : 'Still need: a valid link')
+        : 'Ready to send';
+      return okUrl;
+    }
+    selEl.addEventListener('change',()=>{selEl.dataset.t='1';check();});
+    urlEl.addEventListener('input',()=>{check();});
+    urlEl.addEventListener('blur',()=>{urlEl.dataset.t='1';check();});
+
+    function renderMine(){
+      let list=[]; try{ list=JSON.parse(localStorage.getItem('pnSuggests')||'[]'); }catch(e){}
+      $('sg-mine').innerHTML = list.length
+        ? '<b>'+list.length+'</b> suggestion'+(list.length>1?'s':'')+' sent from this browser: '+
+          list.slice(-4).map(x=>x.name||x.set).join(' · ')
+        : '';
+    }
+    function open(){
+      modal.classList.add('show');
+      try{ if(!whoEl.value && typeof WHO==='string' && WHO) whoEl.value=WHO; }catch(e){}
+      renderMine(); check(); setTimeout(()=>selEl.focus(),40);
+    }
+    function close(){ modal.classList.remove('show'); }
+    $('sugopen').addEventListener('click',open);
+    $('sg-cancel').addEventListener('click',close);
+    $('sg-close2').addEventListener('click',close);
+    modal.addEventListener('click',e=>{ if(e.target===modal) close(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modal.classList.contains('show')) close(); });
+    $('sg-again').addEventListener('click',()=>{
+      $('sg-thanks').style.display='none'; $('sg-form').style.display='';
+      selEl.value=''; urlEl.value=''; nameEl.value=''; whyEl.value='';
+      delete selEl.dataset.t; delete urlEl.dataset.t;
+      fSet.classList.remove('bad'); fUrl.classList.remove('bad','good');
+      renderMine(); check();
+    });
+
+    sendEl.addEventListener('click',function(){
+      if(hpEl.value) { close(); return; }           /* bot honeypot */
+      const u=validUrl(urlEl.value); if(!selEl.value||!u){ check(); return; }
+      const rec={ set:selEl.value==='__other'?'(not sure)':selEl.value, url:u,
+                  name:(nameEl.value||'').trim(), who:(whoEl.value||'').trim(),
+                  why:(whyEl.value||'').trim() };
+      try{ const l=JSON.parse(localStorage.getItem('pnSuggests')||'[]'); l.push(rec);
+           localStorage.setItem('pnSuggests',JSON.stringify(l)); }catch(e){}
+
+      const body='Set it is for: '+rec.set+'\nLink: '+rec.url+'\nPlace name: '+(rec.name||'—')+
+                 '\nFrom: '+(rec.who||'—')+'\nWhy it fits / notes:\n'+(rec.why||'—')+'\n';
+      const finish=how=>{
+        $('sg-form').style.display='none'; $('sg-thanks').style.display='';
+        $('sg-thanksmsg').textContent = how==='post'
+          ? 'It is with the producers for '+rec.set+'. Nothing posts to the board until someone reviews it.'
+          : 'Your email app should have opened with it filled in — hit send there and it is with the producers for '+rec.set+'.';
+      };
+      if(SUBMIT_ENDPOINT){
+        sendEl.disabled=true; sendEl.textContent='Sending…';
+        fetch(SUBMIT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify(Object.assign({_subject:'PN location suggestion — '+rec.set},rec))})
+        .then(r=>{ sendEl.textContent='Send it'; finish('post'); })
+        .catch(()=>{ sendEl.textContent='Send it';
+          window.location.href='mailto:'+TO+'?subject='+encodeURIComponent('PN location suggestion — '+rec.set)+'&body='+encodeURIComponent(body);
+          finish('mail'); });
+      } else {
+        window.location.href='mailto:'+TO+'?subject='+encodeURIComponent('PN location suggestion — '+rec.set)+'&body='+encodeURIComponent(body);
+        finish('mail');
+      }
+    });
+  })();
    const noteModal=document.getElementById('notemodal'), noteTA=document.getElementById('nm-ta'), noteTitle=document.getElementById('nm-title');
    function closeNoteModal(){ if(noteModal)noteModal.classList.remove('show'); pendingNote=null; }
    function saveNoteModal(){ if(!pendingNote)return; const t=(noteTA.value||'').trim(); if(t){ const k=rmKey(pendingNote.set,pendingNote.nm); (NOTES[k]||(NOTES[k]=[])).push({by:WHO||'someone',text:t.slice(0,500),ts:Date.now()}); logAdd('noted',pendingNote.nm); saveState(); renderPicks(); draw(); } closeNoteModal(); }
