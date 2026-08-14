@@ -516,7 +516,12 @@
      #scout .rmbtn{cursor:pointer;font-size:11px;font-weight:800;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:8px;padding:3px 9px;white-space:nowrap;user-select:none}
      #scout .rmbtn:hover{border-color:#d0463b;color:#e06a5f}
      #scout .rmbtn.on{background:#d0463b;color:#fff;border-color:#d0463b}
-     #scout .cand.removed{opacity:.5} #scout .cand.removed .top b{text-decoration:line-through}
+     #scout .cand.removed{display:none}
+     body.showrm #scout .cand.removed{display:block;opacity:.45}
+     body.showrm #scout .cand.removed .top b{text-decoration:line-through;text-decoration-thickness:1px}
+     #scout .rmnote{margin-top:8px;font-size:12px;color:var(--muted)}
+     #scout .rmshow,.rmshow{cursor:pointer;font-size:11px;font-weight:700;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:7px;padding:2px 9px;margin-left:6px}
+     .rmshow:hover{color:var(--ink);border-color:var(--violet)} .rmshow.on{background:var(--violet);color:#fff;border-color:var(--violet)}
      #scout .strow{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-top:7px}
      #scout .stbtn{cursor:pointer;font-size:10.5px;font-weight:700;border:1px solid var(--ring);background:var(--surface);color:var(--muted);border-radius:7px;padding:2px 8px;white-space:nowrap;user-select:none} #scout .stbtn:hover{color:var(--ink);border-color:var(--ink2)}
      #scout .stbtn.on.talks{background:#c99a2e;border-color:#c99a2e;color:#0d0d0d} #scout .stbtn.on.approved{background:#5aa84a;border-color:#5aa84a;color:#0d0d0d} #scout .stbtn.on.passed{background:#c05a4e;border-color:#c05a4e;color:#fff}
@@ -756,7 +761,7 @@
      grid.querySelectorAll('.sc').forEach(sc=>{
        const setMatch=q&&(sc.getAttribute('data-search')||'').includes(q);
        let vis=0;
-       sc.querySelectorAll('.cand').forEach(cd=>{const ok=!q||setMatch||(cd.getAttribute('data-search')||'').includes(q);cd.style.display=ok?'':'none';if(ok)vis++;});
+       sc.querySelectorAll('.cand').forEach(cd=>{const gone=cd.classList.contains('removed')&&!document.body.classList.contains('showrm');const ok=!gone&&(!q||setMatch||(cd.getAttribute('data-search')||'').includes(q));cd.style.display=ok?'':'none';if(ok)vis++;});
        const scShow=!q||setMatch||vis>0; sc.style.display=scShow?'':'none'; if(scShow)matches++;
      });
      const lbl=grid.querySelector('.pilotlbl'); if(lbl)lbl.style.display=q?'none':'';
@@ -775,7 +780,7 @@
      else { sets.forEach(s=>{ h+='<div class="pkset">'+s+'</div>';
        PICKS[s].forEach((nm,i)=>{ h+='<div class="pkrow"><span class="rk">Pick '+(i+1)+'</span><span class="nm">'+nm+'</span><button data-mv="up" data-s="'+A(s)+'" data-i="'+i+'" title="move up">↑</button><button data-mv="down" data-s="'+A(s)+'" data-i="'+i+'" title="move down">↓</button><button data-rm="1" data-s="'+A(s)+'" data-i="'+i+'" title="remove from picks">✕</button></div>'; }); }); }
      if(stAll.length){ h+='<div style="margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--ink2)"><b style="color:#fff">Deal status:</b> '+(stc.talks?'<span style="color:#e6b84e">🗣️ '+stc.talks+' in talks</span>&nbsp; ':'')+(stc.approved?'<span style="color:#7fce6c">✅ '+stc.approved+' secured</span>&nbsp; ':'')+(stc.passed?'<span style="color:#e06a5f">🚫 '+stc.passed+' passed</span>':'')+'</div>'; }
-     if(rmCount){ h+='<div style="margin-top:8px;font-size:12px;color:var(--muted)">🚫 <b style="color:#e06a5f">'+rmCount+' removed</b> — dimmed on the board; tap <b>🚫 removed</b> on a card to restore. <button class="pkrestore">restore all</button></div>'; }
+     if(rmCount){ const shown=document.body.classList.contains('showrm'); h+='<div class="rmnote">🚫 <b style="color:#e06a5f">'+rmCount+' removed</b> — hidden from the board. <span class="rmshow'+(shown?' on':'')+'">'+(shown?'👁 hide them again':'👁 show removed')+'</span> <button class="pkrestore">restore all</button></div>'; }
      if(LOG.length){ h+='<div class="actlog"><b style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)">📋 Recent activity — who did what</b>'+LOG.slice(0,14).map(e=>'<div class="actrow"><span class="who">'+A(e.by)+'</span> '+A(e.act)+' <b>'+A(e.nm)+'</b> <span class="t">· '+ago(e.ts)+'</span></div>').join('')+'</div>'; }
      mp.innerHTML=h;
    }
@@ -893,8 +898,9 @@
    if(noteModal){ document.getElementById('nm-save').addEventListener('click',saveNoteModal); document.getElementById('nm-cancel').addEventListener('click',closeNoteModal); noteModal.addEventListener('click',e=>{ if(e.target===noteModal) closeNoteModal(); }); noteTA.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeNoteModal();} else if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();saveNoteModal();} }); }
    function deleteNote(set,nm,i){ const k=rmKey(set,nm); const a=NOTES[k]; if(!a)return; a.splice(i,1); if(!a.length)delete NOTES[k]; saveState(); renderPicks(); draw(); }
    grid.addEventListener('click',e=>{ const hh=e.target.closest('.sc-h'); if(hh&&!e.target.closest('a')){ hh.parentElement.classList.toggle('collapsed'); return; } const nb=e.target.closest('.notebtn'); if(nb){ if(ensureWho()) addNote(nb.dataset.noteset,nb.dataset.notenm); return; } const nd=e.target.closest('.ndel'); if(nd){ if(confirm('Delete this note?')) deleteNote(nd.dataset.ntset,nd.dataset.ntnm,+nd.dataset.nti); return; } const sb=e.target.closest('.stbtn'); if(sb){ if(ensureWho()) setStatus(sb.dataset.stset,sb.dataset.stnm,sb.dataset.st); return; } const rb=e.target.closest('.rmbtn'); if(rb){ if(ensureWho()) toggleRemove(rb.dataset.rmset,rb.dataset.rmnm); return; } const b=e.target.closest('.pickbtn'); if(!b)return; if(ensureWho()) togglePick(b.dataset.set,b.dataset.nm); });
-   mp.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b)return;
+   mp.addEventListener('click',e=>{ const b=e.target.closest('button,.rmshow'); if(!b)return;
      if(b.classList.contains('pkclear')){ if(confirm('Clear all picks'+(SYNC.realtime?' for the whole crew':'')+'?')){PICKS={};saveState();renderPicks();draw();} return; }
+     if(b.classList.contains('rmshow')){ document.body.classList.toggle('showrm'); renderPicks(); applySearch(); return; }
      if(b.classList.contains('pkrestore')){ if(confirm('Restore all removed candidates'+(SYNC.realtime?' for the whole crew':'')+'?')){REMOVED={};saveState();renderPicks();draw();} return; }
      const s=b.dataset.s, i=+b.dataset.i, a=PICKS[s]; if(!a)return;
      if(b.dataset.rm){ a.splice(i,1); if(!a.length)delete PICKS[s]; }
